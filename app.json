@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mybowling-app",
+    "name": "MyBowling",
     "slug": "mybowling-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
     }
   }
 }

@@ -32,6 +32,9 @@ export const ScoreInput = styled.TextInput`
   border-radius: 4px;
   padding: 0 8px;
   height: 30px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 export const ScoreText = styled.Text`

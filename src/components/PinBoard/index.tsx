@@ -2,6 +2,7 @@ import { View, Pressable, Text } from "react-native";
 import { Container } from "./styles";
 import { PinIcon } from "../Icons/PinIcon";
 import { useState } from "react";
+import { isIpad } from '../../utils/getDevice';
 
 const frameToString = (frame: number[]) => {
   return frame.length > 0 ? frame.join(" - ") : "";
@@ -44,8 +45,8 @@ export function PinBoard({ onFrameSet }: { onFrameSet: (frame: string) => void }
             >
             <PinIcon
               key={index}
-              height={60}
-              width={60}
+              height={isIpad() ? 110:60}
+              width={isIpad() ? 110:60}
               color={selectedPins.includes(index) ? "#981b1b" : "#0d9488"}
             />
             </Pressable>

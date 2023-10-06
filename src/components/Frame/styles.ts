@@ -8,12 +8,13 @@ export const Card = styled.View`
   align-items: center;
   justify-content: space-between;
   background-color: #0d9488;
+  border: 2px solid #FFF;
   padding: 8px;
+  color: #FFF;
 `;
 
 export const FrameNumber = styled.Text`
   font-size: 14px;
-  color: #FFF;
   font-weight: bold;
 `;
 
@@ -39,6 +40,5 @@ export const ScoreInput = styled.TextInput`
 
 export const ScoreText = styled.Text`
   font-size: 18px;
-  color: #FFF;
   font-weight: bold;
 `;

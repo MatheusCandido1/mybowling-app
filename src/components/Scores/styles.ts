@@ -7,10 +7,10 @@ export const Container = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
+  padding: 0 8px;
 `;
 
 export const ScoreCard = styled.View`
-  padding: 8px;
   flex: 1;
   items-align: center;
   justify-content: center;

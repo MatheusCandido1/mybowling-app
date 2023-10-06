@@ -1,16 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
-import { Splash } from './src/components/Splash';
 import { Tabs } from './src/Router/Tabs';
-import { SafeAreaView } from 'react-native';
-
+import { NativeBaseProvider } from "native-base";
 
 export default function App() {
   return (
-    <>
+    <NativeBaseProvider>
       <StatusBar style="auto" />
       <Tabs />
-    </>
+    </NativeBaseProvider>
   );
 }
 

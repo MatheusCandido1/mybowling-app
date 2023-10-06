@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { PinIcon } from "./PinIcon";
+import { isIpad } from '../../utils/getDevice';
 
 interface ThreePinProps {
   height: number;
@@ -13,7 +14,7 @@ export function ThreePinIcon({ height, width, color }: ThreePinProps) {
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
-        gap: -22,
+        gap: isIpad() ? -28:-22,
         alignItems: 'center',
         marginTop: 4,
       }}

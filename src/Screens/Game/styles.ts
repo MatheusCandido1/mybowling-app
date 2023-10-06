@@ -11,11 +11,12 @@ export const Frames = styled.View`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  padding: 0 8px;
 `;
 
 export const Content = styled.View`
   flex: 1;
-  padding: 12px 8px 24px;
+  padding: 12px 0 24px;
   item-align: center;
   justify-content: start;
 `;
@@ -39,6 +40,8 @@ export const ScoreButtonText = styled.Text`
   text-align: center;
 `;
 
+export const FloatingScoreButtonContainer = styled.View``;
+
 
 export const SplitContainer = styled.View`
   position: absolute;
@@ -57,4 +60,11 @@ export const SplitButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
   text-align: center;
+`;
+
+export const Overlay = styled.KeyboardAvoidingView`
+  background: rgba(0,0,0,0.8);
+  flex: 1;
+  justify-content: center;
+  z-index: 999;
 `;

@@ -25,8 +25,24 @@ export const Label = styled.Text`
 
 export const IconContainer = styled.View`
   position: absolute;
-  bottom: 2;
-  right: 2;
+  bottom: 2px;
+  right: 2px;
   justify-content: center;
   align-items: center;
 `;
+
+export const ErrorContainer = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 2px;
+`;
+
+export const ErrorText = styled.Text`
+  font-size: 12px;
+  color: #e11d48;
+  font-weight: bold;
+  margin-right: 2px;
+  text-align: right;
+`;
+

@@ -1,21 +1,30 @@
 import { FlatList, Text, View } from "react-native";
-import { Container, BallContainer, Label, IconContainer } from "./styles";
+import { Container, BallContainer, Label, IconContainer} from "./styles";
 import { Ball2Icon } from "../../../Icons/Ball2Icon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { IBall } from "../../../../entities/Ball";
+import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
 
-interface IBall {
-  id: number;
-  name: string;
-  color: string;
+
+interface BallSelectInputProps {
+  label: string;
+  resetForm?: () => void;
+  error?: string;
 }
 
-export function BallSelectInput() {
+export function BallSelectInput({ label, resetForm, error }: BallSelectInputProps) {
   const [selectedBall, setSelectedBall] = useState<IBall | null>(null);
 
   function handleSelectBall(ball: IBall) {
     setSelectedBall(ball);
   }
+
+  useEffect(() => {
+    if(resetForm) {
+      setSelectedBall(null);
+    }
+  }, []);
 
   function getColor(ball: IBall) {
     const defaultColor = '#0d9488'
@@ -47,7 +56,7 @@ export function BallSelectInput() {
 
   return (
     <Container>
-      <Label>Select ball</Label>
+      <Label>{label}</Label>
       <FlatList
         data={balls}
         keyExtractor={item => String(item.id)}
@@ -78,6 +87,7 @@ export function BallSelectInput() {
           </BallContainer>
         )}
       />
+      <ErrorFeedbackInput error={error} />
     </Container>
   )
 }

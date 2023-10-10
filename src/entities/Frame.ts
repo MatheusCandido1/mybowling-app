@@ -6,10 +6,12 @@ export interface IFrame {
   firstBall: {
     pins: number | undefined,
     thrown: boolean,
+    split?: string,
   },
   secondBall: {
     pins: number | undefined,
     thrown: boolean,
+    split?: string,
   },
   thirdBall?: {
     pins: number | undefined,

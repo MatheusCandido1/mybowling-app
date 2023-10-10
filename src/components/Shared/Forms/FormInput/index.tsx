@@ -21,7 +21,7 @@ export function FormInput({ label, error }: FormInputProps) {
       </Label>
       <Input
         variant="underlined"
-        placeholder="Enter the E-mail"
+        placeholder="06/10/2023"
       />
       <ErrorContainer>
         <ErrorText>{error}</ErrorText>

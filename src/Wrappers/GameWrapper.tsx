@@ -1,11 +1,15 @@
-// import { Game } from "../Screens/Game";
+import { Game } from "../Screens/Game";
 import { NewGameModal } from "../components/Game/NewGameModal";
-import { GameProvider } from "../contexts/GameContext";
+import { GameContext, GameProvider } from "../contexts/GameContext";
 
 export function GameWrapper() {
   return (
     <GameProvider>
-      <NewGameModal />
+      <GameContext.Consumer>
+      {({ currentFrame }) => (
+        currentFrame ? <Game /> : <NewGameModal />
+      )}
+      </GameContext.Consumer>
     </GameProvider>
   )
 }

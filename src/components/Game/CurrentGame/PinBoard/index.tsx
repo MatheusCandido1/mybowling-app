@@ -1,11 +1,11 @@
 import { View, Pressable, Text } from "react-native";
 import { Container } from "./styles";
-import { PinIcon } from "../Icons/PinIcon";
+import { PinIcon } from "../../../Icons/PinIcon";
 import { useState } from "react";
-import { isIpad } from '../../utils/getDevice';
+import { isIpad } from '../../../../utils/getDevice';
 
 const frameToString = (frame: number[]) => {
-  return frame.length > 0 ? frame.join(" - ") : "";
+  return frame.length > 0 ? frame.join("-") : "";
 };
 
 const defaultFrame = [1,2,3,4,5,6,7,8,9,10]

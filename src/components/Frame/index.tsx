@@ -119,7 +119,7 @@ export function Frame({ item }: FrameProps) {
           }}
         />
       </ScoreInputContainer>
-      <ScoreText>{points}</ScoreText>
+      <ScoreText>{item.status !== 'WAITING' && points}</ScoreText>
     </Card>
   )
 }

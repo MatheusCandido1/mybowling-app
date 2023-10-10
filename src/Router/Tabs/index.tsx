@@ -5,7 +5,7 @@ const Tab = createBottomTabNavigator();
 
 import { Home } from '../../Screens/Home';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
-import { Games } from '../../Screens/Games';
+import { GamesWrapper } from '../../Wrappers/GamesWrapper';
 import { Equipments } from '../../Screens/Equipments';
 import { Profile } from '../..//Screens/Profile';
 import { View } from 'react-native';
@@ -57,7 +57,7 @@ export function Tabs() {
         />
         <Tab.Screen
           name="Games"
-          component={Games}
+          component={GamesWrapper}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (

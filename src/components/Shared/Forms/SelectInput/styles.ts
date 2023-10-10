@@ -21,20 +21,3 @@ export const Input = styled.TextInput`
   font-weight: medium;
   font-size: 16px;
 `;
-
-export const ErrorContainer = styled.View`
-  flex-direction: row;
-  justify-content: flex-end;
-  height: 16px;
-  width: 100%;
-  margin-top: 2px;
-`;
-
-
-export const ErrorText = styled.Text`
-  font-size: 12px;
-  color: #940d19;
-  font-weight: bold;
-  margin-right: 2px;
-  text-align: right;
-`;

@@ -1,8 +1,7 @@
-import { Text } from "react-native";
 import { Container, ScoreCard, FrameNumberLabel, Label } from "./styles";
-import { useGame } from "../../hooks/useGame";
-import { IFrame } from "../../entities/Frame";
-import { formatPoints, formatScore } from "../../utils/formatScore";
+import { useGame } from "../../../../hooks/useGame";
+import { IFrame } from "../../../../entities/Frame";
+import { formatPoints, formatScore } from "../../../../utils/formatScore";
 
 export function Scores() {
   const  { frames } = useGame();

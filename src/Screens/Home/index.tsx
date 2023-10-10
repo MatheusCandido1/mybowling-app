@@ -7,7 +7,6 @@ export function Home() {
   return (
     <Container>
       <Header title="Home" />
-      <NumPad />
     </Container>
   );
 }

@@ -11,6 +11,8 @@ interface GameContextData {
   input2: string;
   updateFrameValue: (value: string) => void;
   calculateFrame: (currentFrame: IFrame | undefined, frameIndex: number | undefined) => number;
+  startNewGame: () => void;
+  resetGame: () => void;
 }
 
 export const GameContext = createContext({} as GameContextData);
@@ -34,6 +36,7 @@ const initialFrames: IFrame[ ] = Array.from({ length: 10 }, (_, i) => ({
   },
   points: 0,
   status: i === 0 ? 'IN_PROGRESS':'WAITING',
+  split: '',
 }));
 
 
@@ -55,6 +58,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setIsNumPadVisible(false);
   }
 
+  function startNewGame() {
+    setFrames(initialFrames);
+  }
+
+  function resetGame() {
+    setFrames([]);
+  }
+
 
 
   function calculateScorePerFrame() {
@@ -63,7 +74,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       const val = prevFrame ? prevFrame.currentScore : 0;
 
       if (frame.isStrike) {
-        console.log('strike')
         return { ...frame, currentScore: val + 10 + calculateFrame(frame, index + 1) };
       } else if (frame.isSpare) {
         return { ...frame, currentScore: val + 10 + calculateFrame(frame, index + 1) };
@@ -149,6 +159,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
               ...currentFrame,
               points: Number(value),
               firstBall: { ...currentFrame.firstBall, pins: Number(value), thrown: true },
+
             };
           }
         } else if (!currentFrame.secondBall.thrown) {
@@ -250,6 +261,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         input2,
         updateFrameValue,
         calculateFrame,
+        startNewGame,
+        resetGame
       }}
     >
       {children}

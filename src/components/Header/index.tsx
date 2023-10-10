@@ -2,18 +2,21 @@ import { Modal, TouchableOpacity, View } from "react-native";
 import { Container, Title } from "./styles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { InsightsModal } from "../InsightsModal/InsightsModal";
+import { InsightsModal } from "../Game/CurrentGame/InsightsModal/InsightsModal";
 
 interface HeaderProps {
   title: string;
+  onPress?: () => void;
 }
 
-export function Header({ title }: HeaderProps) {
+export function Header({ title, onPress }: HeaderProps) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <Container>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={onPress}
+      >
         <Ionicons name="arrow-back-sharp" size={32} color="#000" />
       </TouchableOpacity>
       <Title>{title}</Title>

@@ -10,7 +10,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: 400px;
+  margin-top: 350px;
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;
@@ -18,17 +18,31 @@ export const Container = styled.View`
   elevation: 2;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  padding: 8px 16px;
 `;
 
 export const Header = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 16px;
+`;
+
+export const Title = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+`;
+
+export const SubTitle = styled.Text`
+  font-size: 16px;
+  color: #000;
 `;
 
 export const Form = styled.View`
   flex: 1;
   padding: 0 16px;
+  margin-bottom: 20px;
 `;
 
+export const InputContainer = styled.View``;

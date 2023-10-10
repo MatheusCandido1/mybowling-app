@@ -1,4 +1,4 @@
-import { PinIcon } from "../Icons/PinIcon";
+import { PinIcon } from "../../../Icons/PinIcon";
 import { Container, ShadowContainer, LegendContainer, Label, ScoreContainer } from "./styles";
 
 export function PinBoardHeader() {

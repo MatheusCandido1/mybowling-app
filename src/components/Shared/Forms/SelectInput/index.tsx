@@ -1,11 +1,13 @@
-import { Container, Input, Label, ErrorText, ErrorContainer } from "./styles";
+import { ILocation } from "../../../../entities/Location";
+import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
+import { Container, Input, Label } from "./styles";
 import { Select } from "native-base";
 
 
 interface SelectInputProps {
   label: string;
   error?: string;
-  items: any;
+  items?: ILocation[];
 }
 
 export function SelectInput({ label, error, items }: SelectInputProps) {
@@ -13,26 +15,18 @@ export function SelectInput({ label, error, items }: SelectInputProps) {
 
   return (
     <Container>
-      <Label
-        style={{
-          color: highlightColor,
-        }}
-      >
+      <Label>
         {label}
       </Label>
      <Select
       placeholder="Select the Location"
       variant="underlined"
      >
-        <Select.Item label="UX Research" value="ux" />
-        <Select.Item label="Web Development" value="web" />
-        <Select.Item label="Cross Platform Development" value="cross" />
-        <Select.Item label="UI Designing" value="ui" />
-        <Select.Item label="Backend Development" value="backend" />
+      {items?.map((item: ILocation) => (
+         <Select.Item key={item.id} label={item.name} value={item.id} />
+      ))}
       </Select>
-      <ErrorContainer>
-        <ErrorText>{error}</ErrorText>
-      </ErrorContainer>
+      <ErrorFeedbackInput error={error} />
     </Container>
   )
 }

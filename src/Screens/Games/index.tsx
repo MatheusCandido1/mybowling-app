@@ -1,98 +1,122 @@
-import { useState } from "react";
-import { Header } from "../../components/Header";
-import { Container, Content, SearchContainer, SearchButton, SearchInput, GamesContainer, SearchButtonText} from "./styles";
-import { Input } from "native-base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FlatList, Text, View } from "react-native";
-import { IGame } from "../../entities/Game";
+import { Header } from "../../components/Shared/Header";
+import { Container, Content, SearchContainer, SearchButton, GamesContainer, FilterText, FilterItem, FilterContainer} from "./styles";
+import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import { FlatList, View } from "react-native";
 import { GameCard } from "../../components/Games/GameCard";
+import { useGamesController } from "./useGamesController";
+import { OverlayLoading } from "../../components/Shared/OverlayLoading";
+import { GameDetailsModal } from "../../components/Games/GameDetailsModal";
+import { GamesFilterModal } from "../../components/Games/GamesFilterModal";
+import { formatFromDate } from "../../utils/formatDate";
+import { Ball2Icon } from "../../components/Icons/Ball2Icon";
 
 export function Games() {
-  const [search, setSearch] = useState('')
-  const [games, setGames] = useState<any>([
-    {
-      id: '1',
-      date: Date(),
-      frames: [],
-      totalScore: 300,
-      status:'COMPLETED',
-      ball: 'Spin Pro',
-      location: 'South Point Bowling Center'
-    },
-    {
-      id: '2',
-      date: Date(),
-      frames: [],
-      totalScore: 300,
-      status:'COMPLETED',
-      ball: 'Spin Pro',
-      location: 'South Point Bowling Center'
-    },
-    {
-      id: '3',
-      date: Date(),
-      frames: [],
-      totalScore: 300,
-      status:'COMPLETED',
-      ball: 'Spin Pro',
-      location: 'South Point Bowling Center'
-    },
-    {
-      id: '4',
-      date: Date(),
-      frames: [],
-      totalScore: 300,
-      status:'COMPLETED',
-      ball: 'Spin Pro',
-      location: 'South Point Bowling Center'
-    },
-    {
-      id: '5',
-      date: Date(),
-      frames: [],
-      totalScore: 300,
-      status:'COMPLETED',
-      ball: 'Spin Pro',
-      location: 'South Point Bowling Center'
-    }
-  ]);
 
+  const {
+    isLoading,
+    games,
+    showDetailsModal,
+    showFilterModal,
+    handleCloseDetailsModal,
+    handleShowDetailsModal,
+    handleShowFilterModal,
+    handleCloseFilterModal,
+    filters
+  } = useGamesController();
 
   return (
     <Container>
-      <Header title="Games" />
-      <Content>
-        <SearchContainer>
-          <SearchInput>
-            <Input
-              variant="underlined"
-              placeholder="Search..."
-              style={{
-                width: "80%",
-                fontSize: 14,
-              }}
-              focusOutlineColor={"#0d9488"}
-            />
-            </SearchInput>
-          <SearchButton>
-            <MaterialCommunityIcons name="magnify" size={24} color="#FFF" />
-            <SearchButtonText>Filter </SearchButtonText>
-          </SearchButton>
-        </SearchContainer>
-        <GamesContainer>
-          <FlatList
-            data={games}
-            keyExtractor={(item: IGame) => item.id}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-            renderItem={({ item }) => (
-             <GameCard />
-            )}
-          >
+      {isLoading && <OverlayLoading />}
+      {!isLoading && (
+        <>
+        <Header title="Games" />
+        <Content>
+          <SearchContainer>
+            <FilterContainer>
+              <FilterText
+                style={{ fontWeight: 'bold' }}
+              >Filters:
+            </FilterText>
 
-          </FlatList>
-        </GamesContainer>
-      </Content>
-    </Container>
+            <FilterItem>
+              <MaterialCommunityIcons name="calendar-arrow-right" size={24} color="#0d9488" />
+              <FilterText>
+                <FilterText style={{fontWeight: 'bold' }}>Start Date: </FilterText>
+                {formatFromDate(filters.start_date)}
+              </FilterText>
+            </FilterItem>
+
+            <FilterItem>
+              <MaterialCommunityIcons name="calendar-arrow-left" size={24} color="#0d9488" />
+              <FilterText>
+
+                <FilterText style={{fontWeight: 'bold'}}>End Date: </FilterText>
+                {formatFromDate(filters.end_date)}
+              </FilterText>
+            </FilterItem>
+            { filters.ball !== null ? (
+              <FilterItem>
+              <Ball2Icon  height={24} width={24} color={filters.ball.color} />
+              <FilterText>
+                <FilterText style={{fontWeight: 'bold'}}>Ball: </FilterText>
+                Motiv Ripcord - 14lb
+              </FilterText>
+              </FilterItem>
+              ): null
+            }
+            { filters.location !== null ? (
+              <FilterItem>
+                <Entypo name="location" size={24} color="#0d9488" />
+                <FilterText>
+                <FilterText style={{fontWeight: 'bold'}}>Location: </FilterText>
+                South Point Bowling Center
+                </FilterText>
+              </FilterItem>
+            ): null}
+
+
+            </FilterContainer>
+            <SearchButton
+              onPress={() => handleShowFilterModal()}
+            >
+              <Ionicons name="options" size={24} color="#FFF" />
+            </SearchButton>
+          </SearchContainer>
+          <GamesContainer>
+            <FlatList
+              data={games}
+              keyExtractor={(item: any) => item.id}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+              renderItem={({ item }) => (
+              <GameCard
+                location={item.location}
+                date={item.game_date}
+                totalScore={item.total_score}
+                frames={item.frames}
+                onShowDetails={() => handleShowDetailsModal()}
+              />
+              )}
+            >
+
+            </FlatList>
+          </GamesContainer>
+        </Content>
+        </>
+      )}
+      {showDetailsModal ? (
+        <GameDetailsModal
+          showModal={showDetailsModal}
+          setShowModal={handleCloseDetailsModal}
+        />
+      ) : null}
+
+      {showFilterModal ? (
+        <GamesFilterModal
+          showModal={showFilterModal}
+          setShowModal={handleCloseFilterModal}
+        />
+      ) : null}
+      </Container>
   )
 }

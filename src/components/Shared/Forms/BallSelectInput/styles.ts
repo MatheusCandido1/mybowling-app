@@ -46,3 +46,11 @@ export const ErrorText = styled.Text`
   text-align: right;
 `;
 
+export const HelperText = styled.Text`
+  font-size: 14px;
+  color: #000;
+  font-weight: bold;
+  margin-right: 2px;
+  text-align: left;
+`;
+

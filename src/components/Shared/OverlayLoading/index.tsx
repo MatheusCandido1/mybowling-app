@@ -37,7 +37,7 @@ export function OverlayLoading() {
         <FontAwesome5
           name="bowling-ball"
           size={40}
-          color="#0d9488"
+          color="#FFF"
         />
       </Animated.View>
       <HorizontalRow />

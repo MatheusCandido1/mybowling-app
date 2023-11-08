@@ -1,6 +1,6 @@
-import { Header } from "../../components/Header";
+import { Header } from "../../components/Shared/Header";
 import { Container } from "./styles";
-import { OverlayLoading } from "../../components/OverlayLoading";
+import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 
 export function Equipments() {
   return (

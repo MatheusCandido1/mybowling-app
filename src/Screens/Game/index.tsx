@@ -1,96 +1,46 @@
-import { View } from "react-native";
-import { Header } from "../../components/Header";
-import { Container, Frames, Content, SplitContainer, SplitButtonText } from "./styles";
-import { Frame } from "../../components/Frame";
-import { PinBoardHeader } from "../../components/Game/CurrentGame/PinBoardHeader";
-import { FlatList  } from "react-native";
-import { PinBoard } from "../../components/Game/CurrentGame/PinBoard";
-import { Scores } from "../../components/Game/CurrentGame/Scores";
-import { useState, useRef } from "react";
-import { NumPad } from "../../components/Shared/NumPad";
+import { FlatList, View } from "react-native";
+import { Header } from "../../components/Shared/Header";
+import { Container, Content, FrameSwiper, CurrentFrameContainer, SplitButtonText, SplitContainer } from "./styles"
+import { Frame } from "../../components/Game/CurrentGame/Frame";
 import { useGame } from "../../hooks/useGame";
-import { AlertDialog, Center, Button } from "native-base";
-import { existingSplits } from "../../utils/splitHelper";
-
+import { Board } from "../../components/Game/CurrentGame/Board";
+import { NumPad } from "../../components/Shared/NumPad";
 
 export function Game() {
-  const { isNumPadVisible, frames, resetGame } = useGame();
-
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-  const [frameSet, setFrameSet] = useState<string>('');
-  const [showNumPad, setShowNumPad] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
-
-  const onClose = () => setShowAlert(false);
-  const handleAbandon = () => resetGame();
-
-  const cancelRef = useRef(null);
-
-  const handleFrameSet = (data: string) => {
-    setFrameSet(data);
-  };
-
-  function handleGoBack() {
-    setShowAlert(true);
-  }
+  const {
+    frames,
+    handleCurrentFrame,
+    isNumPadVisible,
+    framesList
+  } = useGame();
 
   return (
     <Container>
-      <Header
-        title="Game"
-        onPress={handleGoBack}
-      />
-      {isNumPadVisible && <NumPad />}
+      <Header title="Game" />
+      {isNumPadVisible ? <NumPad /> : null}
       <Content>
-        <Frames>
+
+        <FrameSwiper>
           <FlatList
+            ref={framesList}
             data={frames}
-            keyExtractor={item => String(item.frameNumber)}
+            keyExtractor={item => item.frame_number.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
             style={{}}
-            renderItem={({ item }) => (
+            renderItem={(frame) => (
               <Frame
-                item={item}
+                data={frame.item}
+                onPress={() => handleCurrentFrame(frame.item)}
               />
             )}
-          >
-          </FlatList>
-        </Frames>
-        <PinBoardHeader />
-        <PinBoard onFrameSet={handleFrameSet} />
-        <Scores />
-        {frameSet && existingSplits.includes(frameSet) &&
-          <SplitContainer>
-            <SplitButtonText>Split: {frameSet}</SplitButtonText>
-          </SplitContainer>
-        }
-
+          />
+        </FrameSwiper>
+        <CurrentFrameContainer>
+          <Board/>
+        </CurrentFrameContainer>
       </Content>
-      {/* Cancel Game */}
-      <Center>
-      <AlertDialog leastDestructiveRef={cancelRef} isOpen={showAlert} onClose={onClose}>
-        <AlertDialog.Content>
-          <AlertDialog.CloseButton />
-          <AlertDialog.Header>Abandon Game</AlertDialog.Header>
-          <AlertDialog.Body>
-            If you abandon now, you will lose all your progress. Are you sure you want to abandon this game?
-          </AlertDialog.Body>
-          <AlertDialog.Footer>
-            <Button.Group space={2}>
-              <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
-                Cancel
-              </Button>
-              <Button colorScheme="danger" onPress={handleAbandon}>
-                Abandon
-              </Button>
-            </Button.Group>
-          </AlertDialog.Footer>
-        </AlertDialog.Content>
-      </AlertDialog>
-      </Center>
     </Container>
   )
 }

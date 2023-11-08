@@ -10,7 +10,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: 350px;
+  margin-top: 275px;
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;
@@ -42,7 +42,6 @@ export const SubTitle = styled.Text`
 export const Form = styled.View`
   flex: 1;
   padding: 0 16px;
-  margin-bottom: 20px;
 `;
 
 export const InputContainer = styled.View``;

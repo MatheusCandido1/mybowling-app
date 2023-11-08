@@ -17,6 +17,7 @@ export function ThreePinIcon({ height, width, color }: ThreePinProps) {
         gap: isIpad() ? -28:-22,
         alignItems: 'center',
         marginTop: 4,
+        backgroundColor: 'red'
       }}
     >
       <View style={{ marginTop: -8}}>

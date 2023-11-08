@@ -1,5 +1,6 @@
 export interface IBall {
-  id: number;
+  id: string;
   name: string;
   color: string;
+  weight: number;
 }

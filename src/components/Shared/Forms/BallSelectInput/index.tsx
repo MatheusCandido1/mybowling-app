@@ -1,30 +1,49 @@
 import { FlatList, Text, View } from "react-native";
-import { Container, BallContainer, Label, IconContainer} from "./styles";
+import { Container, BallContainer, Label, IconContainer, HelperText} from "./styles";
 import { Ball2Icon } from "../../../Icons/Ball2Icon";
 import { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IBall } from "../../../../entities/Ball";
 import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
+import { formatBallName } from "../../../../utils/formatBallName";
+import { useBalls } from "../../../../hooks/useBalls";
 
 
 interface BallSelectInputProps {
   label: string;
-  resetForm?: () => void;
   error?: string;
+  onChange?(value: string ): void;
+  value?: string | undefined | null;
 }
 
-export function BallSelectInput({ label, resetForm, error }: BallSelectInputProps) {
-  const [selectedBall, setSelectedBall] = useState<IBall | null>(null);
+export function BallSelectInput({ label, error, onChange, value }: BallSelectInputProps) {
+  const { balls } = useBalls();
 
-  function handleSelectBall(ball: IBall) {
-    setSelectedBall(ball);
+  const [selectedBall, setSelectedBall] = useState<IBall | null>(() => {
+    if (value === null || value === undefined) {
+      resetSelectedBall();
+      return undefined; // Set the input to its default state
+    } else {
+      const foundBall = balls.find((b: IBall) => b.id === value);
+      return foundBall || null;
+    }
+  });
+
+  function resetSelectedBall() {
+    if(selectedBall?.id) {
+      setSelectedBall(null);
+      return;
+    }
   }
 
-  useEffect(() => {
-    if(resetForm) {
+  function handleSelectBall(ball: IBall) {
+    if(selectedBall?.id === ball.id) {
       setSelectedBall(null);
+      return;
     }
-  }, []);
+    setSelectedBall(ball);
+    onChange?.(ball.id.toString());
+  }
 
   function getColor(ball: IBall) {
     const defaultColor = '#0d9488'
@@ -35,31 +54,16 @@ export function BallSelectInput({ label, resetForm, error }: BallSelectInputProp
     }
   }
 
-  const balls = [
-    {
-      id: 1,
-      name: "Hammer",
-      color: "#0d9488"
-    },
-    {
-      id: 2,
-      name: "Hammer",
-      color: "#ff7a00"
-    },
-    {
-      id: 3,
-      name: "Hammer",
-      color: "#971d6f"
-    },
-  ]
-
-
   return (
     <Container>
-      <Label>{label}</Label>
+      {!selectedBall ? (
+        <Label>{label}</Label>
+      ): (
+        <Label>{label}: {formatBallName(selectedBall)}</Label>
+      )}
       <FlatList
         data={balls}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => item.id}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

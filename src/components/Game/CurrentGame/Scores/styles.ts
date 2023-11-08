@@ -6,8 +6,7 @@ export const Container = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  flex: 1;
-  padding: 0 8px;
+  height: 60px;
 `;
 
 export const ScoreCard = styled.View`

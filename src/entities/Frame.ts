@@ -1,22 +1,12 @@
 export interface IFrame {
-  frameNumber: number,
-  isStrike: boolean,
-  isSpare: boolean,
-  currentScore: number,
-  firstBall: {
-    pins: number | undefined,
-    thrown: boolean,
-    split?: string,
-  },
-  secondBall: {
-    pins: number | undefined,
-    thrown: boolean,
-    split?: string,
-  },
-  thirdBall?: {
-    pins: number | undefined,
-    thrown: boolean,
-  },
+  id?: number,
+  frame_number: number,
+  status: 'pending' | 'in_progress' | 'completed',
+  first_shot: number | null,
+  second_shot: number | null,
+  third_shot: number | null,
+  split?: string | null,
+  is_split?: boolean | null,
   points: number,
-  status: 'WAITING' | 'IN_PROGRESS' | 'COMPLETED',
+  score: number
 }

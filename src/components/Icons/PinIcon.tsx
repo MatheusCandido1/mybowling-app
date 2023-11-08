@@ -7,7 +7,7 @@ interface PinProps {
   color: string;
 }
 
-export function PinIcon({height, width, color}: PinProps) {
+export function PinIcon({height = 30, width = 30, color}: PinProps) {
   return (
     <PinSvg
       width={width}

@@ -10,8 +10,8 @@ import {
   NumberTouchableText,
 } from "./styles";
 import { MaterialCommunityIcons, FontAwesome5, Feather } from "@expo/vector-icons";
-import { useGame } from "../../../hooks/useGame";
 import React from "react";
+import { useGame } from "../../../hooks/useGame";
 
 interface ActionButtonProps {
   onPress?: () => void;
@@ -75,21 +75,20 @@ interface NumPadProps {
 export function NumPad() {
   const {
     closeNumPad,
-    updateFrameValue,
+    updateValueForCurrentFrame,
     currentFrame
   } = useGame();
 
   function handlePressNumber(value: string) {
-    updateFrameValue(value);
+    updateValueForCurrentFrame(value);
+    closeNumPad();
   }
 
-  const allowSpare = currentFrame?.firstBall.thrown && !currentFrame?.secondBall.thrown;
-  const allowStrike = !currentFrame?.firstBall.thrown;
+  const allowSpare = currentFrame.first_shot !== null && currentFrame.second_shot === null;
+  const allowStrike = currentFrame.first_shot === null;
 
-  const maxNumber = currentFrame?.firstBall.pins ? (10 - (currentFrame?.firstBall.pins + 1)) : 10;
-
-
-
+  //const maxNumber = currentFrame?.firstShot ? (10 - (Number(currentFrame?.secondShot)+ 1)) : 10;
+  const maxNumber = currentFrame.first_shot !== null ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;
   const numPadNumbers = [
     ["1","2","3"],
     ["4","5","6"],

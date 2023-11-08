@@ -1,58 +1,151 @@
+import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { IFrame } from "../../../entities/Frame";
-import { useGame } from "../../../hooks/useGame";
+import { ILocation } from "../../../entities/Location";
+import { formatDate } from "../../../utils/formatDate";
+import { formatPoints, formatScore } from "../../../utils/formatScore";
 import {
   Container,
   Content,
   ScoreContainer,
   DateText,
-  ScoreText,
   Header,
   HeaderText,
   DateBadge,
-  FrameContainer,
-  FrameNumberLabel,
   Footer,
-  FooterText
 } from "./styles";
 
-export function GameCard() {
-  const { frames } = useGame();
+interface GameCardProps {
+  location: ILocation,
+  date: string,
+  totalScore: number,
+  frames: IFrame[],
+  onShowDetails?: () => void;
+}
+
+export function GameCard({ location, date, totalScore, frames, onShowDetails }: GameCardProps) {
+
+  function splitConverted(frame: IFrame) {
+    if(frame.is_split && frame.points === 10) return true;
+  }
+
+  function formatFirstShot(frame: IFrame) {
+    if(frame.first_shot === 10) return 'X';
+    if(frame.first_shot === 0) return '-';
+    if(frame.first_shot === null) return '';
+    return frame.first_shot;
+  }
+
+  function formatSecondShot(frame: IFrame) {
+    if(frame.frame_number === 10) {
+      if(frame.second_shot === 10) return 'X';
+      if(frame.second_shot === 0) return '-';
+      if(frame.second_shot === null) return '';
+      return frame.second_shot;
+    } else {
+      if(frame.first_shot === 10) return '';
+      if(frame.second_shot === 10 || (frame.points === 10) ) return '/';
+      if(frame.second_shot === 0) return '-';
+      if(frame.second_shot === null) return '';
+      return frame.second_shot;
+    }
+  }
+
+  function formatThirdShot(frame: IFrame) {
+    if(frame.third_shot === 10) return 'X';
+    if(frame.third_shot === 0) return '-';
+    if(frame.third_shot === null) return '';
+    return frame.third_shot;
+  }
 
   const ScoreColumn = ({ frame }:{frame: IFrame}) => {
     return (
-      <FrameContainer
+      <View
         style={{
-          borderLeftWidth: frame.frameNumber === 1 ? 0 : 1,
-          borderRightWidth: frame.frameNumber === 10 ? 0 : 1,
-          borderRightColor: '#c9ccd1',
-          borderLeftColor: '#c9ccd1',
+          width: 44,
+          height: 64,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <FrameNumberLabel>{frame.frameNumber}</FrameNumberLabel>
-        <ScoreText>-</ScoreText>
-        <ScoreText>100</ScoreText>
-      </FrameContainer>
+        <View>
+          <Text style={{fontWeight: 'bold'}}>{frame.frame_number}</Text>
+        </View>
+        <View style={{flexDirection: 'row', gap: 4, justifyContent: 'center', alignItems: 'center'}}>
+          {frame.is_split ? (
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: '#000',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text>{formatFirstShot(frame)}</Text>
+            </View>
+          ): ( <Text>{formatFirstShot(frame)}</Text> )}
+          {frame.second_shot ? <Text>{formatSecondShot(frame)}</Text> : null}
+          {frame.frame_number === 10 ? <Text>{formatThirdShot(frame)}</Text> : null}
+        </View>
+        <View>
+          <Text style={{fontWeight: 'bold'}}>{frame.score}</Text>
+        </View>
+      </View>
     )
   }
 
   return (
     <Container>
        <Header>
-          <HeaderText>South Point Bowling Center</HeaderText>
+          <HeaderText>{location.name}</HeaderText>
           <DateBadge>
-            <DateText>10/09/2023</DateText>
+            <DateText>{formatDate(date)}</DateText>
           </DateBadge>
         </Header>
       <Content>
         <ScoreContainer>
-            {frames.map((frame) => (
-            <ScoreColumn
-              key={frame.frameNumber} frame={frame}
-            />
-          ))}
+        <FlatList
+            data={frames}
+            keyExtractor={(item: IFrame) => item.frame_number.toString()}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{ width: 2, backgroundColor: '#c9ccd1' }} />}
+            renderItem={({ item }) => (
+              <ScoreColumn
+                frame={item}
+              />
+            )}
+          />
         </ScoreContainer>
       </Content>
       <Footer>
+        <TouchableOpacity
+          onPress={onShowDetails}
+        >
+          <Text
+            style={{
+              textDecorationLine: 'underline',
+              color: '#0d9488',
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}
+          >
+            See Details
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 2
+          }}
+        >
+          <Text style={{fontSize: 14}}>Score:</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 14}}>{totalScore}</Text>
+        </View>
       </Footer>
     </Container>
   )

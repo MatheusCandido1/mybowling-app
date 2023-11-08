@@ -1,82 +1,39 @@
-import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Container, Overlay, Header, Title, Form, InputContainer } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
 import { BallSelectInput } from "../../Shared/Forms/BallSelectInput";
 import { MainButton } from "../../Shared/Buttons/MainButton";
-import { ILocation } from "../../../entities/Location";
 import { DateInput } from "../../Shared/Forms/DateInput/DateInput";
-import { IBall } from "../../../entities/Ball";
 import { useNavigation } from "@react-navigation/native";
-import { useGame } from "../../../hooks/useGame";
-
+import { useNewGameController } from "./useNewGameController";
+import { OverlayLoading } from "../../Shared/OverlayLoading";
+import { Controller } from "react-hook-form";
 
 export function NewGameModal() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedBall, setSelectedBall] = useState<IBall | null>(null);
-  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
-  const [date, setDate] = useState(new Date());
-
-  const [selectedBallError, setSelectedBallError] = useState("");
-  const [selectedLocationError, setSelectedLocationError] = useState("");
-
-  const { startNewGame } = useGame();
-
   const navigation = useNavigation();
 
-  const checkError = selectedBallError || selectedLocationError;
+  const {
+    locations,
+    isFetchingLocations,
+    onSubmit,
+    handleSubmit,
+    control,
+    errors,
+    isCreatingGame
+  } = useNewGameController();
 
-  function validateForm() {
-    if(!selectedBall) {
-      setSelectedBallError("Please select a ball");
-    }
-    if(!selectedLocation) {
-      setSelectedLocationError("Please select a location");
-    }
-  }
-
-  const handleNewGame = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      validateForm();
-      setIsLoading(false);
-      if(!checkError) {
-        startNewGame();
-      }
-    }, 1000);
-  }
-
-  function resetForm() {
-    setIsLoading(false);
-  }
-
-  const locations: Array<ILocation> = [
-    {
-      id: "1",
-      name: "South Point Bowling Center",
-    },
-    {
-      id: "2",
-      name: "Sunset Station Bowling Center",
-    },
-    {
-      id: "3",
-      name: "Orleans Bowling Center",
-    },
-    {
-      id: "4",
-      name: "Gold Coaster Bowling Center",
-    },
-  ]
+  const isLoadingResources = isFetchingLocations;
 
   function handleCloseModal() {
-    navigation.navigate('Games')
+    // navigation.navigate('Games')
   }
 
   return (
-    <Overlay>
-      <Container>
+      <Overlay>
+      {isLoadingResources && <OverlayLoading />}
+      {!isLoadingResources && (
+        <Container>
         <Header>
           <Title>
             New Game
@@ -89,37 +46,67 @@ export function NewGameModal() {
         </Header>
         <Form>
           <InputContainer>
-            <DateInput />
-          </InputContainer>
 
+          <Controller
+            control={control}
+            name="game_date"
+            defaultValue={new Date()}
+            render={({ field: { onChange, value }}) => (
+              <DateInput
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          </InputContainer>
           <InputContainer
             style={{
               marginTop: 20
             }}
           >
-            <SelectInput
-              label="Select the Location"
-              items={locations}
-              error={selectedLocationError}
+          <Controller
+            control={control}
+            name="location_id"
+            defaultValue={undefined}
+            render={({ field: { onChange, value }}) => (
+              <SelectInput
+                label="Select the Location"
+                items={locations}
+                onChange={onChange}
+                value={value}
+                error={errors.location_id?.message}
+              />
+            )}
+          />
+          </InputContainer>
+          <InputContainer>
+          <Controller
+            name="ball_id"
+            control={control}
+            render={({ field: { onChange, value }}) => (
+              <BallSelectInput
+                label="Select the ball"
+                onChange={onChange}
+                value={value}
+                error={errors.ball_id?.message}
+              />
+             )}
             />
           </InputContainer>
-
-          <InputContainer>
-            <BallSelectInput
-              label="Select the ball"
-              resetForm={resetForm}
-              error={selectedBallError}
-            />
-          </InputContainer>
-          <InputContainer>
+          <InputContainer
+            style={{
+              marginTop: -8
+            }}
+          >
             <MainButton
-              onPress={handleNewGame}
-              isLoading={isLoading}
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isCreatingGame}
               label="Start Game"
             />
           </InputContainer>
         </Form>
-      </Container>
-    </Overlay>
+        </Container>
+      )}
+      </Overlay>
   )
 }

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MyBowling",
-    "slug": "mybowling-app",
+    "slug": "mybowling",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +29,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
+        "projectId": "86e577e5-3f3f-4a56-858e-b545b9844955"
       }
     },
     "runtimeVersion": {
@@ -37,6 +37,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
-    }
+    },
+    "owner": "candin"
   }
 }

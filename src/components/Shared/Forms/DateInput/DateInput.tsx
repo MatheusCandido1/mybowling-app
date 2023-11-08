@@ -1,12 +1,29 @@
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Container, Label } from './styles';
+import { useState } from 'react';
 
-export function DateInput() {
+interface DateInputProps {
+  onChange?(date: Date): void;
+  value?: Date;
+}
+
+export function DateInput({ onChange, value }: DateInputProps) {
+  const [selectedDate, setSelectedDate] = useState(value ?? new Date());
+
+
+  const handleSetDate = (event: DateTimePickerEvent, date?: Date) => {
+    if (date) {
+      setSelectedDate(date);
+      onChange?.(date);
+    }
+  };
+
   return (
     <Container>
       <Label>Game date</Label>
       <RNDateTimePicker
-        value={new Date()}
+        onChange={handleSetDate}
+        value={value ? new Date(value) : new Date()}
         mode="date"
         display="default"
         style={{
@@ -18,7 +35,6 @@ export function DateInput() {
         accentColor='#0d9488'
         textColor='#0d9488'
       />
-
     </Container>
   )
 }

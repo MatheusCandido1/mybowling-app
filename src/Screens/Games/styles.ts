@@ -13,19 +13,13 @@ export const Content = styled.View`
 
 export const SearchContainer = styled.View`
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-top: 16px;
   width: 100%;
-  gap: 16px;
+  gap: 12px;
 `
 
-export const SearchInput = styled.View`
-  flex: 1;
-  height: 60px;
-  align-items: center;
-  justify-content: center;
-`;
 
 export const SearchButton = styled.TouchableOpacity`
   height: 40px;
@@ -38,11 +32,22 @@ export const SearchButton = styled.TouchableOpacity`
   padding: 0 8px;
 `;
 
-export const SearchButtonText = styled.Text`
+export const FilterText = styled.Text`
   font-size: 16px;
-  color: #FFF;
-  font-weight: bold;
+  color: #000;
+  font-weight: 500;
 `;
+
+export const FilterContainer = styled.View`
+  gap: 4px;
+`;
+
+export const FilterItem = styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+`;
+
 
 export const GamesContainer = styled.View`
   flex: 1;

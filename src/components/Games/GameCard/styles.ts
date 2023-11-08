@@ -16,7 +16,7 @@ export const Header = styled.View`
   height: 36px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  padding: 0 8px;
+  padding: 0 4px;
 `;
 
 export const HeaderText = styled.Text`
@@ -26,14 +26,14 @@ export const HeaderText = styled.Text`
 `;
 
 export const DateBadge = styled.View`
-  background-color: #FFF;
+  background-color: #0d9488;
   border-radius: 8px;
-  padding: 4px;
+  padding: 6px;
 `;
 
 export const DateText = styled.Text`
   font-size: 14px;
-  color: #0d9488;
+  color: #FFF;
   font-weight: bold;
 `;
 
@@ -41,7 +41,7 @@ export const Content = styled.View`
   align-items: center;
   justify-content: space-between;
   flex: 1;
-  padding: 12px;
+  gap: 8px;
 `;
 
 export const ScoreContainer = styled.View`
@@ -50,6 +50,7 @@ export const ScoreContainer = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  padding: 0 16px;
 `;
 
 export const ScoreText = styled.Text`
@@ -67,7 +68,7 @@ export const FrameContainer = styled.View`
 `;
 
 export const FrameNumberLabel = styled.Text`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   color: #000;
@@ -76,10 +77,10 @@ export const FrameNumberLabel = styled.Text`
 export const Footer = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   height: 32px;
-  padding: 0 8px;
+  padding: 0 16px;
 
 `;
 
@@ -90,5 +91,10 @@ export const FooterText = styled.Text`
   text-align: center;
 `;
 
+export const FrameNumberContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 

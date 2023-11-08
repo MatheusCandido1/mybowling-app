@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-import { Home } from '../../Screens/Home';
+import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
 import { Equipments } from '../../Screens/Equipments';
@@ -11,7 +11,7 @@ import { Profile } from '../..//Screens/Profile';
 import { View } from 'react-native';
 
 import { BallIcon } from '../../components/Icons/BallIcon';
-import { ThreePinIcon } from '../../components/Icons/ThreePinIcon';
+import { ScoreboardIcon } from '../../components/Icons/ScoreboardIcon';
 import { HomeIcon } from '../../components/Icons/HomeIcon';
 import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
@@ -28,20 +28,22 @@ export function Tabs() {
           tabBarLabel: () => null,
           tabBarStyle: {
             height: isIpad() ?  90 : 70,
+            backgroundColor: '#0d9488',
+            borderTopWidth: 0,
           }
         }}
-        initialRouteName='Game'
+        initialRouteName='Dashboard'
       >
         <Tab.Screen
-          name="Home"
-          component={Home}
+          name="Dashboard"
+          component={Dashboard}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : -32): ( isIpad() ? -4 : 16),
-                  backgroundColor: focused ? '#0d9488' : '#FFF',
+                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
                 }}
@@ -49,7 +51,7 @@ export function Tabs() {
                 <HomeIcon
                   height={isIpad() ? 44:32}
                   width={isIpad() ? 44:32}
-                  color={focused ? "#FFF":"#0d9488"}
+                  color={!focused ? "#FFF":"#0d9488"}
                 />
               </View>
             )
@@ -63,16 +65,16 @@ export function Tabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : -32): ( isIpad() ? -4 : 16),
-                  backgroundColor: focused ? '#0d9488' : '#FFF',
+                  marginTop: 30,
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
                 }}
               >
-                <ThreePinIcon
+               <ScoreboardIcon
                   height={isIpad() ? 44:32}
                   width={isIpad() ? 44:32}
-                  color={focused ? "#FFF":"#0d9488"}
+                  color={!focused ? "#FFF":"#0d9488"}
                 />
               </View>
             )
@@ -86,8 +88,8 @@ export function Tabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : -32): ( isIpad() ? -4 : 16),
-                  backgroundColor: focused ? '#0d9488' : '#FFF',
+                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
                 }}
@@ -95,7 +97,7 @@ export function Tabs() {
                 <BallIcon
                   height={isIpad() ? 44:32}
                   width={isIpad() ? 44:32}
-                  color={focused ? "#FFF":"#0d9488"}
+                  color={!focused ? "#FFF":"#0d9488"}
                 />
               </View>
             )
@@ -109,8 +111,8 @@ export function Tabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : -32): ( isIpad() ? -4 : 16),
-                  backgroundColor: focused ? '#0d9488' : '#FFF',
+                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
                 }}
@@ -118,7 +120,7 @@ export function Tabs() {
                 <BagIcon
                   height={isIpad() ? 44:32}
                   width={isIpad() ? 44:32}
-                  color={focused ? "#FFF":"#0d9488"}
+                  color={!focused ? "#FFF":"#0d9488"}
                 />
               </View>
             )
@@ -132,15 +134,16 @@ export function Tabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : -32): ( isIpad() ? -4 : 16),
-                  backgroundColor: focused ? '#0d9488' : '#FFF',
+                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
+
                 }}>
                 <ProfileIcon
                   height={isIpad() ? 44:32}
                   width={isIpad() ? 44:32}
-                  color={focused ? "#FFF":"#0d9488"}
+                  color={!focused ? "#FFF":"#0d9488"}
                 />
               </View>
             )

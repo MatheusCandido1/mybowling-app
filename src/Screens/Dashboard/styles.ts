@@ -159,10 +159,10 @@ export const SplitTitle = styled.Text`
 `;
 
 export const SplitItemContainer = styled.View`
-  border: 2px solid #0d9488;
-  border-radius: 8px;
+  border-bottom-width: 2px;
+  border-bottom-color: #0d9488;
+  border-top-width: 2px;
+  border-top-color: #0d9488;
   flex-direction: row;
   padding: 8px;
-  margin-left: 2px;
-  margin-right: 2px;
 `;

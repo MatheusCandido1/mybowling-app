@@ -13,7 +13,6 @@ export type GamesFilters = {
 }
 
 export async function getAll(filters: GamesFilters) {
-  console.log(filters)
   const response = await httpClient.get<any>('/games', {
     params: filters
   });

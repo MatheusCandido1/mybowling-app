@@ -167,7 +167,7 @@ export function Dashboard() {
                 gap: 2,
               }}
             >
-              <Text>Converstion Rate: <Text style={{fontWeight: 'bold'}}>{rate}%</Text> </Text>
+              <Text>Conversion Rate: <Text style={{fontWeight: 'bold'}}>{rate}%</Text> </Text>
               <MaterialIcons name="info-outline" size={20} color="#0d9488" />
             </View>
 

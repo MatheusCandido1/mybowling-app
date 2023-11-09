@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -6,7 +7,7 @@ const Tab = createBottomTabNavigator();
 import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
-import { Equipments } from '../../Screens/Equipments';
+import { Arsenal } from '../../Screens/Arsenal';
 import { Profile } from '../..//Screens/Profile';
 import { View } from 'react-native';
 
@@ -16,18 +17,27 @@ import { HomeIcon } from '../../components/Icons/HomeIcon';
 import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
 import { isIpad } from '../../utils/getDevice';
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 
 export function Tabs() {
 
   return (
+    <SafeAreaProvider>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: '#0d9488',
+      }}
+    >
+    <StatusBar style="light" />
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarLabel: () => null,
           tabBarStyle: {
-            height: isIpad() ?  90 : 70,
+            height: isIpad() ?  90 : 75,
             backgroundColor: '#0d9488',
             borderTopWidth: 0,
           }
@@ -105,7 +115,7 @@ export function Tabs() {
         />
         <Tab.Screen
           name="Equipments"
-          component={Equipments}
+          component={Arsenal}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (
@@ -152,5 +162,7 @@ export function Tabs() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }

@@ -2,10 +2,10 @@ import { Header } from "../../components/Shared/Header";
 import { Container } from "./styles";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 
-export function Equipments() {
+export function Arsenal() {
   return (
     <Container>
-      <Header title="Equipments" />
+      <Header title="Arsenal" />
       <OverlayLoading />
     </Container>
   )

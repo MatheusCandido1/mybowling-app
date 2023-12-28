@@ -77,3 +77,19 @@ export const SocialButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 `;
+
+export const LoginButton = styled.TouchableOpacity`
+  width: 100%;
+  height: 44px;
+  background-color: #0d9488;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-top: 16px;
+`;
+
+export const LoginButtonText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFF;
+`;

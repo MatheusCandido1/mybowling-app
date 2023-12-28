@@ -38,6 +38,8 @@
     "updates": {
       "url": "https://u.expo.dev/5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
     },
-    "owner": "candin"
+    "owner": "candin",
+    "plugins": [
+    ]
   }
 }

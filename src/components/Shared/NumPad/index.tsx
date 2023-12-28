@@ -84,8 +84,11 @@ export function NumPad() {
     closeNumPad();
   }
 
-  const allowSpare = currentFrame.first_shot !== null && currentFrame.second_shot === null;
-  const allowStrike = currentFrame.first_shot === null;
+  // const allowSpare = currentFrame.first_shot !== null && currentFrame.second_shot === null;
+  // const allowStrike = currentFrame.first_shot === null;
+
+  const allowStrike = true;
+  const allowSpare = true;
 
   //const maxNumber = currentFrame?.firstShot ? (10 - (Number(currentFrame?.secondShot)+ 1)) : 10;
   const maxNumber = currentFrame.first_shot !== null ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;

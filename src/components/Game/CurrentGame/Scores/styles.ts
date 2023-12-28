@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   width: 100%;
-  margin-top: 32px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -25,4 +24,11 @@ export const Label = styled.Text`
   font-size: 16px;
   font-weight: medium;
   text-align: center;
+`;
+
+export const LabelContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 18px;
 `;

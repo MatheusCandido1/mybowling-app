@@ -7,7 +7,7 @@ const Tab = createBottomTabNavigator();
 import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
-import { Arsenal } from '../../Screens/Arsenal';
+import { ArsenalWrapper } from '../../Wrappers/ArsenalWrapper';
 import { Profile } from '../..//Screens/Profile';
 import { View } from 'react-native';
 
@@ -21,7 +21,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 
 export function Tabs() {
-
   return (
     <SafeAreaProvider>
     <SafeAreaView
@@ -114,8 +113,8 @@ export function Tabs() {
           }}
         />
         <Tab.Screen
-          name="Equipments"
-          component={Arsenal}
+          name="Arsenal"
+          component={ArsenalWrapper}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  height: 144px;
+  height: 180px;
   border-radius: 8px;
   border: 2px solid #0d9488;
   width: 100%;
@@ -95,6 +95,23 @@ export const FrameNumberContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const SecondFooter   = styled.View`
+  width: 100%;
+  height: 40px;
+  background-color: #0d9488;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;
+
+export const UserName = styled.Text`
+  font-size: 14px;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
 `;
 
 

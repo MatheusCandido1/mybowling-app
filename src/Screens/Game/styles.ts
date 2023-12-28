@@ -49,5 +49,27 @@ export const SplitButtonText = styled.Text`
   text-align: center;
 `;
 
+export const FinishGameContainer = styled.TouchableOpacity`
+  height: 40px;
+  padding: 0 16px;
+  background-color: #FFF;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 999;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 2px;
+`;
+
+export const FinishGameText = styled.Text`
+  color: #0d9488;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+`;
+
 
 

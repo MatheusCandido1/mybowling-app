@@ -1,4 +1,4 @@
-import { Spinner } from 'native-base'
+import { ActivityIndicator } from 'react-native';
 import { Container, Label } from './styles'
 
 interface MainButtonProps {
@@ -14,7 +14,7 @@ export function MainButton({ label, isLoading, onPress }: MainButtonProps) {
       disabled={isLoading}
     >
       {isLoading ? (
-         <Spinner
+         <ActivityIndicator
          accessibilityLabel="Loading posts"
          color="#FFF"
        />

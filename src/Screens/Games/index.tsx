@@ -21,7 +21,8 @@ export function Games() {
     handleShowDetailsModal,
     handleShowFilterModal,
     handleCloseFilterModal,
-    filters
+    filters,
+    selectedGame
   } = useGamesController();
 
   return (
@@ -94,7 +95,7 @@ export function Games() {
                 date={item.game_date}
                 totalScore={item.total_score}
                 frames={item.frames}
-                onShowDetails={() => handleShowDetailsModal()}
+                onShowDetails={() => handleShowDetailsModal(item)}
               />
               )}
             >
@@ -108,6 +109,7 @@ export function Games() {
         <GameDetailsModal
           showModal={showDetailsModal}
           setShowModal={handleCloseDetailsModal}
+          selectedGame={selectedGame}
         />
       ) : null}
 

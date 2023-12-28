@@ -1,17 +1,47 @@
 import { IFrame } from "../entities/Frame";
 
-export function formatScore(frame: IFrame): string {
-  if(frame.status === 'completed') {
-    if(frame.first_shot === 10) {
-      return 'X';
-    } else if(Number(frame.first_shot) + Number(frame.second_shot) === 10) {
-      return `${frame?.first_shot} /`
-    } else {
-      return `${frame?.first_shot} ${frame?.second_shot}`
-    }
+
+export const formatFrameFirstShot = (currentFrame: IFrame) => {
+  if(currentFrame.first_shot === null) {
+    return '';
   }
-  return '-';
+  if(currentFrame.first_shot === 10) {
+    return 'X';
+  }
+  if(currentFrame.first_shot === 0) {
+    return '-';
+  }
+  return currentFrame.first_shot.toString();
 }
+
+export const formatFrameSecondShot = (currentFrame: IFrame) => {
+  if(currentFrame.frame_number === 10) {
+    if(currentFrame.second_shot === 10) return 'X';
+
+  } else {
+    if(currentFrame.first_shot === null) return ''
+    if(currentFrame.second_shot === null) return '';
+
+    if((currentFrame.first_shot + currentFrame.second_shot) === 10) {
+      return '/';
+    }
+    if(currentFrame.second_shot === 0) {
+      return '-';
+    }
+    return currentFrame.second_shot.toString();
+  }
+}
+
+export const formatFrameThirdShot = (currentFrame: IFrame) => {
+  if(currentFrame.frame_number === 10) {
+    if(currentFrame.third_shot === null) return '';
+    if(currentFrame.third_shot === 10) return 'X';
+    if(currentFrame.third_shot === 0) return '-';
+    return currentFrame.third_shot.toString();
+  }
+  return '';
+}
+
 
 export function formatPoints(points: Number): string {
   if(Number.isNaN(points)) {

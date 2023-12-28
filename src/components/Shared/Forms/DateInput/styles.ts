@@ -8,6 +8,5 @@ export const Container = styled.View`
 
 export const Label = styled.Text`
   font-size: 16px;
-  color: #0d9488;
   font-weight: bold;
 `;

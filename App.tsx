@@ -1,10 +1,8 @@
 import { QueryClient, QueryClientProvider  } from "@tanstack/react-query";
 import 'react-native-gesture-handler';
-import { NativeBaseProvider } from "native-base";
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { Stack } from "./src/Router/Stack";
-import { Tabs } from './src/Router/Tabs';
-import { FirstAccessStack } from "./src/Router/FirstAccessStack";
+import { AuthProvider } from "./src/contexts/AuthContext";
+import { AppWrapper } from "./src/Wrappers/AppWrapper";
 
 const toastConfig = {
   success: (props: any) => (
@@ -36,17 +34,13 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider>
-
-        {/* <Tabs /> */}
-        <Tabs />
-        {/* <Stack /> */}
-        {/* <FirstAccessStack /> */}
+        <AuthProvider>
+          <AppWrapper />
+        </AuthProvider>
         <Toast
           topOffset={60}
           config={toastConfig}
         />
-      </NativeBaseProvider>
     </QueryClientProvider>
   );
 }

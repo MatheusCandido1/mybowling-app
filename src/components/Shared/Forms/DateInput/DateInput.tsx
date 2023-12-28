@@ -5,9 +5,11 @@ import { useState } from 'react';
 interface DateInputProps {
   onChange?(date: Date): void;
   value?: Date;
+  label: string;
+  labelColor?: string;
 }
 
-export function DateInput({ onChange, value }: DateInputProps) {
+export function DateInput({ onChange, value, label, labelColor }: DateInputProps) {
   const [selectedDate, setSelectedDate] = useState(value ?? new Date());
 
 
@@ -20,7 +22,13 @@ export function DateInput({ onChange, value }: DateInputProps) {
 
   return (
     <Container>
-      <Label>Game date</Label>
+      <Label
+        style={{
+          color: labelColor ?? '#0d9488',
+        }}
+      >
+        {label}
+      </Label>
       <RNDateTimePicker
         onChange={handleSetDate}
         value={value ? new Date(value) : new Date()}

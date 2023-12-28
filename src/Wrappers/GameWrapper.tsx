@@ -1,11 +1,21 @@
-import React from "react";
+import { useState } from "react";
 import { Game } from "../Screens/Game";
-import { GameProvider } from "../contexts/GameContext";
+import { GameContext, GameProvider } from "../contexts/GameContext";
+import { GameModal } from "../components/Game/GameModal";
 
 export function GameWrapper() {
+
   return (
     <GameProvider>
-      <Game />
+      <GameContext.Consumer>
+        {({ currentGame }) => (
+           currentGame ? (
+            <Game />
+          ): (
+            <GameModal />
+          )
+        )}
+      </GameContext.Consumer>
     </GameProvider>
   )
 }

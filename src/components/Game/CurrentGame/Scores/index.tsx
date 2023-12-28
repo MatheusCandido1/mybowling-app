@@ -1,10 +1,33 @@
-import { Container, ScoreCard, FrameNumberLabel, Label } from "./styles";
+import { Container, ScoreCard, FrameNumberLabel, LabelContainer, Label } from "./styles";
 import { useGame } from "../../../../hooks/useGame";
 import { IFrame } from "../../../../entities/Frame";
-import { formatPoints, formatScore } from "../../../../utils/formatScore";
+import { formatPoints, formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
+import { View } from "react-native";
 
-export function Scores() {
-  const  { frames, currentFrame } = useGame();
+interface ScoresProps {
+  frames: IFrame[];
+}
+
+export function Scores({ frames }: ScoresProps) {
+  //const  { frames, currentFrame } = useGame();
+
+  function SplitComponent({frame}:{frame: IFrame}) {
+    return (
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          borderRadius: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderColor: '#000',
+          borderWidth: 1,
+        }}
+        >
+          <Label>{formatFrameFirstShot(frame)}</Label>
+      </View>
+    )
+  }
 
   const ScoreColumn = ({ frame }:{frame: IFrame}) => {
     return (
@@ -17,9 +40,13 @@ export function Scores() {
         }}
       >
         <FrameNumberLabel>{frame.frame_number}</FrameNumberLabel>
-        <Label>{formatScore(frame)}</Label>
+        <LabelContainer>
+          {frame.is_split ? <SplitComponent frame={frame} /> : <Label>{formatFrameFirstShot(frame)}</Label>}
+          {frame.second_shot !== null && <Label>{formatFrameSecondShot(frame)}</Label>}
+          {frame.third_shot !== null && <Label>{formatFrameThirdShot(frame)}</Label>}
+        </LabelContainer>
         <Label>
-          {currentFrame.frame_number <= frame.frame_number ? ' ' : formatPoints(frame.score)}
+          {formatPoints(frame.score)}
         </Label>
       </ScoreCard>
     )

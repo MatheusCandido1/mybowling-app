@@ -3,6 +3,7 @@ import { useGames } from "../../hooks/useGames";
 import { GamesFilters } from "../../services/gamesService/getAll";
 import { IBall } from "../../entities/Ball";
 import { ILocation } from "../../entities/Location";
+import { IGame } from "../../entities/Game";
 
 export function useGamesController() {
 
@@ -15,16 +16,20 @@ export function useGamesController() {
     location: null
   })
 
+  const [selectedGame, setSelectedGame] = useState<IGame | null>(null);
+
   const { games, isFetching } = useGames(filters);
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
 
-  function handleShowDetailsModal() {
+  function handleShowDetailsModal(game: IGame) {
+    setSelectedGame(game)
     setShowDetailsModal(true);
   }
 
   function handleCloseDetailsModal() {
+    setSelectedGame(null)
     setShowDetailsModal(false);
   }
 
@@ -33,6 +38,7 @@ export function useGamesController() {
   }
 
   function handleCloseFilterModal() {
+
     setShowFilterModal(false);
   }
 
@@ -47,6 +53,7 @@ export function useGamesController() {
     handleCloseDetailsModal,
     handleShowFilterModal,
     handleCloseFilterModal,
-    filters
+    filters,
+    selectedGame
   }
 }

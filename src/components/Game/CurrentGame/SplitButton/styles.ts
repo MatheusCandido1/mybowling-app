@@ -6,7 +6,7 @@ export const SplitContainer = styled.TouchableOpacity`
   justify-content: space-between;
   height: 40px;
   position: absolute;
-  bottom: 120px;
+  bottom: 110px;
   right: 0px;
   z-index: 9999;
 `;
@@ -22,7 +22,7 @@ export const SplitButtonContainer = styled.View`
   background-color: #FFF;
   border: 2px solid #0d9488;
   border-radius: 8px;
-  padding: 8px;
+  padding: 2px 8px;
   justify-content: center;
   align-items: center;
   height: 100%;

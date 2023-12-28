@@ -1,15 +1,18 @@
-import { TextInput, View } from "react-native"
-
-import { Container, Label } from "./styles"
+import {  TextInput, View } from "react-native"
 import { EvilIcons } from "@expo/vector-icons";
-import {  useState } from "react";
+import {  useState, forwardRef } from "react";
 
 interface CustomTextInputProps {
   label: string;
-  icon: 'envelope' | 'lock';
+  icon: 'envelope' | 'lock' | 'navicon' ;
+  value: string;
+  onChangeText: (text: string) => void;
+  isPassword?: boolean;
+  multiline?: boolean;
+  lines?: number;
 }
 
-export function CustomTextInput({ label, icon }: CustomTextInputProps) {
+export function CustomTextInput({ label, icon, value, onChangeText, isPassword, multiline, lines }: CustomTextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -21,7 +24,7 @@ export function CustomTextInput({ label, icon }: CustomTextInputProps) {
   }
 
   return (
-    <Container>
+    <>
       <View
         style={{
           height: 14,
@@ -48,20 +51,27 @@ export function CustomTextInput({ label, icon }: CustomTextInputProps) {
           />
         </View>
         <TextInput
+          multiline={multiline}
+          numberOfLines={lines}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          secureTextEntry={isPassword}
           style={{
-            height: 40,
             borderColor: !isFocused ? '#253237' : '#0d9488',
             borderBottomWidth: 1,
             paddingLeft: 26,
-            paddingTop: 4,
+            paddingTop:  multiline ? 10:4,
             fontSize: 14,
+            height: multiline ? 75 : 40,
+            textAlignVertical: 'top',
           }}
+          autoCapitalize='none'
           placeholder={!isFocused ? label : ''}
+          value={value}
+          onChangeText={onChangeText}
           >
         </TextInput>
       </View>
-    </Container>
+    </>
   )
 }

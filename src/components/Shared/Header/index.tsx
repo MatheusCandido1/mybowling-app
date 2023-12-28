@@ -1,5 +1,5 @@
-import { TouchableOpacity } from "react-native";
-import { Container, Title } from "./styles";
+import { TouchableOpacity, View } from "react-native";
+import { Container, LeftContainer, MiddleContainer, RightContainer, Title } from "./styles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { InsightsModal } from "../../Game/CurrentGame/InsightsModal/InsightsModal";
@@ -14,25 +14,17 @@ export function Header({ title, onPress }: HeaderProps) {
 
   return (
     <Container>
-      <TouchableOpacity
-        onPress={onPress}
-      >
-        <Ionicons name="arrow-back-sharp" size={32} color="#FFF" />
-      </TouchableOpacity>
-      <Title>{title}</Title>
-      <TouchableOpacity
-        onPress={() => setShowModal(true)}
-      >
-        <MaterialCommunityIcons
-          name="lightbulb-on-outline"
-          size={32}
-          color={ showModal ? "#e8b30d" :"#FFF"}
-        />
-      </TouchableOpacity>
-      <InsightsModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+      <LeftContainer>
+        <TouchableOpacity
+          onPress={onPress}
+        >
+          <Ionicons name="arrow-back" size={28} color="#FFF" />
+        </TouchableOpacity>
+      </LeftContainer>
+      <MiddleContainer>
+        <Title>{title}</Title>
+      </MiddleContainer>
+      <RightContainer></RightContainer>
     </Container>
   )
 }

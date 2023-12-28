@@ -2,7 +2,6 @@ import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { IFrame } from "../../../entities/Frame";
 import { ILocation } from "../../../entities/Location";
 import { formatDate } from "../../../utils/formatDate";
-import { formatPoints, formatScore } from "../../../utils/formatScore";
 import {
   Container,
   Content,
@@ -12,7 +11,10 @@ import {
   HeaderText,
   DateBadge,
   Footer,
+  SecondFooter,
+  UserName
 } from "./styles";
+import { Avatar } from "../../Shared/Avatar";
 
 interface GameCardProps {
   location: ILocation,
@@ -20,9 +22,10 @@ interface GameCardProps {
   totalScore: number,
   frames: IFrame[],
   onShowDetails?: () => void;
+  user?: any;
 }
 
-export function GameCard({ location, date, totalScore, frames, onShowDetails }: GameCardProps) {
+export function GameCard({ location, date, totalScore, frames, onShowDetails, user }: GameCardProps) {
 
   function splitConverted(frame: IFrame) {
     if(frame.is_split && frame.points === 10) return true;
@@ -97,7 +100,11 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails }: 
   }
 
   return (
-    <Container>
+    <Container
+      style={{
+        height: user ? 180 : 144,
+      }}
+    >
        <Header>
           <HeaderText>{location.name}</HeaderText>
           <DateBadge>
@@ -147,6 +154,14 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails }: 
           <Text style={{fontWeight: 'bold', fontSize: 14}}>{totalScore}</Text>
         </View>
       </Footer>
+      {user ? (
+        <SecondFooter>
+          <Avatar
+            imageUri={user.avatar}
+          />
+          <UserName>{user.name}</UserName>
+        </SecondFooter>
+      ): null}
     </Container>
   )
 }

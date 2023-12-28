@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { sleep } from '../utils/sleep';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const BASE_URL = 'http://192.168.0.42:8000/api/v1';
 // export const BASE_URL = 'http://localhost:8000/api/v1'
@@ -10,10 +10,10 @@ export const httpClient = axios.create({
 });
 
 httpClient.interceptors.request.use(async (config) => {
-  // const accessToken = localStorage.getItem(localStorageKeys.ACCESS_TOKEN);
+  const token = await AsyncStorage.getItem('mybowling');
 
-  const accessToken = 'token'
-  await sleep(500);
+  const accessToken = token;
+  //await sleep(500);
 
   if(accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -21,9 +21,12 @@ httpClient.interceptors.request.use(async (config) => {
   return config;
 });
 
-httpClient.interceptors.response.use(async (data) => {
-
-  await sleep(500);
-
-  return data;
+httpClient.interceptors.response.use(async (response) => {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+    console.log('error 401')
+  } else {
+      return Promise.reject(error);
+  }
 });

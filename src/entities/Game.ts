@@ -1,11 +1,13 @@
+import { IBall } from "./Ball";
 import { IFrame } from "./Frame";
+import { ILocation } from "./Location";
 
 export interface IGame {
   id: string,
-  date: Date,
+  game_date: Date,
   frames: IFrame[],
-  totalScore: number,
+  total_score: number,
   status: 'WAITING' | 'IN_PROGRESS' | 'COMPLETED',
-  ball: string,
-  location: string
+  ball: IBall,
+  location: ILocation
 }

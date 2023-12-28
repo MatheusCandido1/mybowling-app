@@ -2,7 +2,6 @@ import {
   Container,
   HeaderContainer,
   Content,
-  Avatar,
   DateContainer,
   IconContainer,
   HelloText,
@@ -24,7 +23,6 @@ import {
   SplitTitle
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import AvatarSvg from "../../assets/img/avatar.svg";
 import { Text, View } from "react-native";
 import { useDashboardController } from "./useDashboardController";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
@@ -33,33 +31,40 @@ import { IBall } from "../../entities/Ball";
 import { formatBallName } from "../../utils/formatBallName";
 import Swiper from 'react-native-swiper'
 import { SplitFrame } from "../../components/Dashboard/SplitFrame";
+import { useAuth } from "../../hooks/useAuth";
+import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
+import { Avatar } from "../../components/Shared/Avatar";
 
 
 export function Dashboard() {
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
   const { stats, isLoading } = useDashboardController();
+  const { loggedUser } = useAuth();
 
-  const arsenal = stats.most_used_balls;
+  const user = {
+    first_name: loggedUser?.name.split(' ')[0],
+  }
+
+  const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;
   const highScoreAllTime = stats.highest_score;
 
   const splits_converted = stats.splits_converted || [];
-
 
   const Header = () => {
     return (
       <Navbar>
         <HeaderContainer>
           <DateContainer>
-            <HelloText>Hello, Matheus 👋</HelloText>
+            <HelloText>Hello, {user.first_name} 👋</HelloText>
             <Text style={{color: 'white'}}>Let's Bowl!</Text>
           </DateContainer>
           <IconContainer>
             <MaterialIcons name="notifications-none" size={30} color="white" />
-            <Avatar>
-              <AvatarSvg />
-            </Avatar>
+            <Avatar
+              imageUri={loggedUser?.avatar}
+            />
           </IconContainer>
         </HeaderContainer>
         <Average />
@@ -75,7 +80,7 @@ export function Dashboard() {
           <View style={{alignItems: 'center', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <AverageText>{stats.current_month_average}</AverageText>
-              {stats.current_month_average >= stats.last_month_average ? (
+              {stats.current_month_average > stats.last_month_average ? (
                   <MaterialIcons name="arrow-drop-up" size={30} color="green" />
                ) : (
                   <MaterialIcons name="arrow-drop-down" size={30} color="red" />
@@ -144,7 +149,9 @@ export function Dashboard() {
 
     return (
       <SplitItemContainer>
-        <SplitFrame split={split} />
+        <View style={{width: '35%'}}>
+          <SplitFrame split={split} />
+        </View>
         <SplitStatsContainer >
           <SplitTitleContainer>
             <SplitTitle>{split}</SplitTitle>
@@ -191,7 +198,10 @@ export function Dashboard() {
                 >
                 <ArsenalStatsCardTitle>Arsenal</ArsenalStatsCardTitle>
                 </View>
-                <Swiper
+                {arsenal.length === 0 ? (
+                  <EmptyBalls />
+                ): (
+                  <Swiper
                   showsPagination={true}
                   loop={false}
                   paginationStyle={{
@@ -209,6 +219,9 @@ export function Dashboard() {
                     />
                   ))}
                 </Swiper>
+                )}
+
+
 
               </ArsenalStatsCard>
               <AllTimeScoreCard>
@@ -234,11 +247,13 @@ export function Dashboard() {
             <Title style={{marginBottom: 16}}>Splits</Title>
             <Swiper
               showsPagination={true}
-              loop={false}
+              loop
               paginationStyle={{
                 bottom: -8,
               }}
               activeDotColor="#0d9488"
+              autoplay
+              autoplayTimeout={3}
             >
 
               {splits_converted.length > 0 && splits_converted.map((split: any, index: any) => (

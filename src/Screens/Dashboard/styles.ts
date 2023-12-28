@@ -26,13 +26,6 @@ export const Content = styled.View`
   margin-bottom: 24px;
 `;
 
-
-export const Avatar = styled.View`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-`;
-
 export const DateContainer = styled.View`
   align-items: flex-start;
   justify-content: center;

@@ -6,17 +6,23 @@ import { PinBoard } from "../PinBoard";
 import { Scores } from "../Scores";
 import { ScoreProgress } from "../ScoreProgress";
 import { SplitButton } from "../SplitButton";
+import { formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
+
+
 
 export function Board() {
   const inputFirstShot = useRef(null);
   const inputSecondShot = useRef(null);
+  const inputThirdShot = useRef(null);
+
   const [isSplit, setIsSplit] = useState(false);
 
-  const { currentFrame, openNumPad, setSplit } = useGame();
+  const { currentFrame, frames, openNumPad, setSplit } = useGame();
 
   function resetInputs() {
     inputFirstShot.current?.blur();
     inputSecondShot.current?.blur();
+    inputThirdShot.current?.blur();
   }
 
   const onFocusEmitter = (inputNumber: number) => {
@@ -33,32 +39,6 @@ export function Board() {
     return false;
   }
 
-  const formatFrameFirstShot = () => {
-    if(currentFrame.first_shot === null) {
-      return '';
-    }
-    if(currentFrame.first_shot === 10) {
-      return 'X';
-    }
-    if(currentFrame.first_shot === 0) {
-      return '-';
-    }
-    return currentFrame.first_shot.toString();
-  }
-
-  const formatFrameSecondShot = () => {
-    if(currentFrame.first_shot === null) return ''
-    if(currentFrame.second_shot === null) return '';
-
-    if((currentFrame.first_shot + currentFrame.second_shot) === 10) {
-      return '/';
-    }
-    if(currentFrame.second_shot === 0) {
-      return '-';
-    }
-    return currentFrame.second_shot.toString();
-  }
-
   return (
     <Container>
       <TitleContainer>
@@ -70,23 +50,35 @@ export function Board() {
           showSoftInputOnFocus={false}
           onFocus={() => onFocusEmitter(1)}
           selectionColor={'transparent'}
-          value={formatFrameFirstShot()}
+          value={formatFrameFirstShot(currentFrame)}
         />
         <ScoreInput
           ref={inputSecondShot}
           showSoftInputOnFocus={false}
           onFocus={() => onFocusEmitter(2)}
           selectionColor={'transparent'}
-          value={formatFrameSecondShot()}
+          value={formatFrameSecondShot(currentFrame)}
           editable={!shouldBlockSecondInput()}
           style={{
             opacity: shouldBlockSecondInput() ? 0.5 : 1
           }}
         />
         {(currentFrame.frame_number === 10) && (currentFrame.first_shot === 10 || ((Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10))) ?
-          (<ScoreInput></ScoreInput>)
+          (
+            <ScoreInput
+              ref={inputThirdShot}
+              showSoftInputOnFocus={false}
+              onFocus={() => onFocusEmitter(3)}
+              selectionColor={'transparent'}
+              value={formatFrameThirdShot(currentFrame)}
+              editable={true}
+              style={{
+                opacity: shouldBlockSecondInput() ? 0.5 : 1
+              }}
+            />
+          )
             :
-            null
+          null
         }
       </InputContainer>
       <SplitButton
@@ -108,7 +100,9 @@ export function Board() {
 
       <ScoreContainer>
         <ScoreProgress />
-        <Scores />
+        <Scores
+          frames={frames}
+        />
       </ScoreContainer>
 
 

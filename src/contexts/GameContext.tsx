@@ -1,6 +1,8 @@
-import { useState, createContext, useRef, Ref } from "react";
+import { useState, createContext, useRef, Ref, useEffect } from "react";
 import { IFrame } from "../entities/Frame";
 import Toast from 'react-native-toast-message';
+import { useNavigation } from "@react-navigation/native";
+import { IGame } from "../entities/Game";
 
 interface GameContextData {
   frames: IFrame[];
@@ -15,12 +17,19 @@ interface GameContextData {
   setSplitValue: (newValue: string) => void;
   score: number;
   max: number;
+  isGameDone: boolean;
+  currentGame: IGame | null;
+  handleSaveGame: () => void;
+  handleNewGame: (game: IGame) => void;
 }
 
 export const GameContext = createContext({} as GameContextData);
 
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
+
+  const [currentGame, setCurrentGame] = useState<IGame | null>(null);
+
   const [frames, setFrames] = useState<IFrame[]>([
     {frame_number: 1, status: 'in_progress', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
     {frame_number: 2, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
@@ -41,6 +50,25 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const framesList = useRef(null);
 
+  const isGameDone = frames.every(frame => frame.status === 'completed');
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const newScore = calculateScore();
+    setScore(newScore);
+  }, [frames, setScore]);
+
+  function handleSaveGame() {
+    setCurrentGame(null);
+    navigation.navigate('Dashboard');
+  }
+
+  function handleNewGame(game: IGame) {
+    setCurrentGame(game);
+    console.log('Created')
+  }
+
   function openNumPad(inputNumber: number) {
     setCurrentInputNumber(inputNumber);
     setIsNumPadVisible(true);
@@ -51,55 +79,61 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }
 
 
-  function calculateScore() {
-    const newFrames = [...frames];
+  function calculateScore(): number {
     let totalScore = 0;
 
-    newFrames.forEach((frame, index) => {
-      const nextFrame = newFrames[index + 1];
-      const nextNextFrame = newFrames[index + 2];
+    for (let i = 0; i < frames.length; i++) {
+      const frame = frames[i];
 
-      if (isStrike(frame)) {
-        frame.score = 10;
-        if (nextFrame) {
-          if (isStrike(nextFrame)) {
-            frame.score += 10;
-            if (nextNextFrame) {
-              frame.score += 10;
-            }
-          } else {
-            frame.score += (nextFrame.first_shot || 0) + (nextFrame.second_shot || 0);
-          }
+      if(frame.frame_number === 10) {
+        totalScore += (frame.first_shot || 0) + (frame.second_shot || 0) + (frame.third_shot || 0);
+      } else {
+        if (isStrike(frame)) {
+          totalScore += 10 + getStrikeBonus(frames, i);
+        } else if (isSpare(frame)) {
+          totalScore += 10 + getSpareBonus(frames, i);
+        } else {
+          totalScore += getOpenFrameScore(frame);
         }
-      } else if (isSpare(frame)) {
-        frame.score = 10;
-        if (nextFrame) {
-          frame.score += nextFrame.first_shot || 0;
-        }
-      } else if (isFrameOpen(frame)) {
-        frame.score = (frame.first_shot || 0) + (frame.second_shot || 0);
       }
-
-      // Accumulate the total score
-      totalScore += frame.score;
-
-      // Update the frame in the newFrames array
       frame.score = totalScore;
-      newFrames[index] = frame;
-      setScore(totalScore);
-    });
+    }
 
-    setFrames(newFrames);
+    return totalScore;
+  }
+
+  function getStrikeBonus(frames: IFrame[], currentIndex: number): number {
+    const nextFrame = frames[currentIndex + 1];
+    const nextNextFrame = frames[currentIndex + 2];
+
+    if (nextFrame) {
+      if (isStrike(nextFrame)) {
+        return 10 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
+      } else {
+        return (nextFrame.first_shot || 0) + (nextFrame.second_shot || 0);
+      }
+    }
+
+    return 0;
+  }
+
+  function getSpareBonus(frames: IFrame[], currentIndex: number): number {
+    const nextFrame = frames[currentIndex + 1];
+    return nextFrame ? nextFrame.first_shot || 0 : 0;
+  }
+
+  function getOpenFrameScore(frame: IFrame): number {
+    return (frame.first_shot || 0) + (frame.second_shot || 0);
   }
 
   function moveFrameToNext(index: number) {
-    framesList?.current?.scrollToIndex({
-      animated: true,
-      index: index,
-    });
+    if(index <= 9) {
+      framesList?.current?.scrollToIndex({
+        animated: true,
+        index: index,
+      });
+    }
   }
-
-
 
   function isStrike(frame: IFrame) {
     return frame.first_shot === 10;
@@ -107,10 +141,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   function isSpare(frame: IFrame) {
     return Number(frame.first_shot) + Number(frame.second_shot) === 10;
-  }
-
-  function isFrameOpen(frame: IFrame) {
-    return !isStrike(frame) && !isSpare(frame);
   }
 
   function setSplit(newValue: boolean) {
@@ -140,20 +170,26 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       newFrames[index].first_shot = parseInt(value === "Strike" ? "10" : value);
 
       if(parseInt(value) === 10 || value === "Strike") {
-        moveFrameToNext(currentFrame.frame_number);
         newFrames[index].status = 'completed';
-        newFrames[index+1].status = 'in_progress';
-        setCurrentFrame(newFrames[index+1]);
-      }
 
+        if(index <= 8) {
+          newFrames[index+1].status = 'in_progress';
+          setCurrentFrame(newFrames[index+1]);
+          moveFrameToNext(currentFrame.frame_number);
+        }
+      }
       setFrames(newFrames);
     }
 
     if(currentInputNumber === 2) {
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
-      newFrames[index].second_shot = parseInt(value === "Spare" ? (10 - Number(newFrames[index].first_shot)).toString() : value);
-
+      if(index === 9) {
+        newFrames[index].second_shot = parseInt(value === "Strike" ? "10" : value);
+      } else {
+        newFrames[index].second_shot = parseInt(value === "Spare" ? (10 - Number(newFrames[index].first_shot)).toString() : value);
+      }
+      /*
       if(value === "Spare" && currentFrame.is_split && currentFrame.split !== null) {
         Toast.show({
           type: 'success',
@@ -162,19 +198,28 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           visibilityTime: 3000,
           autoHide: true,
         })
-      }
+      } */
 
       newFrames[index].status = 'completed';
-      newFrames[index+1].status = 'in_progress';
 
-      if(index < 9) {
+      if(index <= 8) {
+        newFrames[index+1].status = 'in_progress';
         moveFrameToNext(currentFrame.frame_number);
         setCurrentFrame(newFrames[index+1]);
       }
       setFrames(newFrames);
     }
+
+    if(currentInputNumber === 3) {
+      const newFrames = [...frames];
+      const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
+      newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value)
+      newFrames[index].status = 'completed';
+      setFrames(newFrames);
+    }
+
+
     closeNumPad();
-    calculateScore();
   }
 
 
@@ -216,7 +261,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         framesList,
         setSplitValue,
         score,
-        max
+        isGameDone,
+        max,
+        handleSaveGame,
+        handleNewGame,
+        currentGame
       }}
     >
       {children}

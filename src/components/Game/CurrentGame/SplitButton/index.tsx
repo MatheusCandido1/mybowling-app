@@ -14,10 +14,10 @@ export function SplitButton({ onPress, disabled }: SplitButtonProps) {
   const shouldShowSplit = currentFrame.is_split === null || currentFrame.is_split === false;
 
   function getLabel() {
-    if(shouldShowSplit) return 'Set Split';
+    if(shouldShowSplit) return 'Set Pins';
 
     else {
-      return `Split: ${currentFrame.split === null ? '' : currentFrame.split}`;
+      return `Pins: ${currentFrame.split === null ? '' : currentFrame.split}`;
     }
   }
 

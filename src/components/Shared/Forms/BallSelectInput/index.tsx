@@ -17,7 +17,7 @@ interface BallSelectInputProps {
 }
 
 export function BallSelectInput({ label, error, onChange, value }: BallSelectInputProps) {
-  const { balls } = useBalls();
+  const { balls, defaultBall } = useBalls();
 
   const [selectedBall, setSelectedBall] = useState<IBall | null>(() => {
     if (value === null || value === undefined) {

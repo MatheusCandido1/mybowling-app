@@ -9,8 +9,10 @@ import { GameDetailsModal } from "../../components/Games/GameDetailsModal";
 import { GamesFilterModal } from "../../components/Games/GamesFilterModal";
 import { formatFromDate } from "../../utils/formatDate";
 import { Ball2Icon } from "../../components/Icons/Ball2Icon";
+import { useNavigation } from "@react-navigation/native";
 
 export function Games() {
+  const navigation = useNavigation();
 
   const {
     isLoading,
@@ -30,7 +32,7 @@ export function Games() {
       {isLoading && <OverlayLoading />}
       {!isLoading && (
         <>
-        <Header title="Games" />
+        <Header title="Games" onPress={() => navigation.goBack()} />
         <Content>
           <SearchContainer>
             <FilterContainer>

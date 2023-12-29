@@ -1,11 +1,10 @@
-import { GroupsProvider, GroupsContext } from "../contexts/GroupsContext";
+import { Group } from "../Screens/Group";
 
-export function GroupWrapper() {
+export function GroupWrapper({ route }: { route: any }) {
+
+  const { id } = route.params
+
   return (
-    <GroupsProvider>
-      <GroupsContext.Consumer>
-
-      </GroupsContext.Consumer>
-    </GroupsProvider>
+    <Group id={id} />
   )
 }

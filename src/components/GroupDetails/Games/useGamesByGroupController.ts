@@ -3,13 +3,12 @@ import { useGamesByGroup } from "../../../hooks/useGamesByGroup";
 import { useGroups } from "../../../hooks/useGroups";
 import { IGame } from "../../../entities/Game";
 
-export function useGamesByGroupController() {
+export function useGamesByGroupController(id: number) {
 
   const [page, setPage] = useState(1);
 
-  const { selectedGroup } = useGroups();
 
-  const { games, isFetching } = useGamesByGroup(selectedGroup.id, page);
+  const { games, isFetching } = useGamesByGroup(id, page);
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);

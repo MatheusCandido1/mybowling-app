@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { createContext, useCallback, useEffect, useState } from "react";
 
 interface GroupsContextData {
@@ -17,6 +18,8 @@ export function GroupsProvider({children}: {children: React.ReactNode}) {
   const [selectedGroup, setSelectedGroup] = useState<any>(null);
 
   const [selectedMenu, setSelectedMenu] = useState<'Games' | 'Members'  | 'Standings'>('Standings');
+
+  const navigation = useNavigation();
 
   function handleShowNewGroupModal() {
     setShowNewGroupModal(true);

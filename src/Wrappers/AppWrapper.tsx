@@ -1,6 +1,6 @@
 
-import { Stack } from "../Router/Stack";
-import { Tabs } from '../Router/Tabs';
+import { AuthStack } from "../Router/AuthStack";
+import { RootNavigator } from '../Router/RootNavigator';
 import { Welcome } from "../Router/Welcome";
 import { useAuth } from "../hooks/useAuth";
 import { KeyboardAvoidingView } from "react-native";
@@ -19,10 +19,10 @@ export function AppWrapper() {
         loggedUser?.profile.first_access ? (
           <Welcome />
           ) : (
-          <Tabs />
+          <RootNavigator />
         )
       ) : (
-          <Stack />
+          <AuthStack />
       )}
     </KeyboardAvoidingView>
   )

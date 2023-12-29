@@ -8,6 +8,7 @@ import { ColorInput } from "../../Shared/Forms/ColorInput";
 import { Controller } from "react-hook-form";
 import { MainButton } from "../../Shared/Buttons/MainButton";
 import { TextInputWithLabel } from "../../Shared/Forms/TextInputWithLabel";
+import { SelectValueInput } from "../../Shared/Forms/SelectValueInput";
 
 export function NewBallModal() {
   const  {
@@ -20,13 +21,11 @@ export function NewBallModal() {
     handleCloseNewBallModal
   } = useNewBallModalController();
 
-
-
   return (
     <Modal
-    visible={showNewBallModal}
-    animationType="fade"
-    transparent
+      visible={showNewBallModal}
+      animationType="fade"
+      transparent
     >
       <Overlay>
         <Container>
@@ -60,8 +59,8 @@ export function NewBallModal() {
           control={control}
           name="weight"
           render={({ field: { onChange, value }}) => (
-            <SelectInput
-              label="Select the location"
+            <SelectValueInput
+              label="Select the weight (lbs)"
               items={weights}
               onChange={onChange}
               value={value}

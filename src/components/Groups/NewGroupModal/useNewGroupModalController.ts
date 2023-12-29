@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GroupsService } from "../../../services/groupsService";
 import { CreateGroupParams } from "../../../services/groupsService/create";
 import Toast from 'react-native-toast-message';
@@ -28,6 +28,8 @@ export function useNewGroupModalController() {
     resolver: zodResolver(schema),
   });
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async (data: CreateGroupParams) => {
       return GroupsService.create(data);
@@ -44,6 +46,7 @@ export function useNewGroupModalController() {
         visibilityTime: 2000,
         autoHide: true,
       })
+      queryClient.invalidateQueries({ queryKey: ['groups'] });
       reset();
       handleCloseNewGroupModal();
 

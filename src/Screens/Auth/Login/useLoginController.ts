@@ -6,6 +6,7 @@ import { loginParams } from "../../../services/authService/login";
 import { AuthService } from "../../../services/authService";
 import Toast from 'react-native-toast-message';
 import { useAuth } from "../../../hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
 
 const schema = z.object({
   email: z.string().email(),
@@ -16,6 +17,8 @@ type FormData = z.infer<typeof schema>;
 
 export function useLoginController() {
   const { login } = useAuth();
+
+  const navigation = useNavigation();
 
   const {
     register,
@@ -49,5 +52,9 @@ export function useLoginController() {
     }
   });
 
-  return { onSubmit, handleSubmit, control, register, errors, isLoading }
+  function handleNewAccountPress() {
+    navigation.navigate('register');
+  }
+
+  return { onSubmit, handleSubmit, control, register, errors, isLoading, handleNewAccountPress }
 }

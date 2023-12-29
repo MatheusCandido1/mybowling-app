@@ -1,14 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
+const StackNavigator = createStackNavigator();
 
 import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
 import { ArsenalWrapper } from '../../Wrappers/ArsenalWrapper';
-import { Profile } from '../..//Screens/Profile';
+import { Profile } from '../../Screens/Profile';
 import { View } from 'react-native';
 
 import { BallIcon } from '../../components/Icons/BallIcon';
@@ -17,20 +16,11 @@ import { HomeIcon } from '../../components/Icons/HomeIcon';
 import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
 import { isIpad } from '../../utils/getDevice';
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
+import { createStackNavigator } from '@react-navigation/stack';
 
 
-export function Tabs() {
+export function MainTabs() {
   return (
-    <SafeAreaProvider>
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: '#0d9488',
-      }}
-    >
-    <StatusBar style="light" />
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -42,6 +32,7 @@ export function Tabs() {
           }
         }}
         initialRouteName='Dashboard'
+        backBehavior={'firstRoute'}
       >
         <Tab.Screen
           name="Dashboard"
@@ -160,8 +151,5 @@ export function Tabs() {
 
         />
       </Tab.Navigator>
-    </NavigationContainer>
-    </SafeAreaView>
-    </SafeAreaProvider>
   );
 }

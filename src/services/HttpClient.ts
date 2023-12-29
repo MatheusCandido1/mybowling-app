@@ -25,7 +25,6 @@ httpClient.interceptors.response.use(async (response) => {
   return response;
 }, function (error) {
   if (401 === error.response.status) {
-    console.log('error 401')
   } else {
       return Promise.reject(error);
   }

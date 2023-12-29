@@ -48,8 +48,25 @@ export const IconContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px;
 `;
+
+
+export const GroupsContainer = styled.TouchableOpacity`
+  background-color: #FFF;
+  border-radius: 8px;
+  padding: 4px 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const GroupContainerTitle = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #0d9488;
+`;
+
 
 export const AverageContainer = styled.View`
   flex-direction: row;

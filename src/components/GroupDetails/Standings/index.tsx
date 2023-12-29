@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Container, Table, TableHeader, TableCell, TableCellText, TableBody, TableRow } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useGroupDetailsController } from "../../../Screens/GroupDetails/useGroupDetailsController";
 
-export function Standinds() {
+interface StandingProps {
+  standings: [];
+}
 
-  const { groupDetail } = useGroupDetailsController();
-
-  const [stadings, ] = useState(groupDetail.standings)
+export function Standings({ standings }: StandingProps) {
 
   function getPosition(position: number) {
     if(position === 1) return <MaterialCommunityIcons name="podium-gold" size={24} color="#f5d860" />
@@ -38,7 +37,7 @@ export function Standinds() {
   const Row = ({ position, name, games, avg} : {position: number, name: string;games: number;avg: number;}) => (
     <TableRow
       style={{
-        borderBottomWidth: position == stadings.length ? 0:2,
+        borderBottomWidth: position == standings.length ? 0:2,
       }}
     >
       <TableCell style={{width: '15%', borderRightWidth: 2, borderRightColor: '#0d9488'}}>
@@ -61,7 +60,7 @@ export function Standinds() {
       <Table>
         <Header />
         <TableBody>
-          {stadings.map((standing, index) => (
+          {standings.map((standing, index) => (
             <Row
               position={standing.position}
               name={standing.player}

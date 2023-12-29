@@ -5,10 +5,11 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 import { Login } from '../../Screens/Auth/Login';
+import { Register } from '../../Screens/Auth/Register';
 
 const StackNavigator = createStackNavigator();
 
-export function Stack() {
+export function AuthStack() {
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -25,6 +26,7 @@ export function Stack() {
             }}
           >
             <StackNavigator.Screen name="login" component={Login} />
+            <StackNavigator.Screen name="register" component={Register}  />
           </StackNavigator.Navigator>
         </NavigationContainer>
       </SafeAreaView>

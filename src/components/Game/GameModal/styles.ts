@@ -10,7 +10,6 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: 190px;
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;
@@ -108,4 +107,25 @@ export const GroupButtonQuantityText = styled.Text`
   font-size: 12px;
   font-weight: bold;
   color: #FFF;
+`;
+
+export const SwitchContainer = styled.View`
+`;
+
+export const SwitchContent = styled.View`
+flex-direction: row;
+align-items: center;
+gap: 8px;
+justify-content: space-between;
+`;
+
+export const SwitchLabel = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #0d9488;
+`;
+
+export const SwitchMessage = styled.Text`
+  font-size: 12px;
+  color: #0d9488;
 `;

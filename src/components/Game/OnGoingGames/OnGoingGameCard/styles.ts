@@ -10,7 +10,7 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const InformationContainer = styled.View`
-  width: 75%;
+  width: 80%;
   height: 100%;
   padding: 16px;
   justify-content: center;
@@ -19,7 +19,7 @@ export const InformationContainer = styled.View`
 `;
 
 export const InformationText = styled.Text`
-  font-size: 16px;
+  font-size: 15px;
   color: #000;
 `;
 
@@ -31,7 +31,7 @@ export const InformationItem = styled.View`
 `;
 
 export const ButtonContainer = styled.View`
-  width: 25%;
+  width: 20%;
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@ export const Button = styled.View`
 `;
 
 export const ButtonText = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: #FFF;
 `;

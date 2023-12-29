@@ -4,8 +4,13 @@ import { Container } from "./styles";
 import { GameCard } from "../../Games/GameCard";
 import { GameDetailsModal } from "../../Games/GameDetailsModal";
 import { GamesFilterModal } from "../../Games/GamesFilterModal";
+import { OverlayLoading } from "../../Shared/OverlayLoading";
 
-export function Games() {
+interface GamesProps {
+  groupId: number;
+}
+
+export function Games({ groupId }: GamesProps) {
   const {
     isFetching,
     games,
@@ -17,9 +22,13 @@ export function Games() {
     handleCloseFilterModal,
     selectedGame,
     handleSetPage
-  } = useGamesByGroupController();
+  } = useGamesByGroupController(groupId);
 
   return (
+    <>
+    {isFetching ? (
+      <OverlayLoading style="light" />
+    ): (
     <Container>
       <FlatList
         data={games}
@@ -56,5 +65,7 @@ export function Games() {
       />
     ) : null}
     </Container>
+    )}
+    </>
   )
 }

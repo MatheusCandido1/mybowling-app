@@ -2,9 +2,21 @@ import { useArsenal } from "../../hooks/useArsenal";
 
 export function useArsenalController() {
 
-  const { showNewBallModal } = useArsenal();
+  const {
+    showNewBallModal,
+    handleShowNewBallModal,
+    balls,
+    isFetching,
+    showEditBallModal,
+    handleShowEditBallModal
+  } = useArsenal();
 
   return {
-    showNewBallModal
+    showNewBallModal,
+    handleShowNewBallModal,
+    balls,
+    isFetching,
+    showEditBallModal,
+    handleShowEditBallModal
   }
 }

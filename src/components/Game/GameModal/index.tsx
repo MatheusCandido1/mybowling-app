@@ -10,7 +10,11 @@ import {
   FilterText,
   FilterButton,
   GroupButtonQuantity,
-  GroupButtonQuantityText
+  GroupButtonQuantityText,
+  SwitchContainer,
+  SwitchLabel,
+  SwitchMessage,
+  SwitchContent
 } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
@@ -25,9 +29,9 @@ import { ModalHeader } from "../../Shared/Game/ModalHeader";
 import { OnGoingGameCard } from "../OnGoingGames/OnGoingGameCard";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
-import { CommonActions } from '@react-navigation/native';
 import { IGame } from "../../../entities/Game";
-
+import { useBalls } from "../../../hooks/useBalls";
+import { Switch } from 'react-native-switch';
 
 
 export function GameModal() {
@@ -35,8 +39,6 @@ export function GameModal() {
   const [filter, setFilter] = useState('Most Recent');
 
   const navigation = useNavigation();
-
-
 
   const {
     locations,
@@ -46,8 +48,13 @@ export function GameModal() {
     control,
     errors,
     isCreatingGame,
-    onGoingGames
+    onGoingGames,
+    enabledBalls,
+    toggleBalls,
+    groups,
+    shouldEnableGroups,
   } = useNewGameController();
+
 
   const sortedOnGoingGames = onGoingGames.sort((a: IGame, b: IGame) => {
     if (filter === 'Most Recent') {
@@ -103,6 +110,28 @@ export function GameModal() {
     )
   }
 
+  const BallSwitch = () => {
+    return (
+      <SwitchContainer>
+        <SwitchContent>
+        <SwitchLabel>Use a custom ball?</SwitchLabel>
+        <Switch
+          value={enabledBalls}
+          onValueChange={toggleBalls}
+          backgroundActive="#0d9488"
+          inActiveText={"No"}
+          activeText={"Yes"}
+
+
+        />
+        </SwitchContent>
+        {!enabledBalls && (
+          <SwitchMessage>With this option, you will play with house ball</SwitchMessage>
+        )}
+      </SwitchContainer>
+    )
+  }
+
   const newGame = () => {
     return (
       <>
@@ -114,6 +143,7 @@ export function GameModal() {
           defaultValue={new Date()}
           render={({ field: { onChange, value }}) => (
             <DateInput
+              label="Game date"
               onChange={onChange}
               value={value}
             />
@@ -131,7 +161,7 @@ export function GameModal() {
           defaultValue={undefined}
           render={({ field: { onChange, value }}) => (
             <SelectInput
-              label="Select the location"
+              label="Select bowling alley"
               items={locations}
               onChange={onChange}
               value={value}
@@ -140,10 +170,36 @@ export function GameModal() {
           )}
         />
         </InputContainer>
+        {
+          shouldEnableGroups ? (
+            <InputContainer>
+            <Controller
+              control={control}
+              name="group_id"
+              defaultValue={undefined}
+              render={({ field: { onChange, value }}) => (
+                <SelectInput
+                  label="Select the group (optional)"
+                  items={groups}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.group_id?.message}
+                />
+              )}
+            />
+            </InputContainer>
+          ) : null
+
+        }
+
         <InputContainer>
-        <Controller
+        <BallSwitch />
+
+        {enabledBalls ? (
+          <Controller
           name="ball_id"
           control={control}
+          defaultValue={undefined}
           render={({ field: { onChange, value }}) => (
             <BallSelectInput
               label="Select the ball"
@@ -151,8 +207,11 @@ export function GameModal() {
               value={value}
               error={errors.ball_id?.message}
             />
-          )}
+            )}
           />
+        ): (
+          <View style={{height: 97, width: '100%'}}></View>
+        )}
         </InputContainer>
         <InputContainer
           style={{
@@ -217,11 +276,16 @@ export function GameModal() {
     )
   }
 
+
   return (
       <Overlay>
       {isLoadingResources && <OverlayLoading />}
       {!isLoadingResources && (
-        <Container>
+        <Container
+          style={{
+            marginTop: !shouldEnableGroups ? 160 : 75
+          }}
+        >
           <ModalHeader
             title="Start Bowling!"
             onPress={handleCloseModal}

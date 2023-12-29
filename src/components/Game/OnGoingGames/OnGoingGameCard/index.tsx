@@ -21,6 +21,8 @@ interface OnGoingGameCardProps {
 export function OnGoingGameCard({ game }: OnGoingGameCardProps) {
   const { ball, location, game_date, total_score } = game;
 
+
+
   const formattedDate = Intl.DateTimeFormat('en-US', {
     day: 'numeric',
     month: 'long',
@@ -35,11 +37,12 @@ export function OnGoingGameCard({ game }: OnGoingGameCardProps) {
           <InformationText>{formattedDate}</InformationText>
         </InformationItem>
 
+        {game.ball && (
         <InformationItem>
           <Ball2Icon height={20} width={20} color={game.ball?.color} />
           <InformationText>{formatBallName(ball)}</InformationText>
-
         </InformationItem>
+        )}
 
         <InformationItem>
           <Entypo name="location" size={20} color="#000" />

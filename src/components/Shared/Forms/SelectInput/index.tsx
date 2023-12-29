@@ -3,6 +3,7 @@ import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
 import { Container, Label } from "./styles";
 import SelectDropdown from 'react-native-select-dropdown'
 import { Entypo } from "@expo/vector-icons";
+import { useState } from "react";
 
 interface SelectInputProps {
   label: string;
@@ -24,7 +25,7 @@ export function SelectInput({ label, error, items, onChange, value, placeholder 
           onSelect={(selectedItem, index) => {
             onChange && onChange(selectedItem.id.toString())
           }}
-          defaultButtonText={placeholder ?? "Select an option"}
+          defaultButtonText={value  ?? "Select an option"}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.name
           }}
@@ -46,7 +47,7 @@ export function SelectInput({ label, error, items, onChange, value, placeholder 
 
           renderDropdownIcon={() => (
             <Entypo name="chevron-down" size={20} color="#000" />
-            )}
+          )}
           />
       <ErrorFeedbackInput error={error} />
     </Container>

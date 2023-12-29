@@ -1,7 +1,13 @@
 import { httpClient } from "../HttpClient";
 
-export async function register() {
-  const response = await httpClient.get<any>('/auth/register');
+export interface RegisterParams {
+  name: string;
+  email: string;
+  password: string;
+}
 
-  return response.data.data;
+export async function register(params: RegisterParams) {
+  const response = await httpClient.post<any>('/auth/register', params);
+
+  return response.data;
 }

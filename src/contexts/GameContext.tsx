@@ -66,7 +66,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   function handleNewGame(game: IGame) {
     setCurrentGame(game);
-    console.log('Created')
   }
 
   function openNumPad(inputNumber: number) {

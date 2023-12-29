@@ -28,7 +28,18 @@ import { KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
 
 
 export function Login() {
-  const { register, handleSubmit, onSubmit, control, isLoading } = useLoginController();
+  const { register, handleSubmit, onSubmit, control, isLoading, handleNewAccountPress } = useLoginController();
+
+  const SocialButtons = () => (
+    <SocialButtonsContainer>
+      <SocialButton>
+        <AntDesign name="google" size={24} color="#c71610" />
+      </SocialButton>
+      <SocialButton>
+        <AntDesign name="apple1" size={24} color="black" />
+      </SocialButton>
+    </SocialButtonsContainer>
+  )
 
   return (
     <ScrollView
@@ -85,17 +96,11 @@ export function Login() {
          </Form>
 
          <Footer>
-           <CreateAccountLink>
+           <CreateAccountLink
+              onPress={handleNewAccountPress}
+           >
              <CreateAccountLinkText>Don't have an account? Sign up!</CreateAccountLinkText>
            </CreateAccountLink>
-           <SocialButtonsContainer>
-             <SocialButton>
-               <AntDesign name="google" size={24} color="#c71610" />
-             </SocialButton>
-             <SocialButton>
-               <AntDesign name="apple1" size={24} color="black" />
-             </SocialButton>
-           </SocialButtonsContainer>
          </Footer>
        </Content>
      </Container>

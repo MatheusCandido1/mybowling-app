@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BallsService } from "../../../services/ballsService";
 import { CreateBallParams } from "../../../services/ballsService/create";
 import Toast from "react-native-toast-message";
@@ -20,15 +20,7 @@ export function useNewBallModalController() {
   const { showNewBallModal, handleCloseNewBallModal } = useArsenal();
 
   const weights = [
-    { name: '8 lbs', id: 8},
-    { name: '9 lbs', id: 9},
-    { name: '10 lbs', id: 10},
-    { name: '11 lbs', id: 11},
-    { name: '12 lbs', id: 12},
-    { name: '13 lbs', id: 13},
-    { name: '14 lbs', id: 14},
-    { name: '15 lbs', id: 15},
-    { name: '16 lbs', id: 16},
+   8, 9, 10, 11, 12, 13, 14, 15, 16
   ];
 
   const {
@@ -41,6 +33,7 @@ export function useNewBallModalController() {
     resolver: zodResolver(schema),
   });
 
+  const queryClient = useQueryClient();
   const {
     mutateAsync: createBall,
     isLoading: isCreatingBall,
@@ -55,6 +48,7 @@ export function useNewBallModalController() {
       await createBall(data);
       reset();
       handleCloseNewBallModal();
+      queryClient.invalidateQueries({ queryKey: ['balls'] });
 
       Toast.show({
         type: 'success',

@@ -11,14 +11,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { useGroupsController } from './useGroupsController';
 import { NewGroupModal } from '../../components/Groups/NewGroupModal';
 import { GroupCard } from '../../components/Groups/GroupCard';
-import { GroupDetails } from '../GroupDetails';
-
-interface GroupProps {
-  hideGroupPage: () => void;
-}
+import { useNavigation } from '@react-navigation/native';
 
 
-export function Groups({ hideGroupPage }: GroupProps) {
+export function Groups() {
   const {
     groups,
     showNewGroupModal,
@@ -28,15 +24,11 @@ export function Groups({ hideGroupPage }: GroupProps) {
     selectedMenu
   } = useGroupsController();
 
+  const navigation = useNavigation();
+
   function handleBackButtonPress() {
-    if(selectedGroup !== null) {
-      handleSelectGroup(null);
-    } else {
-      hideGroupPage();
-    }
+    navigation.goBack();
   }
-
-
 
   return (
     <Container>
@@ -44,9 +36,6 @@ export function Groups({ hideGroupPage }: GroupProps) {
     title="Groups"
     onPress={handleBackButtonPress}
     />
-    {selectedGroup !== null ?
-    ( <GroupDetails /> ) : (
-      <>
       <Content>
         <HeaderContainer>
           <NewGroupButton
@@ -79,8 +68,6 @@ export function Groups({ hideGroupPage }: GroupProps) {
       {showNewGroupModal && (
         <NewGroupModal />
       )}
-      </>
-    )}
     </Container>
   )
 }

@@ -12,33 +12,29 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Groups } from "../Groups";
-import { GroupsProvider } from "../../contexts/GroupsContext";
 import { Avatar } from "../../components/Shared/Avatar";
+import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
-  const { loggedUser, logout } = useAuth();
+  const navigation = useNavigation();
 
-  const [showGroupPage, setShowGroupPage] = useState(false);
+  const { loggedUser, logout } = useAuth();
 
 
   const user = {
     first_name: loggedUser?.name.split(' ')[0],
   }
 
-  if(showGroupPage) {
-    return (
-      <GroupsProvider>
-        <Groups
-          hideGroupPage={() => setShowGroupPage(false)}
-        />
-      </GroupsProvider>
-    )
+  function handleGroupsPress() {
+    navigation.navigate('GroupStack', { screen: 'Groups'});
   }
 
   return (
     <Container>
-      <Header title="Profile" />
+      <Header
+      title="Profile"
+      onPress={() => navigation.goBack()}
+     />
       <Content>
         <AvatarContainer>
           <AvatarRounded>
@@ -56,7 +52,7 @@ export function Profile() {
           </MenuItem>
 
           <MenuItem
-            onPress={() => setShowGroupPage(true)}
+            onPress={handleGroupsPress}
           >
             <MaterialCommunityIcons name="account-group" size={28} color="#0d9488" />
             <MenuItemText>Groups</MenuItemText>

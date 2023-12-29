@@ -20,7 +20,9 @@ import {
   SplitItemContainer,
   SplitStatsContainer,
   SplitTitleContainer,
-  SplitTitle
+  SplitTitle,
+  GroupsContainer,
+  GroupContainerTitle
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
@@ -34,9 +36,14 @@ import { SplitFrame } from "../../components/Dashboard/SplitFrame";
 import { useAuth } from "../../hooks/useAuth";
 import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
 import { Avatar } from "../../components/Shared/Avatar";
+import { EmptySplits } from "../../components/Dashboard/EmptySplits";
+import { useNavigation } from "@react-navigation/native";
 
 
 export function Dashboard() {
+
+  const navigation = useNavigation();
+
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
   const { stats, isLoading } = useDashboardController();
@@ -52,6 +59,10 @@ export function Dashboard() {
 
   const splits_converted = stats.splits_converted || [];
 
+  function navigateToGroups() {
+    navigation.navigate('GroupStack', {screen: 'groups'});
+  }
+
   const Header = () => {
     return (
       <Navbar>
@@ -61,10 +72,17 @@ export function Dashboard() {
             <Text style={{color: 'white'}}>Let's Bowl!</Text>
           </DateContainer>
           <IconContainer>
+            <GroupsContainer
+              onPress={navigateToGroups}
+            >
+              <MaterialIcons name="group" size={30} color="#0d9488" />
+              <GroupContainerTitle>
+                Groups
+              </GroupContainerTitle>
+
+            </GroupsContainer>
             <MaterialIcons name="notifications-none" size={30} color="white" />
-            <Avatar
-              imageUri={loggedUser?.avatar}
-            />
+
           </IconContainer>
         </HeaderContainer>
         <Average />
@@ -245,6 +263,7 @@ export function Dashboard() {
 
             <SplitsContainer>
             <Title style={{marginBottom: 16}}>Splits</Title>
+            {splits_converted.length == 0 && <EmptySplits />}
             <Swiper
               showsPagination={true}
               loop

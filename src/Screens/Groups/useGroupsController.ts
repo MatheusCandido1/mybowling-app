@@ -1,11 +1,24 @@
 import { useState } from "react";
 import { useGroups } from "../../hooks/useGroups";
 import { useGroup } from "../../hooks/useGroup";
+import { useNavigation } from "@react-navigation/native";
 
 export function useGroupsController() {
   const { groups, isFetching } = useGroup();
 
-  const { showNewGroupModal, handleShowNewGroupModal, handleSelectGroup, selectedGroup, selectedMenu  } = useGroups();
+  const navigation = useNavigation();
+
+  const { showNewGroupModal, handleShowNewGroupModal, selectedGroup, selectedMenu  } = useGroups();
+
+  function handleSelectGroup(group: any) {
+    navigation.navigate(
+      'GroupStack', {
+        screen: 'group',
+        params: { id: group.id}
+      }
+    );
+
+  }
 
 
   return {

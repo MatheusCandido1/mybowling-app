@@ -4,7 +4,7 @@ import {  useState, forwardRef } from "react";
 
 interface CustomTextInputProps {
   label: string;
-  icon: 'envelope' | 'lock' | 'navicon' ;
+  icon: 'envelope' | 'lock' | 'navicon' | 'user' ;
   value: string;
   onChangeText: (text: string) => void;
   isPassword?: boolean;

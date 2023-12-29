@@ -4,14 +4,14 @@ import { Container, Content, MemberRow, Label, ActionButton, Header, HeaderLabel
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { useGroupDetailsController } from "../../../Screens/GroupDetails/useGroupDetailsController";
+
+interface MemberProps {
+  members: [];
+  isLoggedUserAdmin: boolean;
+}
 
 
-export function Members() {
-  const { groupDetail, isLoggedUserAdmin } = useGroupDetailsController();
-
-
-  const [members,] = useState(groupDetail.members);
+export function Members({ members, isLoggedUserAdmin }: MemberProps) {
 
 
   const Member = ({name, role, avatar}:{name: string, role: string, avatar: string}) => (

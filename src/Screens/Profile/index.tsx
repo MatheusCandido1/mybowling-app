@@ -58,11 +58,6 @@ export function Profile() {
             <MenuItemText>Groups</MenuItemText>
           </MenuItem>
 
-          <MenuItem>
-            <Ionicons name="notifications-outline" size={28} color="#0d9488" />
-            <MenuItemText>Notification Preferences</MenuItemText>
-          </MenuItem>
-
         </Menu>
 
         <MenuItem

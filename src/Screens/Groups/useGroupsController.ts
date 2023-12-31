@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { useGroups } from "../../hooks/useGroups";
-import { useGroup } from "../../hooks/useGroup";
+import { useGroup } from "../../hooks/useGroupGetAll";
 import { useNavigation } from "@react-navigation/native";
 
 export function useGroupsController() {
-  const { groups, isFetching } = useGroup();
+  const { groups, invites, isFetching } = useGroup();
 
   const navigation = useNavigation();
 
-  const { showNewGroupModal, handleShowNewGroupModal, selectedGroup, selectedMenu  } = useGroups();
+  const {
+    showNewGroupModal,
+    handleShowNewGroupModal,
+    selectedGroup,
+    selectedMenu,
+    showInviteModal
+  } = useGroups();
 
   function handleSelectGroup(group: any) {
     navigation.navigate(
@@ -24,10 +30,12 @@ export function useGroupsController() {
   return {
     showNewGroupModal,
     handleShowNewGroupModal,
+    invites,
     groups,
     isFetchingGroups: isFetching,
     handleSelectGroup,
     selectedGroup,
-    selectedMenu
+    selectedMenu,
+    showInviteModal
   }
 }

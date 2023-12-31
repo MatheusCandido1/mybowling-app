@@ -38,9 +38,11 @@ import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
 import { Avatar } from "../../components/Shared/Avatar";
 import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from 'react-native';
 
 
 export function Dashboard() {
+  const { height } = Dimensions.get('window');
 
   const navigation = useNavigation();
 
@@ -207,7 +209,12 @@ export function Dashboard() {
       {isLoading ? ( <OverlayLoading /> ) : (
         <>
           <Header />
-          <Content>
+          <Content
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={
+              height <= 700 ? true : false
+            }
+          >
             <Title>Dashboard</Title>
             <StatsContainer>
               <ArsenalStatsCard>
@@ -239,8 +246,6 @@ export function Dashboard() {
                 </Swiper>
                 )}
 
-
-
               </ArsenalStatsCard>
               <AllTimeScoreCard>
                 <View
@@ -265,7 +270,6 @@ export function Dashboard() {
             <Title style={{marginBottom: 16}}>Splits</Title>
             {splits_converted.length == 0 && <EmptySplits />}
             <Swiper
-              showsPagination={true}
               loop
               paginationStyle={{
                 bottom: -8,
@@ -287,7 +291,7 @@ export function Dashboard() {
 
             </Swiper>
             </SplitsContainer>
-
+            {height < 700 && <View style={{height: 60}}></View>}
           </Content>
         </>
 

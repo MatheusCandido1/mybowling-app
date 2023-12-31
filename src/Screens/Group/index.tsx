@@ -7,9 +7,8 @@ import { Games } from "../../components/GroupDetails/Games";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 import { Header } from "../../components/Shared/Header";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
-import { useGroupDetails } from "../../hooks/useGroupDetails";
-import { useGroupShow } from "../../hooks/useGroupShow";
+import { InviteMemberPopup } from "../../components/GroupDetails/InviteMemberPopup";
+import { MemberDetailsModal } from "../../components/GroupDetails/MemberDetailsModal";
 
 interface GroupProps {
   id: number;
@@ -21,7 +20,10 @@ export function Group({ id }: GroupProps) {
     handleSelectMenu,
     groupDetail,
     isFetching,
-    isLoggedUserAdmin
+    isLoggedUserAdmin,
+    handleShowInviteMemberPopup,
+    showInviteMemberPopup,
+    handleCloseInviteMemberPopup
   } = useGroupController(id);
 
   const navigation = useNavigation();
@@ -59,7 +61,9 @@ export function Group({ id }: GroupProps) {
 
   const AddMemberGroupButton = () => {
     return (
-      <AddMemberContainer>
+      <AddMemberContainer
+        onPress={handleShowInviteMemberPopup}
+      >
         <AddMemberText>
           Member
         </AddMemberText>
@@ -73,6 +77,10 @@ export function Group({ id }: GroupProps) {
     <>
     {isFetching ? <OverlayLoading /> : (
         <Container>
+        <InviteMemberPopup
+          showInviteMemberPopup={showInviteMemberPopup}
+          handleCloseInviteMemberPopup={handleCloseInviteMemberPopup}
+        />
         <Header
         title="Group"
         onPress={handleBackButtonPress}
@@ -86,6 +94,7 @@ export function Group({ id }: GroupProps) {
           <GroupButton title='Members' icon='account-multiple' />
 
         </HeaderGroup>
+        { <AddMemberGroupButton /> }
 
         {selectedMenu === 'Standings' ? <Standings standings={groupDetail.standings} /> : null}
         {selectedMenu === 'Members' ? <Members members={groupDetail.members} isLoggedUserAdmin /> : null}

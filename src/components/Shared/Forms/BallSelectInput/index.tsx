@@ -12,19 +12,19 @@ import { useBalls } from "../../../../hooks/useBalls";
 interface BallSelectInputProps {
   label: string;
   error?: string;
-  onChange?(value: string ): void;
-  value?: string | undefined | null;
+  onChange?(value: string, item: IBall): void;
+  value?: string | null;
 }
 
 export function BallSelectInput({ label, error, onChange, value }: BallSelectInputProps) {
-  const { balls, defaultBall } = useBalls();
+  const { balls } = useBalls();
 
   const [selectedBall, setSelectedBall] = useState<IBall | null>(() => {
     if (value === null || value === undefined) {
       resetSelectedBall();
       return undefined; // Set the input to its default state
     } else {
-      const foundBall = balls.find((b: IBall) => b.id === value);
+      const foundBall = balls.find((b: IBall) => b.id === value.id);
       return foundBall || null;
     }
   });
@@ -42,7 +42,7 @@ export function BallSelectInput({ label, error, onChange, value }: BallSelectInp
       return;
     }
     setSelectedBall(ball);
-    onChange?.(ball.id.toString());
+    onChange?.(ball.id.toString(), ball);
   }
 
   function getColor(ball: IBall) {

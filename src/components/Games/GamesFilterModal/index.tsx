@@ -1,13 +1,32 @@
 import { Modal, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Container, Header, Overlay } from "./styles";
+import { BallContainer, ButtonContainer, Container, DateContainer, Footer, Form, Header, LocationContainer, Overlay, Title } from "./styles";
+import { DateInput } from "../../Shared/Forms/DateInput/DateInput";
+import { BallSelectInput } from "../../Shared/Forms/BallSelectInput";
+import { SelectInput } from "../../Shared/Forms/SelectInput";
+import { MainButton } from "../../Shared/Buttons/MainButton";
+import { useGamesFilterModalController } from "./useGamesFilterModalController";
+import { SecondaryButton } from "../../Shared/Buttons/SecondaryButton";
+import { useGames } from "../../../hooks/useGames";
 
 interface GameFilterModalProps {
   showModal: boolean;
-  setShowModal: (value: boolean) => void;
 }
 
-export function GamesFilterModal({ showModal, setShowModal }: GameFilterModalProps ) {
+export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
+
+  const {
+    locations,
+    handleCloseFiltersModal,
+    handleApplyFilters,
+    currentFilters,
+    handleStartDateChange,
+    handleEndDateChange,
+    handleBallChange,
+    handleLocationChange,
+    handleResetCurrentFilters
+  } = useGamesFilterModalController();
+
   return (
     <Modal
       visible={showModal}
@@ -17,12 +36,59 @@ export function GamesFilterModal({ showModal, setShowModal }: GameFilterModalPro
         <Overlay>
           <Container>
             <Header>
+              <Title>Filter Games</Title>
               <TouchableOpacity
-                onPress={() => setShowModal(false)}
+                onPress={handleCloseFiltersModal}
               >
                 <MaterialCommunityIcons name="close" size={32} color="#000" />
               </TouchableOpacity>
             </Header>
+            <Form>
+              <DateContainer>
+                <DateInput
+                  label="Start Date"
+                  value={currentFilters.start_date}
+                  onChange={handleStartDateChange}
+                />
+                <DateInput
+                  label="End Date"
+                  value={currentFilters.end_date}
+                  onChange={handleEndDateChange}
+                />
+              </DateContainer>
+
+              <LocationContainer>
+                <SelectInput
+                  label="Location"
+                  items={locations}
+                  value={currentFilters.location}
+                  onChange={handleLocationChange}
+                  selectedValue={currentFilters.location}
+                />
+              </LocationContainer>
+              <BallContainer>
+                <BallSelectInput
+                  label="Ball"
+                  value={currentFilters.ball}
+                  onChange={handleBallChange}
+                />
+              </BallContainer>
+              <Footer>
+                <ButtonContainer>
+                  <MainButton
+                    label="Apply Filters"
+                    onPress={() => handleApplyFilters(currentFilters)}
+                  />
+                </ButtonContainer>
+                <ButtonContainer>
+                  <SecondaryButton
+                    label="Reset Filters"
+                    onPress={handleResetCurrentFilters}
+                  />
+                </ButtonContainer>
+               </Footer>
+
+            </Form>
 
           </Container>
         </Overlay>

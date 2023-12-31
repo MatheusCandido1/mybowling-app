@@ -24,12 +24,21 @@ export const SearchContainer = styled.View`
 export const SearchButton = styled.TouchableOpacity`
   height: 40px;
   border-radius: 8px;
-  background-color: #0d9488;
+  background-color: #FFF;
   align-items: center;
   justify-content: center;
   flex-direction: row;
   gap: 4px;
   padding: 0 8px;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+`;
+
+export const SearchButtonText = styled.Text`
+  font-size: 16px;
+  color: #0d9488;
+  font-weight: 700;
 `;
 
 export const FilterText = styled.Text`
@@ -46,6 +55,8 @@ export const FilterItem = styled.View`
   flex-direction: row;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 

@@ -9,6 +9,14 @@ interface GroupsContextData {
   selectedGroup: any;
   selectedMenu: 'Games' | 'Members'  | 'Standings';
   handleSelectMenu(menu: 'Games' | 'Members'  | 'Standings'): void;
+  showInviteModal: boolean;
+  handleShowInviteModal(): void;
+  handleCloseInviteModal(): void;
+  handleSelectMember(member: any): void;
+  selectedMember: any;
+  showMemberDetailsModal: boolean;
+  handleCloseMemberDetailsModal(): void;
+  handleShowMemberDetailsModal(): void;
 }
 
 export const GroupsContext = createContext({} as GroupsContextData);
@@ -16,10 +24,24 @@ export const GroupsContext = createContext({} as GroupsContextData);
 export function GroupsProvider({children}: {children: React.ReactNode}) {
   const [showNewGroupModal, setShowNewGroupModal] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<any>(null);
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<any>(null);
+  const [showMemberDetailsModal, setShowMemberDetailsModal] = useState(false);
 
   const [selectedMenu, setSelectedMenu] = useState<'Games' | 'Members'  | 'Standings'>('Standings');
 
-  const navigation = useNavigation();
+  function handleSelectMember(member: any) {
+    setSelectedMember(member);
+    handleShowMemberDetailsModal();
+  }
+
+  function handleShowMemberDetailsModal() {
+    setShowMemberDetailsModal(true);
+  }
+
+  function handleCloseMemberDetailsModal() {
+    setShowMemberDetailsModal(false);
+  }
 
   function handleShowNewGroupModal() {
     setShowNewGroupModal(true);
@@ -37,6 +59,14 @@ export function GroupsProvider({children}: {children: React.ReactNode}) {
     setSelectedMenu(menu);
   }
 
+  function handleShowInviteModal() {
+    setShowInviteModal(true);
+  }
+
+  function handleCloseInviteModal() {
+    setShowInviteModal(false);
+  }
+
   return (
     <GroupsContext.Provider value={{
       showNewGroupModal,
@@ -46,7 +76,14 @@ export function GroupsProvider({children}: {children: React.ReactNode}) {
       selectedGroup,
       selectedMenu,
       handleSelectMenu,
-
+      showInviteModal,
+      handleShowInviteModal,
+      handleCloseInviteModal,
+      handleSelectMember,
+      selectedMember,
+      handleCloseMemberDetailsModal,
+      handleShowMemberDetailsModal,
+      showMemberDetailsModal
     }}>
       {children}
     </GroupsContext.Provider>

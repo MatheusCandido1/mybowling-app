@@ -6,6 +6,16 @@ import { useState } from "react";
 export function useGroupController(id: number) {
   const { loggedUser } = useAuth();
 
+  const [showInviteMemberPopup, setShowInviteMemberPopup] = useState(false);
+
+  function handleShowInviteMemberPopup() {
+    setShowInviteMemberPopup(true);
+  }
+
+  function handleCloseInviteMemberPopup() {
+    setShowInviteMemberPopup(false);
+  }
+
   const [selectedMenu, setSelectedMenu] = useState<'Games' | 'Members'  | 'Standings'>('Standings');
 
   function handleSelectMenu(menu: 'Games' | 'Members'  | 'Standings') {
@@ -21,6 +31,9 @@ export function useGroupController(id: number) {
     selectedMenu,
     isFetching,
     groupDetail,
-    isLoggedUserAdmin
+    isLoggedUserAdmin,
+    showInviteMemberPopup,
+    handleShowInviteMemberPopup,
+    handleCloseInviteMemberPopup
   }
 }

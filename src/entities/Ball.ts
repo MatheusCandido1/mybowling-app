@@ -3,4 +3,5 @@ export interface IBall {
   name: string;
   color: string;
   weight: number;
+  type: string;
 }

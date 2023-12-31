@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+import {Dimensions} from 'react-native';
+
+const { height } = Dimensions.get('window');
+
 export const Container = styled.SafeAreaView`
   background-color: #FFF;
   flex: 1;
@@ -20,10 +24,9 @@ export const HeaderContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const Content = styled.View`
+export const Content = styled.ScrollView`
   flex: 1;
   padding: 24px;
-  margin-bottom: 24px;
 `;
 
 export const DateContainer = styled.View`
@@ -132,7 +135,6 @@ export const ArsenalStatsCardTitle = styled.Text`
 export const AllTimeScoreCard = styled.View`
   border-radius: 8px;
   width: 35%;
-  height: 172px;
   justify-content: flex-start;
   align-items: center;
   background-color: #0d9488;
@@ -148,7 +150,7 @@ export const BallContainer = styled.View`
 
 export const SplitsContainer = styled.View`
   margin-top: 16px;
-  flex: 1;
+  height: 166px;
 `;
 
 export const SplitStatsContainer = styled.View`

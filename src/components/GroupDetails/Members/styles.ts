@@ -45,7 +45,7 @@ export const Label = styled.Text`
 `;
 
 export const ActionButton = styled.TouchableOpacity`
-  background-color: #981b1b;
+  background-color: #0fab9e;
   padding: 8px;
   border-radius: 8px;
 `;
@@ -58,7 +58,7 @@ export const ActionButtonText = styled.Text`
 
 export const RoleBadge = styled.View`
   background-color: #0d9488;
-  padding: 6px;
+  padding: 6px 4px;
   border-radius: 8px;
 `;
 

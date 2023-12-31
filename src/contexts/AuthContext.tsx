@@ -28,7 +28,6 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
         console.error('Error fetching token:', error);
       }
     };
-
     fetchLoggedUser(me)
     fetchToken();
   }, []);

@@ -1,8 +1,6 @@
 import { Modal, TouchableOpacity, View } from "react-native";
 import { Container, Content, DeleteBallButton, Header, InputContainer, Overlay, Title } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { CustomTextInput } from "../../Shared/Forms/CustomTextInput";
-import { SelectInput } from "../../Shared/Forms/SelectInput";
 import { useEditBallModalController } from "./useEditBallModalController";
 import { ColorInput } from "../../Shared/Forms/ColorInput";
 import { Controller } from "react-hook-form";
@@ -24,10 +22,9 @@ export function EditBallModal() {
     showConfirmDeletePopup,
     handleOpenConfirmDeletePopup,
     handleCloseConfirmDeletePopup,
-    handleDeleteBall
+    handleDeleteBall,
+    isDefaultBall
   } = useEditBallModalController();
-
-
 
   return (
     <Modal
@@ -40,9 +37,11 @@ export function EditBallModal() {
           <Header>
             <View style={{flexDirection: 'row', gap: 8, justifyContent: 'center', alignItems: 'center'}}>
               <Title>Edit Ball</Title>
-              <DeleteBallButton onPress={handleOpenConfirmDeletePopup}>
-                <MaterialCommunityIcons name="delete" size={24} color="#FFF"  />
-              </DeleteBallButton>
+              {!isDefaultBall && (
+                <DeleteBallButton onPress={handleOpenConfirmDeletePopup}>
+                  <MaterialCommunityIcons name="delete" size={24} color="#FFF"  />
+                </DeleteBallButton>
+              )}
             </View>
 
             <TouchableOpacity
@@ -53,13 +52,11 @@ export function EditBallModal() {
           </Header>
           <Content>
 
-
-
           <Controller
-          control={control}
-          name="name"
-          defaultValue=""
-          render={({ field: { onChange, value }}) => (
+            control={control}
+            name="name"
+            defaultValue=""
+            render={({ field: { onChange, value }}) => (
               <TextInputWithLabel
                 label="Ball name/brand"
                 value={value}
@@ -113,7 +110,7 @@ export function EditBallModal() {
         handleCloseConfirmPopup={handleCloseConfirmDeletePopup}
         handleConfirm={handleDeleteBall}
         title="Delete Ball"
-        text="Are you sure you want to delete this ball?"
+        text="Are you sure you want to delete this ball? All the games played with this ball will also be deleted."
       />
     </Modal>
   )

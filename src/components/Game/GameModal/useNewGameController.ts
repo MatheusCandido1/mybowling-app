@@ -9,14 +9,16 @@ import Toast from 'react-native-toast-message';
 import { useOnGoingGames } from "../../../hooks/useOnGoingGames";
 import { useGame } from "../../../hooks/useGame";
 import { useEffect, useState } from "react";
-import { useGroup } from "../../../hooks/useGroup";
+import { useGroup } from "../../../hooks/useGroupGetAll";
 
-type FormData = {
-  game_date: Date;
-  location_id: string;
-  ball_id?: string;
-  group_id?: string;
-};
+const schema = z.object({
+  game_date: z.date(),
+  location_id: z.string({ required_error: 'Please select a location' }).nonempty({ message: 'Please select a location' }),
+  ball_id:  z.string({ required_error: 'Please select a ball' }).nonempty({ message: 'Please select a ball.' }),
+  group_id: z.string().optional(),
+});
+
+type FormData = z.infer<typeof schema>;
 
 export function useNewGameController() {
   const { locations, isFetching: isFetchingLocations } = useLocations();
@@ -36,8 +38,6 @@ export function useNewGameController() {
   const shouldEnableGroups = groups.length > 0;
 
 
-
-
   function toggleBalls() {
     if (balls.length === 0) {
       Toast.show({
@@ -52,13 +52,6 @@ export function useNewGameController() {
     setEnabledBalls(!enabledBalls);
   }
 
-  const dynamicSchema = z.object({
-    game_date: z.date(),
-    location_id: z.string({ required_error: 'Please select a location' }),
-    ball_id: enabledBalls ? z.string({ required_error: 'Please select a ball' }) : z.string().optional(),
-    group_id: z.string().optional(),
-  });
-
   const {
     handleSubmit,
     register,
@@ -66,7 +59,7 @@ export function useNewGameController() {
     reset,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(dynamicSchema),
+    resolver: zodResolver(schema),
   });
 
   const queryClient = useQueryClient();

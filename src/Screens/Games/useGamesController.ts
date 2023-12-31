@@ -1,27 +1,28 @@
 import { useState } from "react";
-import { useGames } from "../../hooks/useGames";
+import { useGamesGetAll } from "../../hooks/useGamesGetAll";
 import { GamesFilters } from "../../services/gamesService/getAll";
 import { IBall } from "../../entities/Ball";
 import { ILocation } from "../../entities/Location";
 import { IGame } from "../../entities/Game";
+import { useGames } from "../../hooks/useGames";
 
 export function useGamesController() {
 
   const today = new Date();
 
-  const [filters, setFilters] = useState<GamesFilters>({
-    start_date: new Date(today.getFullYear(), today.getMonth(), 1),
-    end_date: new Date(today.getFullYear(), today.getMonth() + 1, 0),
-    ball: null,
-    location: null
-  })
+  const {
+    filters,
+    showFiltersModal,
+    handleCloseFiltersModal,
+    handleShowFiltersModal,
+    games,
+    isFetchingGames
+   } = useGames();
 
   const [selectedGame, setSelectedGame] = useState<IGame | null>(null);
 
-  const { games, isFetching } = useGames(filters);
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [showFilterModal, setShowFilterModal] = useState(false);
 
   function handleShowDetailsModal(game: IGame) {
     setSelectedGame(game)
@@ -33,26 +34,15 @@ export function useGamesController() {
     setShowDetailsModal(false);
   }
 
-  function handleShowFilterModal() {
-    setShowFilterModal(true);
-  }
-
-  function handleCloseFilterModal() {
-
-    setShowFilterModal(false);
-  }
-
-
-
   return {
     games,
-    isLoading: isFetching,
+    isLoading: isFetchingGames,
+    showFiltersModal,
+    handleShowFiltersModal,
+    handleCloseFiltersModal,
     showDetailsModal,
-    showFilterModal,
     handleShowDetailsModal,
     handleCloseDetailsModal,
-    handleShowFilterModal,
-    handleCloseFilterModal,
     filters,
     selectedGame
   }

@@ -1,7 +1,7 @@
 import { Header } from "../../components/Shared/Header";
-import { Container, Content, SearchContainer, SearchButton, GamesContainer, FilterText, FilterItem, FilterContainer} from "./styles";
+import { Container, Content, SearchContainer, SearchButton, GamesContainer, FilterText, FilterItem, FilterContainer, SearchButtonText} from "./styles";
 import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { GameCard } from "../../components/Games/GameCard";
 import { useGamesController } from "./useGamesController";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
@@ -10,6 +10,8 @@ import { GamesFilterModal } from "../../components/Games/GamesFilterModal";
 import { formatFromDate } from "../../utils/formatDate";
 import { Ball2Icon } from "../../components/Icons/Ball2Icon";
 import { useNavigation } from "@react-navigation/native";
+import { EmptyGames } from "../../components/Games/EmptyGames";
+import { formatBallName } from "../../utils/formatBallName";
 
 export function Games() {
   const navigation = useNavigation();
@@ -18,11 +20,11 @@ export function Games() {
     isLoading,
     games,
     showDetailsModal,
-    showFilterModal,
+    showFiltersModal,
     handleCloseDetailsModal,
     handleShowDetailsModal,
-    handleShowFilterModal,
-    handleCloseFilterModal,
+    handleShowFiltersModal,
+    handleCloseFiltersModal,
     filters,
     selectedGame
   } = useGamesController();
@@ -62,7 +64,7 @@ export function Games() {
               <Ball2Icon  height={24} width={24} color={filters.ball.color} />
               <FilterText>
                 <FilterText style={{fontWeight: 'bold'}}>Ball: </FilterText>
-                Motiv Ripcord - 14lb
+                {formatBallName(filters.ball)}
               </FilterText>
               </FilterItem>
               ): null
@@ -72,19 +74,15 @@ export function Games() {
                 <Entypo name="location" size={24} color="#0d9488" />
                 <FilterText>
                 <FilterText style={{fontWeight: 'bold'}}>Location: </FilterText>
-                South Point Bowling Center
+                {filters.location.name}
                 </FilterText>
               </FilterItem>
             ): null}
 
 
             </FilterContainer>
-            <SearchButton
-              onPress={() => handleShowFilterModal()}
-            >
-              <Ionicons name="options" size={24} color="#FFF" />
-            </SearchButton>
           </SearchContainer>
+          {games.length === 0 && <EmptyGames />}
           <GamesContainer>
             <FlatList
               data={games}
@@ -115,12 +113,20 @@ export function Games() {
         />
       ) : null}
 
-      {showFilterModal ? (
+      {showFiltersModal ? (
         <GamesFilterModal
-          showModal={showFilterModal}
-          setShowModal={handleCloseFilterModal}
+          showModal={showFiltersModal}
         />
       ) : null}
+
+
+        <SearchButton
+          onPress={handleShowFiltersModal}
+        >
+          <SearchButtonText>Filters</SearchButtonText>
+
+          <Ionicons name="options" size={24} color="#0d9488" />
+        </SearchButton>
       </Container>
   )
 }

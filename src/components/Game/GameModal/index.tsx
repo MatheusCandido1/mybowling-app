@@ -30,8 +30,10 @@ import { OnGoingGameCard } from "../OnGoingGames/OnGoingGameCard";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 import { IGame } from "../../../entities/Game";
-import { useBalls } from "../../../hooks/useBalls";
 import { Switch } from 'react-native-switch';
+import { Separator } from "../../Shared/Separator";
+import { isDeviceSmall } from "../../../utils/deviceDimensions";
+import { NewGameModalHeight } from "../../../utils/modalHeightByDevice";
 
 
 export function GameModal() {
@@ -55,6 +57,7 @@ export function GameModal() {
     shouldEnableGroups,
   } = useNewGameController();
 
+  const ModalHeight = shouldEnableGroups ? NewGameModalHeight()?.dimension - 90 : NewGameModalHeight()?.dimension;
 
   const sortedOnGoingGames = onGoingGames.sort((a: IGame, b: IGame) => {
     if (filter === 'Most Recent') {
@@ -158,10 +161,10 @@ export function GameModal() {
         <Controller
           control={control}
           name="location_id"
-          defaultValue={undefined}
+          defaultValue=""
           render={({ field: { onChange, value }}) => (
             <SelectInput
-              label="Select bowling alley"
+              label="Select location"
               items={locations}
               onChange={onChange}
               value={value}
@@ -176,7 +179,7 @@ export function GameModal() {
             <Controller
               control={control}
               name="group_id"
-              defaultValue={undefined}
+              defaultValue=""
               render={({ field: { onChange, value }}) => (
                 <SelectInput
                   label="Select the group (optional)"
@@ -193,29 +196,23 @@ export function GameModal() {
         }
 
         <InputContainer>
-        <BallSwitch />
-
-        {enabledBalls ? (
           <Controller
           name="ball_id"
           control={control}
-          defaultValue={undefined}
+          defaultValue={""}
           render={({ field: { onChange, value }}) => (
             <BallSelectInput
-              label="Select the ball"
+              label="Select ball"
               onChange={onChange}
               value={value}
               error={errors.ball_id?.message}
             />
             )}
           />
-        ): (
-          <View style={{height: 97, width: '100%'}}></View>
-        )}
         </InputContainer>
         <InputContainer
           style={{
-            marginTop: -8
+            marginTop: 4
           }}
         >
           <MainButton
@@ -283,8 +280,10 @@ export function GameModal() {
       {!isLoadingResources && (
         <Container
           style={{
-            marginTop: !shouldEnableGroups ? 160 : 75
+            marginTop: ModalHeight,
           }}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={isDeviceSmall}
         >
           <ModalHeader
             title="Start Bowling!"
@@ -292,6 +291,7 @@ export function GameModal() {
           />
           <GroupButtonGame />
           {showNewGame ? newGame() : onGoingGame()}
+          <Separator height={40} device="small" />
         </Container>
       )}
       </Overlay>

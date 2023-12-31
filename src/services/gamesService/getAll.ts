@@ -3,8 +3,6 @@ import { IGame } from "../../entities/Game";
 import { ILocation } from "../../entities/Location";
 import { httpClient } from "../HttpClient";
 
-type GamesResponse = Array<IGame>;
-
 export type GamesFilters = {
   start_date: Date;
   end_date: Date;

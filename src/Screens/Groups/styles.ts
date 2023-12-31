@@ -36,6 +36,7 @@ export const NewGroupButtonText = styled.Text`
 
 export const GroupsList = styled.View`
   margin-top: 16px;
+  flex: 1;
 `;
 
 

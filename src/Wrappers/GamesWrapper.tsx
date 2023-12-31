@@ -1,10 +1,10 @@
 import { Games } from "../Screens/Games";
-import { GameProvider } from "../contexts/GameContext";
+import { GamesProvider } from "../contexts/GamesContext";
 
 export function GamesWrapper() {
   return (
-    <GameProvider>
+    <GamesProvider>
       <Games />
-    </GameProvider>
+    </GamesProvider>
   )
 }

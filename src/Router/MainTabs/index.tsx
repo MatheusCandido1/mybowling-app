@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 const StackNavigator = createStackNavigator();
+import { Dimensions } from 'react-native';
 
 import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
@@ -20,13 +21,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 export function MainTabs() {
+  const { height } = Dimensions.get('window');
+
+  const shouldAddMargin = height > 700;
+
   return (
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarLabel: () => null,
           tabBarStyle: {
-            height: isIpad() ?  90 : 75,
+            height: 75,
             backgroundColor: '#0d9488',
             borderTopWidth: 0,
           }
@@ -42,7 +47,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  marginTop: shouldAddMargin ? 30 : 0,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -65,7 +70,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: 30,
+                  marginTop: shouldAddMargin ? 30 : 0,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -88,7 +93,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  marginTop: shouldAddMargin ? 30 : 0,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -111,7 +116,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  marginTop: shouldAddMargin ? 30 : 0,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -134,7 +139,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: focused ? ( isIpad() ? -84 : 30): ( isIpad() ? -4 : 30),
+                  marginTop: shouldAddMargin ? 30 : 0,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,

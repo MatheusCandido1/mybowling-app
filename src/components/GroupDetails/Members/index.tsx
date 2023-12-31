@@ -3,7 +3,8 @@ import { Avatar } from "../../Shared/Avatar";
 import { Container, Content, MemberRow, Label, ActionButton, Header, HeaderLabel, RoleBadge, RoleBadgeText } from "./styles";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useGroup } from "../../../hooks/useGroup";
+import { MemberDetailsModal } from "../MemberDetailsModal";
 
 interface MemberProps {
   members: [];
@@ -13,31 +14,34 @@ interface MemberProps {
 
 export function Members({ members, isLoggedUserAdmin }: MemberProps) {
 
+  const { showMemberDetailsModal, handleSelectMember } = useGroup();
 
-  const Member = ({name, role, avatar}:{name: string, role: string, avatar: string}) => (
+
+
+  const Member = ({member}:{member: any}) => (
     <MemberRow>
       <View style={{width: '60%', alignItems:'center', flexDirection: 'row', gap: 8, justifyContent: 'flex-start'}}>
-        <Avatar imageUri={avatar} />
-        <Label>{name}</Label>
+        <Avatar imageUri={member.avatar} />
+        <Label>{member.name}</Label>
       </View>
       <View style={{width: '20%', alignItems:'center'}}>
         <RoleBadge
           style={{
-            backgroundColor: role === 'Admin' ? '#0d9488' : '#0d5d94',
+            backgroundColor: member.role === 'Admin' ? '#0d9488' : '#0d5d94',
           }}
         >
           <RoleBadgeText>
-          {role}
+          {member.role}
           </RoleBadgeText>
         </RoleBadge>
       </View>
-      {isLoggedUserAdmin ? (
          <View style={{width: '20%', alignItems:'flex-end'}}>
-         <ActionButton>
-           <MaterialCommunityIcons name="account-edit" size={18} color="#FFF" />
+         <ActionButton
+            onPress={() => handleSelectMember(member)}
+         >
+           <MaterialCommunityIcons name="account-details" size={18} color="#FFF" />
          </ActionButton>
        </View>
-      ): null}
 
     </MemberRow>
   )
@@ -65,10 +69,12 @@ export function Members({ members, isLoggedUserAdmin }: MemberProps) {
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{ height: 8, backgroundColor: '#FFF' }} />}
             renderItem={({ item }) => (
-              <Member name={item.name} role={item.role} avatar={item.avatar} />
+              <Member member={item} />
             )}
           />
       </Content>
+
+      {showMemberDetailsModal && <MemberDetailsModal /> }
     </Container>
   )
 }

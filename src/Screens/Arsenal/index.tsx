@@ -19,6 +19,8 @@ import { IBall } from "../../entities/Ball";
 import { Ball2Icon } from "../../components/Icons/Ball2Icon";
 import { EditBallModal } from "../../components/Arsenal/EditBallModal";
 import { useNavigation } from "@react-navigation/native";
+import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
+import { EmptyArsenal } from "../../components/Arsenal/EmptyArsenal";
 
 export function Arsenal() {
   const navigation = useNavigation();
@@ -69,6 +71,7 @@ export function Arsenal() {
        </HeaderContainer>
 
        <View style={{height: 16}} />
+       {balls.length === 0 && <EmptyArsenal />}
 
        <FlatList
         data={balls}

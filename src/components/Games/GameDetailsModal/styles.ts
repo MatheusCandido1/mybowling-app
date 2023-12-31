@@ -1,4 +1,6 @@
-import styled from "styled-components/native";
+import styled from "styled-components/native"
+
+import { isDeviceSmall } from "../../../utils/deviceDimensions";
 
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.6);
@@ -10,7 +12,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: 200px;
+  margin-top: 132px;
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;
@@ -68,7 +70,5 @@ export const FramesContainer = styled.View`
 
 export const Footer = styled.View`
   width: 100%;
-  height: 60px;
-  background-color: #0D9488;
-  margin: 24px 0 48px 0;
+  height: ${isDeviceSmall ? '32px':'60px'};
 `;

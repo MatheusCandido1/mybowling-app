@@ -1,4 +1,3 @@
-import { ILocation } from "../../../../entities/Location";
 import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
 import { Container, Label } from "./styles";
 import SelectDropdown from 'react-native-select-dropdown'
@@ -9,12 +8,22 @@ interface SelectInputProps {
   label: string;
   error?: string;
   items: any[];
-  onChange?(value: string): void;
-  value: string | undefined;
+  onChange?(value: string, item?: Item): void;
+  value: string | null;
   placeholder?: string;
 }
 
+interface Item {
+  id: string;
+  name: string;
+}
+
 export function SelectInput({ label, error, items, onChange, value, placeholder }: SelectInputProps) {
+
+  function handleSelect(value: { id: string; name: string; }) {
+    onChange && onChange(value.id.toString(), value)
+  }
+
   return (
     <Container>
       <Label>
@@ -23,9 +32,9 @@ export function SelectInput({ label, error, items, onChange, value, placeholder 
       <SelectDropdown
           data={items}
           onSelect={(selectedItem, index) => {
-            onChange && onChange(selectedItem.id.toString())
+            handleSelect(selectedItem)
           }}
-          defaultButtonText={value  ?? "Select an option"}
+          defaultButtonText={value?.name ?? "Select an option"}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.name
           }}

@@ -94,6 +94,7 @@ export function useEditBallModalController() {
     try {
       await deleteBall(selectedBall!.id);
       queryClient.invalidateQueries({ queryKey: ['balls'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       handleCloseConfirmDeletePopup();
       handleCloseEditBallModal();
 
@@ -115,6 +116,7 @@ export function useEditBallModalController() {
     }
   }
 
+  const isDefaultBall = selectedBall?.type === 'DEFAULT';
 
   return {
     weights,
@@ -129,6 +131,7 @@ export function useEditBallModalController() {
     showConfirmDeletePopup,
     handleOpenConfirmDeletePopup,
     handleCloseConfirmDeletePopup,
-    handleDeleteBall
+    handleDeleteBall,
+    isDefaultBall
   }
 }

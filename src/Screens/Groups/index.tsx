@@ -12,6 +12,11 @@ import { useGroupsController } from './useGroupsController';
 import { NewGroupModal } from '../../components/Groups/NewGroupModal';
 import { GroupCard } from '../../components/Groups/GroupCard';
 import { useNavigation } from '@react-navigation/native';
+import { FlatList, View } from 'react-native';
+import { EmptyGroups } from '../../components/Groups/EmptyGroups';
+import { useState } from 'react';
+import { InvitesModal } from '../../components/Groups/InvitesModal';
+import { InvitesButton } from '../../components/Groups/InvitesButton';
 
 
 export function Groups() {
@@ -21,7 +26,8 @@ export function Groups() {
     handleShowNewGroupModal,
     handleSelectGroup,
     selectedGroup,
-    selectedMenu
+    selectedMenu,
+    showInviteModal
   } = useGroupsController();
 
   const navigation = useNavigation();
@@ -33,8 +39,8 @@ export function Groups() {
   return (
     <Container>
     <Header
-    title="Groups"
-    onPress={handleBackButtonPress}
+      title="Groups"
+      onPress={handleBackButtonPress}
     />
       <Content>
         <HeaderContainer>
@@ -49,25 +55,39 @@ export function Groups() {
             />
           </NewGroupButton>
         </HeaderContainer>
-
+        {}
         <GroupsList>
-          {groups.map((group: any) => (
+        <FlatList
+          data={groups}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+          ListEmptyComponent={() =>
+          <EmptyGroups />
+          }
+          renderItem={({ item }) => (
             <GroupCard
-              key={group.id}
-              name={group.name}
-              cover={group.cover}
-              description={group.description}
-              members={group.members}
-              onPress={() => handleSelectGroup(group)}
+              name={item.name}
+              cover={item.cover}
+              description={item.description}
+              members={item.members}
+              onPress={() => handleSelectGroup(item)}
             />
-          ))}
-        </GroupsList>
+          )}
+        /></GroupsList>
 
       </Content>
+
+      <InvitesButton />
+
 
       {showNewGroupModal && (
         <NewGroupModal />
       )}
+      {showInviteModal && (
+        <InvitesModal />
+      )}
+
     </Container>
   )
 }

@@ -15,15 +15,21 @@ import {
   CloseFrameText,
   CloseFrameSubText,
   SplitFrameContainer,
-  ScoreContainer
+  ScoreContainer,
+  InformationLabel,
+  InformationResult,
+  InformationItem,
+  ResultBadge,
+  ResultBadgeText
  } from "./styles";
+import { isOpenFrame, isSpare, isStrike } from "../../../../utils/scoreHelper";
+import { isSplit } from "../../../../utils/splitHelper";
 
 interface FrameCardProps {
   frame: IFrame;
 }
 
 export function FrameCard({ frame }: FrameCardProps) {
-  const isSplit = frame.is_split ? frame.split : false;
 
   const ClosedFrame = ({isStrike}: {isStrike: boolean}) => {
     return (
@@ -46,6 +52,39 @@ export function FrameCard({ frame }: FrameCardProps) {
     )
   }
 
+  function formatResult(frame: IFrame) {
+    if(isStrike(frame)) {
+      return 'Strike';
+    }
+    if(isSpare(frame)) {
+      if(isSplit(frame.pins)) {
+        return 'Split Converted'
+      }
+      return 'Spare';
+    }
+    if(isOpenFrame(frame)) {
+      return 'Open Frame';
+    }
+  }
+
+  const BoardDisplay = () => {
+    if(frame.pins) {
+      return <SplitFrame split={frame.pins} />
+    }
+
+    if(frame.first_shot === 10) {
+      return <ClosedFrame isStrike />
+    }
+
+    if(frame.first_shot !== 10 && frame.points === 10) {
+      return <ClosedFrame isStrike={false} />
+    }
+
+    if(frame.first_shot !== 10 && frame.points !== 10) {
+      return <OpenFrame />
+    }
+  }
+
   return (
     <Container>
        <FrameNumberContainer>
@@ -53,13 +92,46 @@ export function FrameCard({ frame }: FrameCardProps) {
           <FrameNumber>{frame.frame_number}</FrameNumber>
         </FrameNumberContainer>
       <InformationContainer>
+        <InformationItem>
+          <InformationLabel>First Shot:</InformationLabel>
+          <InformationResult>{frame.first_shot}</InformationResult>
+        </InformationItem>
+        <InformationItem>
+          <InformationLabel>Second Shot:</InformationLabel>
+          <InformationResult>{frame.second_shot}</InformationResult>
+        </InformationItem>
+        {frame.third_shot && (
+          <InformationItem>
+            <InformationLabel>Third Shot:</InformationLabel>
+            <InformationResult>{frame.third_shot}</InformationResult>
+          </InformationItem>
+        )}
+        <InformationItem>
+          <ResultBadge
+            style={{
+              backgroundColor: formatResult(frame) === 'Split Converted' ? '#0fab9e':'#ABB2B9'
+            }}
+          >
+            <ResultBadgeText>{formatResult(frame)}</ResultBadgeText>
+          </ResultBadge>
+        </InformationItem>
+
+        {frame.is_split && (
+          <InformationItem>
+          <ResultBadge
+            style={{
+              backgroundColor: '#26a9e0',
+            }}
+          >
+            <ResultBadgeText>{frame.pins}</ResultBadgeText>
+          </ResultBadge>
+        </InformationItem>
+
+        )}
 
       </InformationContainer>
       <BoardContainer>
-        {frame.split && <SplitFrame split={frame.split} />}
-        {frame.first_shot === 10 && <ClosedFrame isStrike />}
-        {frame.first_shot !== 10 && frame.points === 10 && <ClosedFrame isStrike={false} />}
-        {frame.first_shot !== 10 && frame.points !== 10 && !frame.split && <OpenFrame />}
+        <BoardDisplay />
       </BoardContainer>
       <ScoreContainer>
         <FrameNumberLabel>Score</FrameNumberLabel>

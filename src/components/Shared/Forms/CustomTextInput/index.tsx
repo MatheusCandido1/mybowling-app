@@ -1,6 +1,7 @@
 import {  TextInput, View } from "react-native"
 import { EvilIcons } from "@expo/vector-icons";
 import {  useState, forwardRef } from "react";
+import { isAndroid } from "../../../../utils/getOS";
 
 interface CustomTextInputProps {
   label: string;
@@ -13,6 +14,7 @@ interface CustomTextInputProps {
 }
 
 export function CustomTextInput({ label, icon, value, onChangeText, isPassword, multiline, lines }: CustomTextInputProps) {
+
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -60,7 +62,7 @@ export function CustomTextInput({ label, icon, value, onChangeText, isPassword, 
             borderColor: !isFocused ? '#253237' : '#0d9488',
             borderBottomWidth: 1,
             paddingLeft: 26,
-            paddingTop:  multiline ? 10:4,
+            paddingTop: isAndroid ? (multiline ? 4 : 12) : (multiline ? 10 : 4),
             fontSize: 14,
             height: multiline ? 75 : 40,
             textAlignVertical: 'top',

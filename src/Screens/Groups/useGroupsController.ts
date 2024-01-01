@@ -1,19 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGroups } from "../../hooks/useGroups";
 import { useGroup } from "../../hooks/useGroupGetAll";
 import { useNavigation } from "@react-navigation/native";
+import { useQueryClient } from "@tanstack/react-query";
+import Toast from "react-native-toast-message";
 
 export function useGroupsController() {
   const { groups, invites, isFetching } = useGroup();
 
   const navigation = useNavigation();
 
+
+  const queryClient = useQueryClient();
+
+
+
   const {
     showNewGroupModal,
     handleShowNewGroupModal,
     selectedGroup,
     selectedMenu,
-    showInviteModal
+    showInviteModal,
+    handleShowInviteModal
   } = useGroups();
 
   function handleSelectGroup(group: any) {
@@ -23,7 +31,29 @@ export function useGroupsController() {
         params: { id: group.id}
       }
     );
+  }
 
+  async function refreshGroups() {
+
+
+
+    const oldData = queryClient.getQueryData(['groups', 'getAll']);
+
+    await queryClient.invalidateQueries({ queryKey: ['groups'] });
+
+    const newData = queryClient.getQueryData(['groups', 'getAll']);
+
+   if(oldData !== newData) {
+    Toast.show({
+      type: 'info',
+      text1: 'You have a new invite! Click here to check it out!',
+      visibilityTime: 5000,
+      autoHide: true,
+      onPress: () => {
+        handleShowInviteModal()
+      }
+    });
+   }
   }
 
 
@@ -36,6 +66,7 @@ export function useGroupsController() {
     handleSelectGroup,
     selectedGroup,
     selectedMenu,
-    showInviteModal
+    showInviteModal,
+    refreshGroups
   }
 }

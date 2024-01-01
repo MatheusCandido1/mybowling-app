@@ -96,7 +96,7 @@ export const FilterButton = styled.TouchableOpacity`
 export const GroupButtonQuantity = styled.View`
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 10px;
   background-color: #FFF;
   justify-content: center;
   align-items: center;

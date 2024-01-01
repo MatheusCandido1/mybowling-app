@@ -147,7 +147,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
     if(newValue === false) {
       newFrames[index].is_split = false;
-      newFrames[index].split = null;
+      newFrames[index].pins = null;
     } else {
       newFrames[index].is_split = true;
     }
@@ -158,7 +158,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   function setSplitValue(newValue: string) {
     const newFrames = [...frames];
     const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
-    newFrames[index].split = newValue;
+    newFrames[index].pins = newValue;
     setFrames(newFrames);
   }
 

@@ -12,6 +12,7 @@ export const ScoreCard = styled.View`
   flex: 1;
   items-align: center;
   justify-content: center;
+  gap: 4px;
 `;
 
 export const FrameNumberLabel = styled.Text`
@@ -26,9 +27,18 @@ export const Label = styled.Text`
   text-align: center;
 `;
 
-export const LabelContainer = styled.View`
-  flex-direction: row;
+export const ResultContainer = styled.View`
+  height: 20px;
+`;
+
+export const SplitResultContainer = styled.View`
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
-  height: 18px;
+  border-color: #000;
+  border-width: 1px;
 `;
+
+

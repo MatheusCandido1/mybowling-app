@@ -1,7 +1,5 @@
 import styled from "styled-components/native";
 
-import { isDeviceSmall } from "../../../utils/deviceDimensions";
-
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.6);
   flex: 1;
@@ -12,7 +10,6 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: ${isDeviceSmall ? '215px':'385px'};
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;

@@ -17,7 +17,7 @@ export function SplitButton({ onPress, disabled }: SplitButtonProps) {
     if(shouldShowSplit) return 'Set Pins';
 
     else {
-      return `Pins: ${currentFrame.split === null ? '' : currentFrame.split}`;
+      return `Pins: ${currentFrame.pins === null ? '' : currentFrame.pins}`;
     }
   }
 

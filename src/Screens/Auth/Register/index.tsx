@@ -13,7 +13,8 @@ import {
   SocialButtonsContainer,
   SocialButton,
   LoginButton,
-  LoginButtonText
+  LoginButtonText,
+  ButtonContainer
 } from './styles';
 
 import HeroSvg from '../../../assets/img/hero.svg'
@@ -25,6 +26,7 @@ import { useRegisterController } from './useRegisterController';
 import { Controller } from 'react-hook-form';
 import { OverlayLoading } from '../../../components/Shared/OverlayLoading';
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
+import { Separator } from '../../../components/Shared/Separator';
 
 
 export function Register() {
@@ -91,12 +93,13 @@ export function Register() {
              )}
            />
 
-
+          <ButtonContainer>
            <MainButton
               onPress={handleSubmit(onSubmit)}
               label="Sign Up"
               isLoading={isLoading}
             />
+            </ButtonContainer>
 
          </Form>
 

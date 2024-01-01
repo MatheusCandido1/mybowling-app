@@ -7,13 +7,47 @@ export const Container = styled.View`
   overflow: hidden;
   flex-direction: row;
   border: 4px solid #0D9488;
-  elevation: 2;
 `;
 
 export const InformationContainer = styled.View`
   width: 35%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const InformationItem = styled.View`
   flex-direction: row;
+  gap: 4px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const InformationLabel = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  text-align: right;
+`;
+
+export const InformationResult = styled.Text``;
+
+export const ResultBadge = styled.View`
+  justifyContent: center;
+  alignItems: center;
+  flexDirection: row;
+  backgroundColor: #ABB2B9;
+  padding: 4px;
+  borderRadius: 4px;
+`;
+
+export const ResultBadgeText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
 `;
 
 export const FrameNumberContainer = styled.View`

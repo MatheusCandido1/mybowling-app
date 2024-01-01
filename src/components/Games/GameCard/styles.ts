@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   height: 180px;
   border-radius: 8px;
-  border: 2px solid #0d9488;
+  border: 3px solid #0d9488;
   width: 100%;
 `;
 
@@ -14,8 +14,6 @@ export const Header = styled.View`
   width: 100%;
   background-color: #0d9488;
   height: 36px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
   padding: 0 4px;
 `;
 

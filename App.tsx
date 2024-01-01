@@ -20,6 +20,23 @@ const toastConfig = {
       }}
     />
   ),
+  info: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#87CEFA',
+      }}
+      contentContainerStyle={{
+        paddingHorizontal: 15,
+     }}
+     text1NumberOfLines={3}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '400',
+        textAlign: 'center',
+      }}
+    />
+  ),
 }
 
 const queryClient = new QueryClient({

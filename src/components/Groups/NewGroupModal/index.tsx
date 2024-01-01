@@ -5,13 +5,14 @@ import { MainButton } from "../../Shared/Buttons/MainButton";
 import { Controller } from 'react-hook-form';
 import { useNewGroupModalController } from "./useNewGroupModalController";
 import { CustomTextInput } from "../../Shared/Forms/CustomTextInput";
-import { DateInput } from "../../Shared/Forms/DateInput/DateInput";
-import { useGroups } from "../../../hooks/useGroups";
-
+import { NewGroupModalHeight } from "../../../utils/modalHeightByDevice";
 
 export function NewGroupModal() {
 
   const { register, handleSubmit, onSubmit, control, isLoading, showNewGroupModal, handleCloseNewGroupModal } = useNewGroupModalController();
+
+
+  const ModalHeight = NewGroupModalHeight()?.dimension;
 
   return (
     <Modal
@@ -20,7 +21,11 @@ export function NewGroupModal() {
     transparent
     >
       <Overlay>
-        <Container>
+        <Container
+          style={{
+            marginTop: ModalHeight
+          }}
+        >
           <Header>
             <Title>New Group</Title>
             <TouchableOpacity
@@ -63,22 +68,6 @@ export function NewGroupModal() {
               <ImageSelector>
                 <ImageSelectorText>Choose an Image</ImageSelectorText>
               </ImageSelector>
-              {/*
-
-                <Controller
-                  control={control}
-                  name="date_limit"
-                  defaultValue={new Date()}
-                  render={({ field: { onChange, value }}) => (
-                    <DateInput
-                      label="Date Limit"
-                      labelColor="#253237"
-                      onChange={onChange}
-                      value={value}
-                    />
-                  )}
-                />
-              */}
               <MainButton
                 label="Create Group"
                 onPress={handleSubmit(onSubmit)}

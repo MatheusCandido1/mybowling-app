@@ -1,8 +1,6 @@
 import styled from 'styled-components/native';
 
-import {Dimensions} from 'react-native';
-
-const { height } = Dimensions.get('window');
+import { isAndroid } from '../../utils/getOS';
 
 export const Container = styled.SafeAreaView`
   background-color: #FFF;
@@ -123,7 +121,7 @@ export const ArsenalStatsCard = styled.View`
   height: 172px;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid #0d9488;
+  border: ${isAndroid ? '3px' : '2px'} solid #0d9488;
 `;
 
 export const ArsenalStatsCardTitle = styled.Text`
@@ -138,7 +136,7 @@ export const AllTimeScoreCard = styled.View`
   justify-content: flex-start;
   align-items: center;
   background-color: #0d9488;
-  border: 2px solid #0d9488;
+  border: ${isAndroid ? '3px' : '2px'} solid #0d9488;
 `;
 
 export const BallContainer = styled.View`

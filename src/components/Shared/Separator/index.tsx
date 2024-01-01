@@ -8,7 +8,7 @@ import {
 
 interface SeparatorProps {
   height: number;
-  device: 'small' | 'medium' | 'large';
+  device?: 'small' | 'medium' | 'large';
 }
 
 export function Separator({ height, device }: SeparatorProps) {

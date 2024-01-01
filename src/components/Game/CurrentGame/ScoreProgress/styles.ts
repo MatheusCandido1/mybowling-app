@@ -39,7 +39,7 @@ export const ProgressValueContainer = styled.View`
 export const MaxContainer = styled.View`
   height: 32px;
   width: 32px;
-  border-radius: 50%;
+  border-radius: 16px;
   background-color: #FFF;
   border: 2px solid #0D9488;
   justify-content: center;

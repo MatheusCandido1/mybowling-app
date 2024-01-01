@@ -39,6 +39,7 @@ import { Avatar } from "../../components/Shared/Avatar";
 import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
+import { isAndroid } from "../../utils/getOS";
 
 
 export function Dashboard() {
@@ -219,7 +220,7 @@ export function Dashboard() {
             <StatsContainer>
               <ArsenalStatsCard>
                 <View
-                  style={{width: '100%', alignItems: 'center', backgroundColor: '#0d9488', height: 28, justifyContent: 'center'}}
+                  style={{width: '100%', alignItems: 'center', backgroundColor: '#0d9488', height: 28, justifyContent: 'center',}}
                 >
                 <ArsenalStatsCardTitle>Arsenal</ArsenalStatsCardTitle>
                 </View>
@@ -281,7 +282,7 @@ export function Dashboard() {
 
               {splits_converted.length > 0 && splits_converted.map((split: any, index: any) => (
                 <SplitItem
-                  split={split.split}
+                  split={split.pins}
                   attempts={split.attempted}
                   converted={split.converted}
                   rate={split.rate}
@@ -291,7 +292,7 @@ export function Dashboard() {
 
             </Swiper>
             </SplitsContainer>
-            {height < 700 && <View style={{height: 60}}></View>}
+            {(height < 700 || isAndroid) && <View style={{height: 60}}></View>}
           </Content>
         </>
 

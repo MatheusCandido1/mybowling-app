@@ -24,6 +24,9 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "expo": {
+      "userInterfaceStyle": "automatic"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },

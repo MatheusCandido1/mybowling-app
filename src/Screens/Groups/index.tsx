@@ -27,7 +27,8 @@ export function Groups() {
     handleSelectGroup,
     selectedGroup,
     selectedMenu,
-    showInviteModal
+    showInviteModal,
+    refreshGroups
   } = useGroupsController();
 
   const navigation = useNavigation();
@@ -61,6 +62,8 @@ export function Groups() {
           data={groups}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
+          onRefresh={refreshGroups}
+          refreshing={false}
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
           ListEmptyComponent={() =>
           <EmptyGroups />

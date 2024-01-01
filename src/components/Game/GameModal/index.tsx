@@ -20,7 +20,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
 import { BallSelectInput } from "../../Shared/Forms/BallSelectInput";
 import { MainButton } from "../../Shared/Buttons/MainButton";
-import { DateInput } from "../../Shared/Forms/DateInput/DateInput";
 import { useNavigation } from "@react-navigation/native";
 import { useNewGameController } from "./useNewGameController";
 import { OverlayLoading } from "../../Shared/OverlayLoading";
@@ -34,6 +33,7 @@ import { Switch } from 'react-native-switch';
 import { Separator } from "../../Shared/Separator";
 import { isDeviceSmall } from "../../../utils/deviceDimensions";
 import { NewGameModalHeight } from "../../../utils/modalHeightByDevice";
+import { DateInput } from "../../Shared/Forms/DateInput";
 
 
 export function GameModal() {

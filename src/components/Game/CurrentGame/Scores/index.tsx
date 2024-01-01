@@ -1,8 +1,11 @@
-import { Container, ScoreCard, FrameNumberLabel, LabelContainer, Label } from "./styles";
+import { Container, ScoreCard, FrameNumberLabel, Label, SplitResultContainer, ResultContainer } from "./styles";
 import { useGame } from "../../../../hooks/useGame";
 import { IFrame } from "../../../../entities/Frame";
-import { formatPoints, formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
-import { View } from "react-native";
+import { formatPoints, formatFrameFirstShot } from "../../../../utils/formatScore";
+import { View, Text } from "react-native";
+import { isSplit } from "../../../../utils/splitHelper";
+import { isStrike, isSpare, isOpenFrame } from "../../../../utils/scoreHelper";
+import { isAndroid } from "../../../../utils/getOS";
 
 interface ScoresProps {
   frames: IFrame[];
@@ -24,12 +27,60 @@ export function Scores({ frames }: ScoresProps) {
           borderWidth: 1,
         }}
         >
-          <Label>{formatFrameFirstShot(frame)}</Label>
+          <Label style={{marginTop: -2}}>{formatFrameFirstShot(frame)}</Label>
       </View>
     )
   }
 
+  const GetFrameFormate = ({frame}: {frame: IFrame}) => {
+    if(isStrike(frame)) {
+      return (
+        <ResultContainer>
+          <Text>X</Text>
+        </ResultContainer>
+      )
+    }
+
+    if(isSplit(frame.pins!)) {
+      return (
+        <View style={{flexDirection: 'row', gap: 3, justifyContent: 'center', alignItems: 'center'}}>
+        <SplitResultContainer>
+          <Text style={{marginTop: isAndroid ? -1:0}}>{frame.first_shot}</Text>
+        </SplitResultContainer>
+        <Text>{isSpare(frame) ? '/':frame.second_shot}</Text>
+        </View>
+      )
+    }
+
+    if(isSpare(frame)) {
+      return (
+        <ResultContainer>
+        <View style={{flexDirection: 'row', gap: 4, justifyContent: 'center', alignItems: 'center'}}>
+          <Text>{frame.first_shot}</Text>
+          <Text>/</Text>
+        </View>
+        </ResultContainer>
+      )
+    }
+
+    if(isOpenFrame(frame)) {
+      return (
+        <ResultContainer>
+          <View style={{flexDirection: 'row', gap: 4, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>{frame.first_shot}</Text>
+            <Text>{frame.second_shot === 0 ? '-':frame.second_shot}</Text>
+          </View>
+        </ResultContainer>
+      )
+    }
+
+
+    return <></>
+
+  }
+
   const ScoreColumn = ({ frame }:{frame: IFrame}) => {
+
     return (
       <ScoreCard
         style={{
@@ -39,15 +90,17 @@ export function Scores({ frames }: ScoresProps) {
           borderLeftColor: '#c9ccd1',
         }}
       >
-        <FrameNumberLabel>{frame.frame_number}</FrameNumberLabel>
-        <LabelContainer>
-          {frame.is_split ? <SplitComponent frame={frame} /> : <Label>{formatFrameFirstShot(frame)}</Label>}
-          {frame.second_shot !== null && <Label>{formatFrameSecondShot(frame)}</Label>}
-          {frame.third_shot !== null && <Label>{formatFrameThirdShot(frame)}</Label>}
-        </LabelContainer>
-        <Label>
-          {formatPoints(frame.score)}
-        </Label>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <FrameNumberLabel>{frame.frame_number}</FrameNumberLabel>
+        </View>
+
+        <View style={{flexDirection: 'row', justifyContent: 'center', gap: 4}}>
+          <GetFrameFormate frame={frame} />
+        </View>
+
+        <View style={{justifyContent: 'center', alignItems: 'center', borderTopWidth: 2, borderTopColor: '#c9ccd1'}}>
+          <FrameNumberLabel style={{marginTop: 2}}>{frame.score}</FrameNumberLabel>
+        </View>
       </ScoreCard>
     )
 

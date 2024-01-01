@@ -93,3 +93,7 @@ export const LoginButtonText = styled.Text`
   font-weight: bold;
   color: #FFF;
 `;
+
+export const ButtonContainer = styled.View`
+  margin-top: 12px;
+`;

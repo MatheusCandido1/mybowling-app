@@ -40,7 +40,7 @@ export function useInviteMemberPopupController() {
     try {
       await mutateAsync({
         ...data,
-        group_id: 3,
+        group_id: 5,
       });
 
       setFeedback('SUCCESS');

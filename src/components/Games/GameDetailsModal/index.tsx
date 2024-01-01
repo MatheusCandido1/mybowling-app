@@ -79,7 +79,7 @@ export function GameDetailsModal({ showModal, setShowModal, selectedGame }: Game
                 </FilterItem>
                 </InformationContainer>
                 <ScoresContainer>
-                  <Subtitle>Scoreboard</Subtitle>
+                  <Subtitle style={{marginBottom: 8}}>Scoreboard</Subtitle>
                   <Scores
                     frames={frames}
                   />

@@ -18,12 +18,15 @@ import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
 import { isIpad } from '../../utils/getDevice';
 import { createStackNavigator } from '@react-navigation/stack';
+import { isAndroid } from '../../utils/getOS';
 
 
 export function MainTabs() {
   const { height } = Dimensions.get('window');
 
   const shouldAddMargin = height > 700;
+
+  const setDefaultMarginTop = isAndroid ? 0 : (shouldAddMargin ? 30 : 0);
 
   return (
       <Tab.Navigator
@@ -47,7 +50,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: shouldAddMargin ? 30 : 0,
+                  marginTop: setDefaultMarginTop,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -70,7 +73,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: shouldAddMargin ? 30 : 0,
+                  marginTop: setDefaultMarginTop,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -93,7 +96,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: shouldAddMargin ? 30 : 0,
+                  marginTop: setDefaultMarginTop,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -116,7 +119,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: shouldAddMargin ? 30 : 0,
+                  marginTop: setDefaultMarginTop,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,
@@ -139,7 +142,7 @@ export function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
-                  marginTop: shouldAddMargin ? 30 : 0,
+                  marginTop: setDefaultMarginTop,
                   backgroundColor: !focused ? '#0d9488' : '#FFF',
                   padding: focused ? 10 : 0,
                   borderRadius:focused ? 8 : 0,

@@ -1,13 +1,15 @@
 import { Modal, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BallContainer, ButtonContainer, Container, DateContainer, Footer, Form, Header, LocationContainer, Overlay, Title } from "./styles";
-import { DateInput } from "../../Shared/Forms/DateInput/DateInput";
 import { BallSelectInput } from "../../Shared/Forms/BallSelectInput";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
 import { MainButton } from "../../Shared/Buttons/MainButton";
 import { useGamesFilterModalController } from "./useGamesFilterModalController";
 import { SecondaryButton } from "../../Shared/Buttons/SecondaryButton";
-import { useGames } from "../../../hooks/useGames";
+import { DateInput } from "../../Shared/Forms/DateInput";
+import { FilterGamesModalHeight } from "../../../utils/modalHeightByDevice";
+
+
 
 interface GameFilterModalProps {
   showModal: boolean;
@@ -27,6 +29,9 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
     handleResetCurrentFilters
   } = useGamesFilterModalController();
 
+
+  const ModalHeight = FilterGamesModalHeight()?.dimension;
+
   return (
     <Modal
       visible={showModal}
@@ -34,7 +39,11 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
       transparent
       >
         <Overlay>
-          <Container>
+          <Container
+            style={{
+              marginTop: ModalHeight
+            }}
+          >
             <Header>
               <Title>Filter Games</Title>
               <TouchableOpacity
@@ -46,14 +55,14 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
             <Form>
               <DateContainer>
                 <DateInput
-                  label="Start Date"
-                  value={currentFilters.start_date}
-                  onChange={handleStartDateChange}
+                 label="Start Date"
+                 value={currentFilters.start_date}
+                 onChange={handleStartDateChange}
                 />
                 <DateInput
-                  label="End Date"
-                  value={currentFilters.end_date}
-                  onChange={handleEndDateChange}
+                 label="End Date"
+                 value={currentFilters.end_date}
+                 onChange={handleStartDateChange}
                 />
               </DateContainer>
 

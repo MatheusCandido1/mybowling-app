@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { GroupsService } from "../services/groupsService";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
-export function useGroup() {
+export function useGroupGetAll() {
   const { data = [], isFetching } = useQuery({
     queryKey: ['groups', 'getAll'],
     queryFn: GroupsService.getAll,

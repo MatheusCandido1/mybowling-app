@@ -1,4 +1,4 @@
-import { useGroup } from "../../../hooks/useGroupGetAll";
+import { useGroupGetAll } from "../../../hooks/useGroupGetAll";
 import { useGroups } from "../../../hooks/useGroups";
 import { Container, ActionButton, ActionButtonText, InformationText } from "./styles";
 
@@ -6,7 +6,7 @@ export function EmptyGroups() {
 
   const { handleShowNewGroupModal, handleShowInviteModal  } = useGroups();
 
-  const { invites } = useGroup();
+  const { invites } = useGroupGetAll();
 
   return (
     <Container>

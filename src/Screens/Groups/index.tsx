@@ -24,7 +24,7 @@ export function Groups() {
     groups,
     showNewGroupModal,
     handleShowNewGroupModal,
-    handleSelectGroup,
+    handleGroupPress,
     selectedGroup,
     selectedMenu,
     showInviteModal,
@@ -74,7 +74,7 @@ export function Groups() {
               cover={item.cover}
               description={item.description}
               members={item.members}
-              onPress={() => handleSelectGroup(item)}
+              onPress={() => handleGroupPress(item)}
             />
           )}
         /></GroupsList>

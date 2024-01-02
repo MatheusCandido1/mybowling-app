@@ -3,8 +3,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { GroupsService } from "../../../services/groupsService";
-import Toast from "react-native-toast-message";
 import { useState } from "react";
+import { useGroup } from "../../../hooks/useGroup";
 
 const schema = z.object({
   email: z.string().email(),
@@ -13,6 +13,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useInviteMemberPopupController() {
+
+  const { selectedGroupId } = useGroup();
 
   const [feedback, setFeedback] = useState<string>('');
 
@@ -40,7 +42,7 @@ export function useInviteMemberPopupController() {
     try {
       await mutateAsync({
         ...data,
-        group_id: 5,
+        group_id: selectedGroupId,
       });
 
       setFeedback('SUCCESS');

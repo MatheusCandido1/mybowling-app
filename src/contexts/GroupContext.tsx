@@ -8,6 +8,8 @@ interface GroupContextData {
   showConfirmRemovePopup: boolean;
   handleCloseConfirmDeletePopup(): void;
   handleShowConfirmDeletePopup(): void;
+  selectedGroupId: any;
+  handleSelectGroupId(group: any): void;
 }
 
 export const GroupContext = createContext({} as GroupContextData);
@@ -16,6 +18,11 @@ export function GroupProvider({children}: {children: React.ReactNode}) {
   const [showMemberDetailsModal, setShowMemberDetailsModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState({});
   const [showConfirmRemovePopup, setShowConfirmRemovePopup] = useState(false);
+  const [selectedGroupId, setSelectedGroupId] = useState({});
+
+  function handleSelectGroupId(groupId: number) {
+    setSelectedGroupId(groupId);
+  }
 
   function handleCloseConfirmDeletePopup() {
     setShowConfirmRemovePopup(false);
@@ -24,8 +31,6 @@ export function GroupProvider({children}: {children: React.ReactNode}) {
   function handleShowConfirmDeletePopup() {
     setShowConfirmRemovePopup(true);
   }
-
-
 
   function handleSelectMember(member: any) {
     setSelectedMember(member);
@@ -48,7 +53,9 @@ export function GroupProvider({children}: {children: React.ReactNode}) {
       selectedMember,
       showConfirmRemovePopup,
       handleCloseConfirmDeletePopup,
-      handleShowConfirmDeletePopup
+      handleShowConfirmDeletePopup,
+      selectedGroupId,
+      handleSelectGroupId
     }}>
       {children}
     </GroupContext.Provider>

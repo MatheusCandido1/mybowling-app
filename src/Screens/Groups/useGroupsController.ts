@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useGroups } from "../../hooks/useGroups";
-import { useGroup } from "../../hooks/useGroupGetAll";
+import { useGroupGetAll } from "../../hooks/useGroupGetAll";
 import { useNavigation } from "@react-navigation/native";
 import { useQueryClient } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
+import { useGroup } from "../../hooks/useGroup";
 
 export function useGroupsController() {
-  const { groups, invites, isFetching } = useGroup();
+  const { groups, invites, isFetching } = useGroupGetAll();
 
   const navigation = useNavigation();
 
@@ -24,7 +25,7 @@ export function useGroupsController() {
     handleShowInviteModal
   } = useGroups();
 
-  function handleSelectGroup(group: any) {
+  function handleGroupPress(group: any) {
     navigation.navigate(
       'GroupStack', {
         screen: 'group',
@@ -63,7 +64,7 @@ export function useGroupsController() {
     invites,
     groups,
     isFetchingGroups: isFetching,
-    handleSelectGroup,
+    handleGroupPress,
     selectedGroup,
     selectedMenu,
     showInviteModal,

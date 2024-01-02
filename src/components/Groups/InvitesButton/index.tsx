@@ -1,11 +1,11 @@
-import { useGroup } from "../../../hooks/useGroupGetAll";
+import { useGroupGetAll } from "../../../hooks/useGroupGetAll";
 import { useGroups } from "../../../hooks/useGroups";
 import { BadgeText, ButtonText, Container, Content, Badge } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export function InvitesButton() {
 
-  const { invites } = useGroup();
+  const { invites } = useGroupGetAll();
 
   const { handleShowInviteModal } = useGroups();
 

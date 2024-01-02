@@ -58,6 +58,6 @@ export function useInvitesModalController() {
     invites,
     showInviteModal,
     handleCloseInviteModal,
-    handleSubmit
+    handleSubmit,
   }
 }

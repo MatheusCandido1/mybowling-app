@@ -14,7 +14,8 @@ export function useMemberDetailsModalController() {
     selectedMember,
     handleCloseMemberDetailsModal,
     handleShowConfirmDeletePopup,
-    handleCloseConfirmDeletePopup
+    handleCloseConfirmDeletePopup,
+    selectedGroupId
   } = useGroup();
 
   const queryClient = useQueryClient();
@@ -31,7 +32,7 @@ export function useMemberDetailsModalController() {
     try {
       await mutateAsync
       ({
-        group_id: 3,
+        group_id: selectedGroupId,
         member_id: selectedMember?.id
       });
       queryClient.invalidateQueries({ queryKey: ['group'] });

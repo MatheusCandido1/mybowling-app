@@ -9,6 +9,7 @@ interface AuthContextData {
   logout(): void;
   loggedUser: IUser | null;
   fetchLoggedUser(user: any): void;
+  updateLoggedUser(user: any): void;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -31,6 +32,15 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     fetchLoggedUser(me)
     fetchToken();
   }, []);
+
+  const updateLoggedUser = async (user: any) => {
+    try {
+      setLoggedUser(user);
+      await AsyncStorage.setItem('loggedUser', JSON.stringify(user));
+    } catch (error) {
+      console.error('Error updating logged user:', error);
+    }
+  }
 
   const fetchLoggedUser = async (user: any) => {
     try {
@@ -64,7 +74,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       login,
       logout,
       loggedUser,
-      fetchLoggedUser
+      fetchLoggedUser,
+      updateLoggedUser
     }}>
       {children}
     </AuthContext.Provider>

@@ -14,11 +14,17 @@ import { MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-ic
 import { useState } from "react";
 import { Avatar } from "../../components/Shared/Avatar";
 import { useNavigation } from "@react-navigation/native";
+import { EditProfileModal } from "../../components/Profile/EditProfileModal";
+import { useProfileController } from "./useProfileController";
 
 export function Profile() {
   const navigation = useNavigation();
 
   const { loggedUser, logout } = useAuth();
+
+  const {
+    handleShowUpdateProfileModal
+  } = useProfileController();
 
 
   const user = {
@@ -46,16 +52,27 @@ export function Profile() {
           <UserName>Hi, {user.first_name} 👋</UserName>
         </AvatarContainer>
         <Menu>
-          <MenuItem>
-            <MaterialCommunityIcons name="playlist-edit" size={28} color="#0d9488" />
-            <MenuItemText>Edit Profile</MenuItemText>
-          </MenuItem>
+
 
           <MenuItem
             onPress={handleGroupsPress}
           >
             <MaterialCommunityIcons name="account-group" size={28} color="#0d9488" />
             <MenuItemText>Groups</MenuItemText>
+          </MenuItem>
+          <MenuItem
+            onPress={handleShowUpdateProfileModal}
+          >
+            <MaterialCommunityIcons name="playlist-edit" size={28} color="#0d9488" />
+            <MenuItemText>Edit Profile</MenuItemText>
+          </MenuItem>
+
+
+          <MenuItem
+            onPress={handleShowUpdateProfileModal}
+          >
+            <MaterialCommunityIcons name="account-lock-open" size={28} color="#0d9488" />
+            <MenuItemText>Update Password</MenuItemText>
           </MenuItem>
 
         </Menu>
@@ -68,6 +85,7 @@ export function Profile() {
           <MenuItemText>Logout</MenuItemText>
         </MenuItem>
       </Content>
+       <EditProfileModal />
     </Container>
   )
 }

@@ -8,7 +8,7 @@ import { Dashboard } from '../../Screens/Dashboard';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
 import { ArsenalWrapper } from '../../Wrappers/ArsenalWrapper';
-import { Profile } from '../../Screens/Profile';
+import { ProfileWrapper  } from '../../Wrappers/ProfileWrapper';
 import { View } from 'react-native';
 
 import { BallIcon } from '../../components/Icons/BallIcon';
@@ -136,7 +136,7 @@ export function MainTabs() {
         />
         <Tab.Screen
           name="Profile"
-          component={Profile}
+          component={ProfileWrapper}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (

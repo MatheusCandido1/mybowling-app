@@ -1,12 +1,19 @@
 import { useGroups } from "../../hooks/useGroups";
 import { useGroupShow } from "../../hooks/useGroupShow";
 import { useAuth } from "../../hooks/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGroup } from "../../hooks/useGroup";
 
 export function useGroupController(id: number) {
   const { loggedUser } = useAuth();
+  const { handleSelectGroupId, selectedGroupId } = useGroup();
 
   const [showInviteMemberPopup, setShowInviteMemberPopup] = useState(false);
+  const { groupDetail, isFetching } = useGroupShow(id);
+
+  useEffect(() => {
+    handleSelectGroupId(id);
+  }, [id]);
 
   function handleShowInviteMemberPopup() {
     setShowInviteMemberPopup(true);
@@ -22,7 +29,6 @@ export function useGroupController(id: number) {
     setSelectedMenu(menu);
   }
 
-  const { groupDetail, isFetching } = useGroupShow(id);
 
   const isLoggedUserAdmin = loggedUser?.id === groupDetail?.user_id;
 
@@ -34,6 +40,7 @@ export function useGroupController(id: number) {
     isLoggedUserAdmin,
     showInviteMemberPopup,
     handleShowInviteMemberPopup,
-    handleCloseInviteMemberPopup
+    handleCloseInviteMemberPopup,
+    selectedGroupId
   }
 }

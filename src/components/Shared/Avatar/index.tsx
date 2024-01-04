@@ -1,5 +1,5 @@
 import { Image } from "react-native";
-import AvatarSvg from "../../../assets/img/avatar.svg";
+import Avatar2Svg from "../../../assets/img/avatar2.svg";
 import { Container } from "./styles";
 
 interface AvatarProps {
@@ -30,7 +30,7 @@ export function Avatar({ imageUri, size }: AvatarProps) {
           borderRadius={size ? size / 2 : 15}
         />
       ) : (
-        <AvatarSvg />
+        <Avatar2Svg />
       )}
     </Container>
   )

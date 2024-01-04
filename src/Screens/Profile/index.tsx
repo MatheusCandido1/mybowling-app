@@ -11,29 +11,25 @@ import {
 } from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
 import { Avatar } from "../../components/Shared/Avatar";
 import { useNavigation } from "@react-navigation/native";
 import { EditProfileModal } from "../../components/Profile/EditProfileModal";
 import { useProfileController } from "./useProfileController";
+import { UpdatePasswordModal } from "../../components/Profile/UpdatePasswordModal";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Profile() {
   const navigation = useNavigation();
 
-  const { loggedUser, logout } = useAuth();
-
   const {
-    handleShowUpdateProfileModal
+    handleShowUpdateProfileModal,
+    handleShowUpdatePasswordModal,
+    handleGroupsPress,
+    user,
+    loggedUser,
+    handleLogout
   } = useProfileController();
 
-
-  const user = {
-    first_name: loggedUser?.name.split(' ')[0],
-  }
-
-  function handleGroupsPress() {
-    navigation.navigate('GroupStack', { screen: 'Groups'});
-  }
 
   return (
     <Container>
@@ -69,7 +65,7 @@ export function Profile() {
 
 
           <MenuItem
-            onPress={handleShowUpdateProfileModal}
+            onPress={handleShowUpdatePasswordModal}
           >
             <MaterialCommunityIcons name="account-lock-open" size={28} color="#0d9488" />
             <MenuItemText>Update Password</MenuItemText>
@@ -78,14 +74,15 @@ export function Profile() {
         </Menu>
 
         <MenuItem
-          onPress={logout}
+          onPress={handleLogout}
           style={{justifyContent: 'center'}}
         >
           <MaterialIcons name="logout" size={28} color="#0d9488" />
           <MenuItemText>Logout</MenuItemText>
         </MenuItem>
       </Content>
-       <EditProfileModal />
+      <EditProfileModal />
+      <UpdatePasswordModal />
     </Container>
   )
 }

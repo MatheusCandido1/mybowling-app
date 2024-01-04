@@ -61,4 +61,48 @@ export const AddMemberText = styled.Text`
 `;
 
 
+export const EditGroupButton = styled.TouchableOpacity`
+  background-color: #0d9488;
+  padding: 12px;
+  border-radius: 8px;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 12px;
+  bottom: 36px;
+  z-index: 999;
+`;
+
+export const EditGroupButtonText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+`;
+
+export const FiltersContainer = styled.TouchableOpacity`
+  height: 40px;
+  padding: 0 8px;
+  background-color: #FFF;
+  position: absolute;
+  top: -56px;
+  right: 16px;
+  z-index: 999;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 2px;
+`;
+
+export const FiltersText = styled.Text`
+  color: #0d9488;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+`;
+
+
+
 

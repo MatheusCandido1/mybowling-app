@@ -3,10 +3,13 @@ import { useGroup } from "../../../hooks/useGroup";
 import { GroupsService } from "../../../services/groupsService";
 import Toast from "react-native-toast-message";
 import { useAuth } from "../../../hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
 
 export function useMemberDetailsModalController() {
 
   const { loggedUser } = useAuth();
+
+  const navigation = useNavigation();
 
   const {
     showConfirmRemovePopup,
@@ -15,7 +18,8 @@ export function useMemberDetailsModalController() {
     handleCloseMemberDetailsModal,
     handleShowConfirmDeletePopup,
     handleCloseConfirmDeletePopup,
-    selectedGroupId
+    selectedGroup,
+    isLoggedUserAdmin
   } = useGroup();
 
   const queryClient = useQueryClient();
@@ -32,10 +36,13 @@ export function useMemberDetailsModalController() {
     try {
       await mutateAsync
       ({
-        group_id: selectedGroupId,
+        group_id: selectedGroup?.id,
         member_id: selectedMember?.id
       });
       queryClient.invalidateQueries({ queryKey: ['group'] });
+      queryClient.invalidateQueries({ queryKey: ['groups'] });
+
+      // Redirect to groups list
 
       Toast.show({
         type: 'success',
@@ -46,6 +53,10 @@ export function useMemberDetailsModalController() {
       });
 
       handleCloseMemberDetailsModal();
+
+      if(!isLoggedUserAdmin) {
+        navigation.navigate('GroupStack', {screen: 'groups'});
+      }
     } catch (error) {
       Toast.show({
         type: 'error',

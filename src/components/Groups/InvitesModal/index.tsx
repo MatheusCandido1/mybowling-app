@@ -62,37 +62,25 @@ export function InvitesModal() {
                     </InviteHeaderText>
 
                   </InviteHeader>
-                  <InviteImage>
-                    <Image
-                      source={{
-                        uri: item.cover,
-                      }}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        resizeMode: 'contain',
-                        overflow: 'hidden',
-                      }}
-                    />
-                  </InviteImage>
                   <InviteInformation>
                     <InviteTitle>{item.name}</InviteTitle>
                     <InviteSubTitle>{item.description}</InviteSubTitle>
 
                   </InviteInformation>
                   <InviteFooter>
-                    <RejectInviteButton
-                      onPress={() => handleSubmit(item.id, 'decline')}
-                    >
-                      <MaterialCommunityIcons name="close" size={24} color="#fff" />
-                      <RejectInviteButtonText>Reject</RejectInviteButtonText>
-                    </RejectInviteButton>
                     <AcceptInviteButton
                       onPress={() => handleSubmit(item.id, 'accept')}
                     >
                       <MaterialCommunityIcons name="check" size={24} color="#fff" />
                       <AcceptInviteButtonText>Accept</AcceptInviteButtonText>
                     </AcceptInviteButton>
+
+                    <RejectInviteButton
+                      onPress={() => handleSubmit(item.id, 'decline')}
+                    >
+                      <MaterialCommunityIcons name="close" size={24} color="#fff" />
+                      <RejectInviteButtonText>Reject</RejectInviteButtonText>
+                    </RejectInviteButton>
 
                   </InviteFooter>
 

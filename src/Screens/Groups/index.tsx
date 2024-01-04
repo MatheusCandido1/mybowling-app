@@ -71,7 +71,6 @@ export function Groups() {
           renderItem={({ item }) => (
             <GroupCard
               name={item.name}
-              cover={item.cover}
               description={item.description}
               members={item.members}
               onPress={() => handleGroupPress(item)}

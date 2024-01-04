@@ -1,5 +1,5 @@
-import { Container, HeaderGroup, HeaderGroupButton, HeaderGroupButtonText, Content, AddMemberContainer, AddMemberText } from "./styles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Container, HeaderGroup, HeaderGroupButton, HeaderGroupButtonText, Content, AddMemberContainer, AddMemberText, EditGroupButton, EditGroupButtonText, FiltersContainer, FiltersText } from "./styles";
+import { MaterialCommunityIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useGroupController } from "./useGroupController";
 import { Standings } from "../../components/GroupDetails/Standings";
 import { Members } from "../../components/GroupDetails/Members";
@@ -8,13 +8,9 @@ import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 import { Header } from "../../components/Shared/Header";
 import { useNavigation } from "@react-navigation/native";
 import { InviteMemberPopup } from "../../components/GroupDetails/InviteMemberPopup";
-import { MemberDetailsModal } from "../../components/GroupDetails/MemberDetailsModal";
 
-interface GroupProps {
-  id: number;
-}
 
-export function Group({ id }: GroupProps) {
+export function Group() {
   const {
     selectedMenu,
     handleSelectMenu,
@@ -23,8 +19,10 @@ export function Group({ id }: GroupProps) {
     isLoggedUserAdmin,
     handleShowInviteMemberPopup,
     showInviteMemberPopup,
-    handleCloseInviteMemberPopup
-  } = useGroupController(id);
+    handleCloseInviteMemberPopup,
+    handleShowEditGroupModal,
+    handleShowFilterGamesModal
+  } = useGroupController();
 
   const navigation = useNavigation();
 
@@ -59,6 +57,19 @@ export function Group({ id }: GroupProps) {
     )
   }
 
+  const FilterButton = () => {
+    return (
+      <FiltersContainer
+        onPress={handleShowFilterGamesModal}
+      >
+        <FiltersText>
+          Filters
+        </FiltersText>
+        <Ionicons name="options" size={24} color="#0d9488" />
+      </FiltersContainer>
+    )
+  }
+
   const AddMemberGroupButton = () => {
     return (
       <AddMemberContainer
@@ -71,6 +82,17 @@ export function Group({ id }: GroupProps) {
       </AddMemberContainer>
     )
   }
+
+  const EditGroup = () => {
+    return (
+    <EditGroupButton
+      onPress={handleShowEditGroupModal}
+    >
+      <FontAwesome name="pencil-square-o" size={24} color="#FFF" />
+      <EditGroupButtonText>Edit Group</EditGroupButtonText>
+    </EditGroupButton>
+  )
+    }
 
 
   return (
@@ -94,11 +116,18 @@ export function Group({ id }: GroupProps) {
           <GroupButton title='Members' icon='account-multiple' />
 
         </HeaderGroup>
-        { <AddMemberGroupButton /> }
+        {(isLoggedUserAdmin && selectedMenu === 'Members') && (
+          <>
+        <AddMemberGroupButton />
+        <EditGroup />
+        </>
+        )}
 
-        {selectedMenu === 'Standings' ? <Standings standings={groupDetail.standings} /> : null}
-        {selectedMenu === 'Members' ? <Members members={groupDetail.members} isLoggedUserAdmin /> : null}
-        {selectedMenu === 'Games' ? <Games groupId={groupDetail.group.id} /> : null}
+        {selectedMenu === 'Games' && <FilterButton />}
+
+        {selectedMenu === 'Standings' ? <Standings /> : null}
+        {selectedMenu === 'Members' ? <Members /> : null}
+        {selectedMenu === 'Games' ? <Games /> : null}
 
 
 

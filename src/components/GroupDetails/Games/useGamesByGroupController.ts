@@ -2,23 +2,21 @@ import { useState } from "react";
 import { useGamesByGroup } from "../../../hooks/useGamesByGroup";
 import { useGroups } from "../../../hooks/useGroups";
 import { IGame } from "../../../entities/Game";
+import { useGroup } from "../../../hooks/useGroup";
+import { GamesByGroupFilters } from "../../../services/groupsService/games";
 
-export function useGamesByGroupController(id: number) {
+export function useGamesByGroupController() {
 
-  const [page, setPage] = useState(1);
+  const { filters, setFilters, handleShowFilterGamesModal, gamesByGroup, isFetchingGames } = useGroup();
 
-
-  const { games, isFetching } = useGamesByGroup(id, page);
+  function handleApplyFilters(currentFilters: GamesByGroupFilters) {
+    setFilters(currentFilters);
+  }
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   const [selectedGame, setSelectedGame] = useState<IGame | null>(null);
-
-
-  async function handleSetPage() {
-    setPage((prevPage) => prevPage + 1);
-  }
 
   function handleShowDetailsModal(game: IGame) {
     setSelectedGame(game)
@@ -35,14 +33,13 @@ export function useGamesByGroupController(id: number) {
   }
 
   function handleCloseFilterModal() {
-
     setShowFilterModal(false);
   }
 
 
   return {
-    games,
-    isFetching,
+    games: gamesByGroup,
+    isFetching: isFetchingGames,
     showDetailsModal,
     showFilterModal,
     handleShowDetailsModal,
@@ -50,6 +47,9 @@ export function useGamesByGroupController(id: number) {
     handleShowFilterModal,
     handleCloseFilterModal,
     selectedGame,
-    handleSetPage
+    filters,
+    handleApplyFilters,
+    handleShowFilterGamesModal
+
   }
 }

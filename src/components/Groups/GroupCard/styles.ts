@@ -1,21 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-  height: 200px;
   border-radius: 8px;
   border: 1px solid #C5C5C5;
   width: 100%;
 `;
 
-export const CoverContainer = styled.View`
-  height: 100px;
-  width: 100%;
-  padding: 24px;
-`;
-
 export const Content = styled.View`
   flex: 1;
   align-items: center;
+  padding: 12px;
 `;
 
 export const Title = styled.Text`
@@ -40,10 +34,9 @@ export const MembersContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 4px;
+  margin-top: 12px;
   width: 100%;
   gap: -8px;
-  margin-bottom: 8px;
 `;
 
 export const MemberNumberContainer = styled.View`

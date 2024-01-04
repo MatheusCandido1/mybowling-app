@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useGroup } from "../../../hooks/useGroupGetAll";
+import { useGroupGetAll } from "../../../hooks/useGroupGetAll";
 import { useGroups } from "../../../hooks/useGroups";
 import { GroupsService } from "../../../services/groupsService";
 import Toast from "react-native-toast-message";
 
 export function useInvitesModalController() {
 
-  const { invites } = useGroup();
+  const { invites } = useGroupGetAll();
 
   const { showInviteModal, handleCloseInviteModal } = useGroups();
 

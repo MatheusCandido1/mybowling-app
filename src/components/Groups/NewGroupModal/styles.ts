@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { NewGroupModalHeight } from "../../../utils/modalHeightByDevice";
 
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.6);
@@ -9,6 +10,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 
 export const Container = styled.View`
   flex: 1;
+  margin-top: ${NewGroupModalHeight()?.px};
   background-color: #FFF;
   shadow-color: #000;
   shadow-offset: 0px 0px;

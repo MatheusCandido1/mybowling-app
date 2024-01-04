@@ -37,6 +37,22 @@ const toastConfig = {
       }}
     />
   ),
+  error: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#dc3545',
+        elevation: 5,
+      }}
+      contentContainerStyle={{
+        paddingHorizontal: 15,
+     }}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '400'
+      }}
+    />
+  )
 }
 
 const queryClient = new QueryClient({

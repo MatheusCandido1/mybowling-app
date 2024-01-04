@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useQueryClient } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
 import { useGroup } from "../../hooks/useGroup";
+import { IGroup } from "../../entities/Group";
 
 export function useGroupsController() {
   const { groups, invites, isFetching } = useGroupGetAll();
@@ -25,19 +26,16 @@ export function useGroupsController() {
     handleShowInviteModal
   } = useGroups();
 
-  function handleGroupPress(group: any) {
+  function handleGroupPress(group: IGroup) {
     navigation.navigate(
       'GroupStack', {
         screen: 'group',
-        params: { id: group.id}
+        params: { group: group}
       }
     );
   }
 
   async function refreshGroups() {
-
-
-
     const oldData = queryClient.getQueryData(['groups', 'getAll']);
 
     await queryClient.invalidateQueries({ queryKey: ['groups'] });

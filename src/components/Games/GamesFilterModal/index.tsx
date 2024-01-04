@@ -29,7 +29,6 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
     handleResetCurrentFilters
   } = useGamesFilterModalController();
 
-
   const ModalHeight = FilterGamesModalHeight()?.dimension;
 
   return (
@@ -62,7 +61,7 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
                 <DateInput
                  label="End Date"
                  value={currentFilters.end_date}
-                 onChange={handleStartDateChange}
+                 onChange={handleEndDateChange}
                 />
               </DateContainer>
 

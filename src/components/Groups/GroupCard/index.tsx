@@ -1,8 +1,5 @@
-import { Image } from "react-native";
-
 import {
   Container,
-  CoverContainer,
   Content,
   Title,
   Description,
@@ -13,37 +10,20 @@ import {
 import { Avatar } from "../../Shared/Avatar";
 
 interface GroupCardProps {
-  cover?: string;
   name: string;
   description: string;
   members: any[];
   onPress?: () => void;
 }
 
-export function GroupCard({ cover, name, description, members, onPress }: GroupCardProps) {
+export function GroupCard({ name, description, members, onPress }: GroupCardProps) {
   const memberQuantity = members && members.length > 0 ? members.length : 0;
-
-  const background = cover ? cover : 'https://i.ibb.co/HdNtcf6/gradient.png';
 
   return (
     <Container
       onPress={onPress}
     >
-      <CoverContainer>
-        <Image
-          source={{
-            uri: background,
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            resizeMode: 'contain',
-            overflow: 'hidden',
-          }}
-        />
-      </CoverContainer>
       <Content>
-
       <Title>
         {name}
       </Title>

@@ -5,14 +5,11 @@ import { MainButton } from "../../Shared/Buttons/MainButton";
 import { Controller } from 'react-hook-form';
 import { useNewGroupModalController } from "./useNewGroupModalController";
 import { CustomTextInput } from "../../Shared/Forms/CustomTextInput";
-import { NewGroupModalHeight } from "../../../utils/modalHeightByDevice";
 
 export function NewGroupModal() {
 
-  const { register, handleSubmit, onSubmit, control, isLoading, showNewGroupModal, handleCloseNewGroupModal } = useNewGroupModalController();
+  const { handleSubmit, onSubmit, control, isLoading, showNewGroupModal, handleCloseNewGroupModal } = useNewGroupModalController();
 
-
-  const ModalHeight = NewGroupModalHeight()?.dimension;
 
   return (
     <Modal
@@ -21,11 +18,7 @@ export function NewGroupModal() {
     transparent
     >
       <Overlay>
-        <Container
-          style={{
-            marginTop: ModalHeight
-          }}
-        >
+        <Container>
           <Header>
             <Title>New Group</Title>
             <TouchableOpacity
@@ -65,9 +58,6 @@ export function NewGroupModal() {
                 />
               )}
               />
-              <ImageSelector>
-                <ImageSelectorText>Choose an Image</ImageSelectorText>
-              </ImageSelector>
               <MainButton
                 label="Create Group"
                 onPress={handleSubmit(onSubmit)}

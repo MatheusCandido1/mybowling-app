@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { loginParams } from "../../../services/authService/login";
 import { AuthService } from "../../../services/authService";
 import Toast from 'react-native-toast-message';
 import { useAuth } from "../../../hooks/useAuth";
@@ -10,9 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 import { RegisterParams } from "../../../services/authService/register";
 
 const schema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+  name: z.string({ required_error: 'Name is required' }).nonempty({ message: 'Name is required' }),
+  email: z.string({ required_error: 'Email is required' }).nonempty({ message: 'Email is required' }),
+  password: z.string({ required_error: 'Password is required' }).nonempty({ message: 'Password is required' }),
 });
 
 type FormData = z.infer<typeof schema>;

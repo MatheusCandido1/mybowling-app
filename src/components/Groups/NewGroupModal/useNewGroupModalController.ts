@@ -41,7 +41,7 @@ export function useNewGroupModalController() {
       const group = await mutateAsync(data);
       Toast.show({
         type: 'success',
-        text1: 'Group',
+        text1: 'New Group',
         text2: group.message,
         visibilityTime: 2000,
         autoHide: true,

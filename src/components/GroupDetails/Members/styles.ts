@@ -8,6 +8,7 @@ export const Content = styled.View`
   margin-top: 16px;
 `;
 
+
 export const PreHeader = styled.View`
   flex-direction: row;
   align-items: center;

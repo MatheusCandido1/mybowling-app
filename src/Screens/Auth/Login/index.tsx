@@ -10,36 +10,18 @@ import {
   TextContainer,
   CreateAccountLink,
   CreateAccountLinkText,
-  SocialButtonsContainer,
-  SocialButton,
-  LoginButton,
-  LoginButtonText
 } from './styles';
 
 import HeroSvg from '../../../assets/img/hero.svg'
 import Logo from '../../../assets/img/logo.svg';
 import { CustomTextInput } from '../../../components/Shared/Forms/CustomTextInput';
-import { MainButton } from '../../../components/Shared/Buttons/MainButton';
-import { AntDesign } from "@expo/vector-icons";
 import { useLoginController } from './useLoginController';
 import { Controller } from 'react-hook-form';
-import { OverlayLoading } from '../../../components/Shared/OverlayLoading';
-import { KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
-
+import { ScrollView } from 'react-native';
+import { MainButton } from '../../../components/Shared/Buttons/MainButton';
 
 export function Login() {
-  const { register, handleSubmit, onSubmit, control, isLoading, handleNewAccountPress } = useLoginController();
-
-  const SocialButtons = () => (
-    <SocialButtonsContainer>
-      <SocialButton>
-        <AntDesign name="google" size={24} color="#c71610" />
-      </SocialButton>
-      <SocialButton>
-        <AntDesign name="apple1" size={24} color="black" />
-      </SocialButton>
-    </SocialButtonsContainer>
-  )
+  const { errors, handleSubmit, onSubmit, control, isLoading, handleNewAccountPress } = useLoginController();
 
   return (
     <ScrollView
@@ -47,7 +29,6 @@ export function Login() {
         flexGrow: 1,
       }}
     >
-    {isLoading ? <OverlayLoading /> : (
        <Container>
        <LogoContainer>
          <Logo />
@@ -71,6 +52,7 @@ export function Login() {
                  icon={"envelope"}
                  value={value}
                  onChangeText={onChange}
+                 error={errors.email?.message}
                />
              )}
            />
@@ -85,14 +67,15 @@ export function Login() {
                  value={value}
                  onChangeText={onChange}
                  isPassword
+                 error={errors.password?.message}
                />
              )}
            />
-           <LoginButton
+           <MainButton
              onPress={handleSubmit(onSubmit)}
-           >
-             <LoginButtonText>Sign In</LoginButtonText>
-           </LoginButton>
+             label={"Sign in"}
+             isLoading={isLoading}
+           />
          </Form>
 
          <Footer>
@@ -104,7 +87,6 @@ export function Login() {
          </Footer>
        </Content>
      </Container>
-    )}
     </ScrollView>
   )
 }

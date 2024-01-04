@@ -98,8 +98,6 @@ export function useEditProfileModalController() {
         const match = /\.(\w+)$/.exec(filename);
         const type = match ? `image/${match[1]}` : 'image';
 
-        //console.log('filename', filename)
-
         const formData = new FormData();
 
         // @ts-ignore
@@ -107,7 +105,14 @@ export function useEditProfileModalController() {
 
         // Call the mutation and pass the FormData
         const response = await mutateAsync(formData);
-        updateLoggedUser (response.data)
+        updateLoggedUser(response.data)
+        Toast.show({
+          type: 'success',
+          text1: 'Avatar Updated',
+          text2: 'Your avatar has been updated',
+          visibilityTime: 2000,
+          autoHide: true,
+        })
       }
     }
   };

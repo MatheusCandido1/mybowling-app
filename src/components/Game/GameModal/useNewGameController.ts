@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import { useOnGoingGames } from "../../../hooks/useOnGoingGames";
 import { useGame } from "../../../hooks/useGame";
 import { useEffect, useState } from "react";
-import { useGroup } from "../../../hooks/useGroupGetAll";
+import { useGroupGetAll } from "../../../hooks/useGroupGetAll";
 
 const schema = z.object({
   game_date: z.date(),
@@ -25,7 +25,7 @@ export function useNewGameController() {
   const { balls, isFetching: isFetchingBalls } = useBalls();
   const { onGoingGames } = useOnGoingGames();
   const { handleNewGame } = useGame();
-  const { groups } = useGroup();
+  const { groups } = useGroupGetAll();
 
   const [enabledBalls, setEnabledBalls] = useState(false);
 

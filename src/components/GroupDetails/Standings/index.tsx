@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useGroup } from "../../../hooks/useGroup";
+import { EmptyStandings } from "../EmptyStandings";
 import { Container, Table, TableHeader, TableCell, TableCellText, TableBody, TableRow } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-interface StandingProps {
-  standings: [];
-}
+export function Standings() {
 
-export function Standings({ standings }: StandingProps) {
+  const { standings } = useGroup();
 
   function getPosition(position: number) {
     if(position === 1) return <MaterialCommunityIcons name="podium-gold" size={24} color="#f5d860" />
@@ -14,7 +13,6 @@ export function Standings({ standings }: StandingProps) {
     if(position === 3) return <MaterialCommunityIcons name="podium-bronze" size={24} color="#b9856e" />
     return <TableCellText style={{color: '#053b36'}}>{position}</TableCellText>;
   }
-
 
 
   const Header = () => (
@@ -57,6 +55,7 @@ export function Standings({ standings }: StandingProps) {
 
   return (
     <Container>
+      {standings.length === 0 ? <EmptyStandings /> : (
       <Table>
         <Header />
         <TableBody>
@@ -69,10 +68,11 @@ export function Standings({ standings }: StandingProps) {
               key={index}
             />
           ))}
-
         </TableBody>
 
       </Table>
+
+      )}
 
     </Container>
   )

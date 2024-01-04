@@ -2,21 +2,15 @@ import { FlatList, View } from "react-native";
 import { Avatar } from "../../Shared/Avatar";
 import { Container, Content, MemberRow, Label, ActionButton, Header, HeaderLabel, RoleBadge, RoleBadgeText } from "./styles";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import { useGroup } from "../../../hooks/useGroup";
 import { MemberDetailsModal } from "../MemberDetailsModal";
-
-interface MemberProps {
-  members: [];
-  isLoggedUserAdmin: boolean;
-}
+import { EditGroupModal } from "../EditGroupModal";
 
 
-export function Members({ members, isLoggedUserAdmin }: MemberProps) {
+export function Members() {
 
-  const { showMemberDetailsModal, handleSelectMember } = useGroup();
-
-
+  const { showMemberDetailsModal, handleSelectMember, members, isLoggedUserAdmin } = useGroup();
 
   const Member = ({member}:{member: any}) => (
     <MemberRow>
@@ -49,6 +43,7 @@ export function Members({ members, isLoggedUserAdmin }: MemberProps) {
   return (
     <Container>
       <Content>
+
         <Header>
           <View style={{width: '60%', alignItems:'center'}}>
             <HeaderLabel>Player</HeaderLabel>
@@ -75,6 +70,7 @@ export function Members({ members, isLoggedUserAdmin }: MemberProps) {
       </Content>
 
       {showMemberDetailsModal && <MemberDetailsModal /> }
+      <EditGroupModal />
     </Container>
   )
 }

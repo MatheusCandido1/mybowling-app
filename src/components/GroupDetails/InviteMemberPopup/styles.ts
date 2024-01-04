@@ -21,7 +21,7 @@ export const Container = styled.View`
 `;
 
 export const PopupContainer = styled.View`
-  height: 250px;
+  height: 275px;
   width: 100%;
   background-color: #FFF;
   border-radius: 16px;
@@ -59,7 +59,6 @@ export const PopupFooter = styled.View`
   gap: 8px;
   justify-content: flex-end;
   align-items: center;
-
 `;
 
 export const InputContainer = styled.View`
@@ -111,12 +110,11 @@ export const FeedbackContainer = styled.View`
 `;
 
 export const EmptyFeedbackContainer = styled.View`
-
   width: 100%;
   justify-content: flex-start;
   align-items: flex-start;
   margin-top: 16px;
-  height: 60px;
+  height: 40px;
   border: 2px solid #FFF;
   border-radius: 8px;
   margin-bottom: 16px;

@@ -19,13 +19,31 @@ export const FilterGamesModalHeight = () => {
 }
 
 export const NewGroupModalHeight = () => {
-  if(isDeviceSmall) return { dimension: 230,px: '230px' }
-  if(isDeviceMedium) return { dimension: 380,px: '380px' }
-  if(isDeviceBig) return { dimension: 450,px: '450px' }
+  if(isDeviceSmall) return { dimension: 290,px: '290px' }
+  if(isDeviceMedium) return { dimension: 435,px: '435px' }
+  if(isDeviceBig) return { dimension: 500,px: '500px' }
 }
 
 export const EditProfileModalHeight = () => {
   if(isDeviceSmall) return { dimension: 250,px: '250px' }
-  if(isDeviceMedium) return { dimension: 400,px: '400px' }
+  if(isDeviceMedium) return { dimension: 375,px: '375px' }
   if(isDeviceBig) return { dimension: 475,px: '475px' }
+}
+
+export const UpdatePasswordModalHeight = () => {
+  if(isDeviceSmall) return { dimension: 395,px: '395px' }
+  if(isDeviceMedium) return { dimension: 475,px: '425px' }
+  if(isDeviceBig) return { dimension: 550,px: '550px' }
+}
+
+export const UpdateGroupModalHeight = () => {
+  if(isDeviceSmall) return { dimension: 125,px: '125px' }
+  if(isDeviceMedium) return { dimension: 300,px: '300px' }
+  if(isDeviceBig) return { dimension: 375,px: '375px' }
+}
+
+export const FilterGamesByGroupModalHeight = () => {
+  if(isDeviceSmall) return { dimension: 300,px: '300px' }
+  if(isDeviceMedium) return { dimension: 400,px: '400px' }
+  if(isDeviceBig) return { dimension: 500,px: '500px' }
 }

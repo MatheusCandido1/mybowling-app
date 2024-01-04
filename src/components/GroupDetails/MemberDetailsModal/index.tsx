@@ -66,7 +66,7 @@ export function MemberDetailsModal() {
         handleCloseConfirmPopup={handleCloseConfirmDeletePopup}
         handleConfirm={handleConfirmDelete}
         title="Remove User"
-        text="Are you sure you want to remove this member?"
+        text={loggedUser.id === selectedMember.id ? "Are you sure you want to leave the group?" : `Are you sure you want to remove ${selectedMember.name}?`}
       />
 
 

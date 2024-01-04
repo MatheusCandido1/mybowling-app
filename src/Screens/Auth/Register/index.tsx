@@ -30,7 +30,7 @@ import { Separator } from '../../../components/Shared/Separator';
 
 
 export function Register() {
-  const { register, handleSubmit, onSubmit, control, isLoading, handleAlreadyUserPress } = useRegisterController();
+  const { handleSubmit, onSubmit, control, isLoading, handleAlreadyUserPress, errors } = useRegisterController();
 
   return (
     <ScrollView
@@ -38,7 +38,6 @@ export function Register() {
         flexGrow: 1,
       }}
     >
-    {isLoading ? <OverlayLoading /> : (
        <Container>
        <LogoContainer>
          <Logo />
@@ -62,6 +61,7 @@ export function Register() {
                  icon={"user"}
                  value={value}
                  onChangeText={onChange}
+                 error={errors.name?.message}
                />
              )}
             />
@@ -75,6 +75,7 @@ export function Register() {
                  icon={"envelope"}
                  value={value}
                  onChangeText={onChange}
+                 error={errors.email?.message}
                />
              )}
            />
@@ -89,6 +90,7 @@ export function Register() {
                  value={value}
                  onChangeText={onChange}
                  isPassword
+                 error={errors.password?.message}
                />
              )}
            />
@@ -112,7 +114,6 @@ export function Register() {
          </Footer>
        </Content>
      </Container>
-    )}
     </ScrollView>
   )
 }

@@ -2,6 +2,7 @@ import {  TextInput, View } from "react-native"
 import { EvilIcons } from "@expo/vector-icons";
 import {  useState, forwardRef } from "react";
 import { isAndroid } from "../../../../utils/getOS";
+import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
 
 interface CustomTextInputProps {
   label: string;
@@ -11,9 +12,10 @@ interface CustomTextInputProps {
   isPassword?: boolean;
   multiline?: boolean;
   lines?: number;
+  error?: string;
 }
 
-export function CustomTextInput({ label, icon, value, onChangeText, isPassword, multiline, lines }: CustomTextInputProps) {
+export function CustomTextInput({ label, icon, value, onChangeText, isPassword, multiline, lines, error }: CustomTextInputProps) {
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -73,6 +75,7 @@ export function CustomTextInput({ label, icon, value, onChangeText, isPassword, 
           onChangeText={onChangeText}
           >
         </TextInput>
+      <ErrorFeedbackInput error={error} />
       </View>
     </>
   )

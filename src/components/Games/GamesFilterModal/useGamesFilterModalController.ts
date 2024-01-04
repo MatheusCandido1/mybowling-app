@@ -6,8 +6,6 @@ import { ILocation } from "../../../entities/Location";
 import { IBall } from "../../../entities/Ball";
 
 export function useGamesFilterModalController() {
-  const today = new Date();
-
   const { locations } = useLocations();
 
   const { handleCloseFiltersModal, handleApplyFilters, filters, handleResetFilters } = useGames();

@@ -25,7 +25,8 @@ httpClient.interceptors.response.use(async (response) => {
   return response;
 }, function (error) {
   if (401 === error.response.status) {
+    return Promise.reject(error);
   } else {
-      return Promise.reject(error);
+    return Promise.reject(error);
   }
 });

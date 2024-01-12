@@ -5,7 +5,7 @@ import { Frame } from "../../components/Game/CurrentGame/Frame";
 import { useGame } from "../../hooks/useGame";
 import { Board } from "../../components/Game/CurrentGame/Board";
 import { NumPad } from "../../components/Shared/NumPad";
-import { Entypo, Foundation, MaterialCommunityIcons} from "@expo/vector-icons";
+import { MaterialCommunityIcons} from "@expo/vector-icons";
 import { useGameController } from "./useGameController";
 
 export function Game() {
@@ -17,7 +17,7 @@ export function Game() {
     isNumPadVisible,
     framesList,
     isGameDone,
-    handleSaveGame
+    handleSaveGame,
   } = useGameController();
 
   const FinishGameButton = () => {

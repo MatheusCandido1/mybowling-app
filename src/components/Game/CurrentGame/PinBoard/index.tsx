@@ -1,15 +1,35 @@
 import { Pressable, View } from "react-native";
 import { Container } from "./styles";
 import { PinIcon } from "../../../Icons/PinIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGame } from "../../../../hooks/useGame";
 import Toast from 'react-native-toast-message';
 
 export function PinBoard() {
-  const [selectedPins, setSelectedPins] = useState<number[]>([]);
   const { setSplitValue, currentFrame } = useGame();
 
+  const [selectedPins, setSelectedPins] = useState<number[]>(currentFrame.pins?.split("-").map(Number) || []);
+
+
+  useEffect(() => {
+    setSelectedPins(currentFrame.pins?.split("-").map(Number) || []);
+  }, [currentFrame.pins]);
+
+
+  const allowPinSelection = currentFrame.first_shot !== null && currentFrame.first_shot !== 10;
+
   function handlePinPress(pin: number) {
+    if(!allowPinSelection) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: "You can't select pins in this frame! Please throw the ball!",
+        visibilityTime: 2000,
+        autoHide: true,
+      })
+      return;
+    }
+    /*
 
     if(selectedPins.length + 1 > (10 - Number(currentFrame.first_shot))) {
       Toast.show({
@@ -23,24 +43,15 @@ export function PinBoard() {
     }
     else {
 
+      */
       setSelectedPins((prevSelectedPins) => {
-
         const updatedSelectedPins = prevSelectedPins.includes(pin)
           ? prevSelectedPins.filter((selectedPin) => selectedPin !== pin)
           : [...prevSelectedPins, pin];
-
-
-        if(updatedSelectedPins.length > 2) {
-          return updatedSelectedPins;
-        }
-
         const currentSplit = updatedSelectedPins.sort((a, b) => a - b);
-
         setSplitValue(currentSplit.join('-'));
-
         return updatedSelectedPins;
       });
-    }
   }
 
   const rows : number[][] = [
@@ -51,7 +62,12 @@ export function PinBoard() {
   ];
 
   return (
-    <Container>
+    <Container
+      pointerEvents={allowPinSelection ? 'auto' : 'none'}
+      style={{
+        opacity: !allowPinSelection ? 0.5 : 1
+      }}
+    >
     {rows.map((row, index) => (
       <View key={index} style={{flexDirection: 'row', justifyContent: 'center'}}>
         {row.map((index) => (

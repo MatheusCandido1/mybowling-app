@@ -1,8 +1,10 @@
-import { useState, createContext, useRef, Ref, useEffect } from "react";
+import { useState, createContext, useRef, useEffect } from "react";
 import { IFrame } from "../entities/Frame";
-import Toast from 'react-native-toast-message';
 import { useNavigation } from "@react-navigation/native";
 import { IGame } from "../entities/Game";
+import { isGameComplete } from "../utils/scoreHelper";
+import { useMutation } from "@tanstack/react-query";
+import { framesService } from "../services/frameService";
 
 interface GameContextData {
   frames: IFrame[];
@@ -21,38 +23,42 @@ interface GameContextData {
   currentGame: IGame | null;
   handleSaveGame: () => void;
   handleNewGame: (game: IGame) => void;
+  handleResumeGame: (game: IGame) => void;
+  currentInputNumber: number;
+  resetGame: () => void;
 }
 
 export const GameContext = createContext({} as GameContextData);
-
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const [currentGame, setCurrentGame] = useState<IGame | null>(null);
 
-  const [frames, setFrames] = useState<IFrame[]>([
-    {frame_number: 1, status: 'in_progress', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 2, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 3, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 4, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 5, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 6, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 7, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 8, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 9, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-    {frame_number: 10, status: 'pending', first_shot: null, second_shot: null, third_shot: null, points: 0, score: 0, split: null, is_split: null},
-  ]);
+  const [frames, setFrames] = useState<IFrame[]>([]);
+
   const [isNumPadVisible, setIsNumPadVisible] = useState(false);
-  const [currentFrame, setCurrentFrame] = useState<IFrame>(frames[0]);
+  const [currentFrame, setCurrentFrame] = useState<IFrame>();
   const [currentInputNumber, setCurrentInputNumber] = useState(1);
   const [score, setScore] = useState(0);
   const [max,] = useState(300);
 
   const framesList = useRef(null);
 
-  const isGameDone = frames.every(frame => frame.status === 'completed');
+  const isGameDone = isGameComplete(frames);
+
 
   const navigation = useNavigation();
+
+  function resetGame() {
+    setCurrentGame(null);
+    setIsNumPadVisible(false);
+  }
+
+  const { mutateAsync: updateFrame, isLoading } = useMutation({
+    mutationFn: async (data: IFrame) => {
+      return framesService.update(data);
+    },
+  })
 
   useEffect(() => {
     const newScore = calculateScore();
@@ -62,6 +68,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   function handleSaveGame() {
     setCurrentGame(null);
     navigation.navigate('Dashboard');
+  }
+
+  function handleResumeGame(game: IGame) {
+    setCurrentGame(game);
+    const mostRecentFrame = game.frames.find(f => f.status === 'in_progress');
+    setCurrentFrame(mostRecentFrame);
+    setTimeout(() =>
+      moveFrameToNext(mostRecentFrame!.frame_number - 1), 250
+    );
+
+    setFrames(game.frames);
   }
 
   function handleNewGame(game: IGame) {
@@ -95,6 +112,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           totalScore += getOpenFrameScore(frame);
         }
       }
+
       frame.score = totalScore;
     }
 
@@ -134,6 +152,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+
   function isStrike(frame: IFrame) {
     return frame.first_shot === 10;
   }
@@ -164,12 +183,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   function updateValueForCurrentFrame(value: string) {
     if(currentInputNumber === 1) {
+
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
+
+      if(newFrames[index].first_shot !== null) {
+        newFrames[index].first_shot = null;
+        newFrames[index].second_shot = null;
+        newFrames[index].pins = null;
+        newFrames[index].is_split = false;
+      }
+
+
       newFrames[index].first_shot = parseInt(value === "Strike" ? "10" : value);
 
       if(parseInt(value) === 10 || value === "Strike") {
         newFrames[index].status = 'completed';
+
+        updateFrame(newFrames[index])
 
         if(index <= 8) {
           newFrames[index+1].status = 'in_progress';
@@ -200,6 +231,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       } */
 
       newFrames[index].status = 'completed';
+      updateFrame(newFrames[index])
 
       if(index <= 8) {
         newFrames[index+1].status = 'in_progress';
@@ -215,6 +247,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value)
       newFrames[index].status = 'completed';
       setFrames(newFrames);
+      updateFrame(newFrames[index])
     }
 
 
@@ -264,7 +297,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         max,
         handleSaveGame,
         handleNewGame,
-        currentGame
+        currentGame,
+        handleResumeGame,
+        currentInputNumber,
+        resetGame,
       }}
     >
       {children}

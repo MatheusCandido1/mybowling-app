@@ -1,4 +1,6 @@
 import { useGame } from "../../../../hooks/useGame";
+import { Pin2Icon } from "../../../Icons/Pin2Icon";
+import { PinIcon } from "../../../Icons/PinIcon";
 import { ThreePinIcon } from "../../../Icons/ThreePinIcon";
 import { SplitContainer, SplitButtonContainer, SplitButtonText } from "./styles";
 
@@ -14,11 +16,8 @@ export function SplitButton({ onPress, disabled }: SplitButtonProps) {
   const shouldShowSplit = currentFrame.is_split === null || currentFrame.is_split === false;
 
   function getLabel() {
-    if(shouldShowSplit) return 'Set Pins';
-
-    else {
-      return `Pins: ${currentFrame.pins === null ? '' : currentFrame.pins}`;
-    }
+    if(shouldShowSplit) return 'Show Pins';
+    return 'Hide Pins';
   }
 
   return (
@@ -31,12 +30,17 @@ export function SplitButton({ onPress, disabled }: SplitButtonProps) {
     >
       <SplitButtonContainer
         style={{
-          width: shouldShowSplit ? '100%': 'auto',
+          width: 'auto'
         }}
       >
         <SplitButtonText>
           {getLabel()}
         </SplitButtonText>
+        <PinIcon
+          height={20}
+          width={20}
+          color={"#0d9488"}
+        />
       </SplitButtonContainer>
     </SplitContainer>
   )

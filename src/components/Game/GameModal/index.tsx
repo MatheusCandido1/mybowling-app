@@ -10,11 +10,7 @@ import {
   FilterText,
   FilterButton,
   GroupButtonQuantity,
-  GroupButtonQuantityText,
-  SwitchContainer,
-  SwitchLabel,
-  SwitchMessage,
-  SwitchContent
+  GroupButtonQuantityText
 } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
@@ -29,9 +25,7 @@ import { OnGoingGameCard } from "../OnGoingGames/OnGoingGameCard";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 import { IGame } from "../../../entities/Game";
-import { Switch } from 'react-native-switch';
 import { Separator } from "../../Shared/Separator";
-import { isDeviceSmall } from "../../../utils/deviceDimensions";
 import { NewGameModalHeight } from "../../../utils/modalHeightByDevice";
 import { DateInput } from "../../Shared/Forms/DateInput";
 
@@ -51,10 +45,9 @@ export function GameModal() {
     errors,
     isCreatingGame,
     onGoingGames,
-    enabledBalls,
-    toggleBalls,
     groups,
     shouldEnableGroups,
+    handleContinueGame
   } = useNewGameController();
 
   const ModalHeight = shouldEnableGroups ? NewGameModalHeight()?.dimension - 90 : NewGameModalHeight()?.dimension;
@@ -66,7 +59,6 @@ export function GameModal() {
       return new Date(a.game_date).getTime() - new Date(b.game_date).getTime();
     }
   })
-
 
   const isLoadingResources = isFetchingLocations;
 
@@ -106,32 +98,13 @@ export function GameModal() {
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <OnGoingGameCard game={item} />
+            <OnGoingGameCard
+              game={item}
+              onPress={() => handleContinueGame(item)}
+            />
           )}
         />
       </>
-    )
-  }
-
-  const BallSwitch = () => {
-    return (
-      <SwitchContainer>
-        <SwitchContent>
-        <SwitchLabel>Use a custom ball?</SwitchLabel>
-        <Switch
-          value={enabledBalls}
-          onValueChange={toggleBalls}
-          backgroundActive="#0d9488"
-          inActiveText={"No"}
-          activeText={"Yes"}
-
-
-        />
-        </SwitchContent>
-        {!enabledBalls && (
-          <SwitchMessage>With this option, you will play with house ball</SwitchMessage>
-        )}
-      </SwitchContainer>
     )
   }
 
@@ -282,8 +255,6 @@ export function GameModal() {
           style={{
             marginTop: ModalHeight,
           }}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={isDeviceSmall}
         >
           <ModalHeader
             title="Start Bowling!"

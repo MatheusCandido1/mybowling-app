@@ -11,8 +11,8 @@ export const Container = styled.Pressable`
 
 export const FrameNumberContainer = styled.View`
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 4px;
+  left: 4px;
   width: 20px;
   height: 20px;
   border-radius: 10px;
@@ -23,6 +23,7 @@ export const FrameNumberContainer = styled.View`
 export const FrameNumberText = styled.Text`
   color: white;
   font-weight: bold;
+  font-size: 12px;
 `;
 
 export const PartialScoreContainer = styled.View`
@@ -30,13 +31,13 @@ export const PartialScoreContainer = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  gap: 4px
+  gap: 4px;
 `;
 
 export const PartialScoreText = styled.Text`
   color: black;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 export const FinalScoreContainer = styled.View`

@@ -16,12 +16,11 @@ import { MaterialCommunityIcons, FontAwesome, Entypo, Octicons } from "@expo/vec
 
 interface OnGoingGameCardProps {
   game: IGame;
+  onPress: () => void;
 }
 
-export function OnGoingGameCard({ game }: OnGoingGameCardProps) {
+export function OnGoingGameCard({ game, onPress }: OnGoingGameCardProps) {
   const { ball, location, game_date, total_score } = game;
-
-
 
   const formattedDate = Intl.DateTimeFormat('en-US', {
     day: 'numeric',
@@ -30,7 +29,9 @@ export function OnGoingGameCard({ game }: OnGoingGameCardProps) {
   }).format(new Date(game_date));
 
   return (
-    <Container>
+    <Container
+      onPress={onPress}
+    >
       <InformationContainer>
         <InformationItem>
           <FontAwesome name="calendar" size={20} color="#000" />

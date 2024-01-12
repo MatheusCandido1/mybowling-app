@@ -29,6 +29,7 @@ export const Label = styled.Text`
 
 export const ResultContainer = styled.View`
   height: 20px;
+  flex-direction: row;
 `;
 
 export const SplitResultContainer = styled.View`

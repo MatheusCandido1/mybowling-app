@@ -6,7 +6,7 @@ export const SplitContainer = styled.TouchableOpacity`
   justify-content: space-between;
   height: 40px;
   position: absolute;
-  bottom: 110px;
+  bottom: 120px;
   right: 0px;
   z-index: 9999;
 `;

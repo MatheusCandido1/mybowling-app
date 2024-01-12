@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { GamesService } from "../services/gamesService";
-import { GamesFilters } from "../services/gamesService/getAll";
 
 export function useOnGoingGames() {
 
@@ -9,6 +8,7 @@ export function useOnGoingGames() {
     queryFn: () => GamesService.ongoing(),
     staleTime: Infinity
   });
+
 
   return {
     onGoingGames,

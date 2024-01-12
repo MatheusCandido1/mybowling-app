@@ -1,10 +1,10 @@
 import { Container, ScoreCard, FrameNumberLabel, Label, SplitResultContainer, ResultContainer } from "./styles";
 import { useGame } from "../../../../hooks/useGame";
 import { IFrame } from "../../../../entities/Frame";
-import { formatPoints, formatFrameFirstShot } from "../../../../utils/formatScore";
+import { formatPoints, formatFrameFirstShot, formatFrameSecondShot } from "../../../../utils/formatScore";
 import { View, Text } from "react-native";
 import { isSplit } from "../../../../utils/splitHelper";
-import { isStrike, isSpare, isOpenFrame } from "../../../../utils/scoreHelper";
+import { isStrike, isSpare, isOpenFrame, isFrameComplete } from "../../../../utils/scoreHelper";
 import { isAndroid } from "../../../../utils/getOS";
 
 interface ScoresProps {
@@ -12,27 +12,22 @@ interface ScoresProps {
 }
 
 export function Scores({ frames }: ScoresProps) {
-  //const  { frames, currentFrame } = useGame();
+  const  { currentFrame } = useGame();
 
-  function SplitComponent({frame}:{frame: IFrame}) {
-    return (
-      <View
-        style={{
-          width: 20,
-          height: 20,
-          borderRadius: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderColor: '#000',
-          borderWidth: 1,
-        }}
-        >
-          <Label style={{marginTop: -2}}>{formatFrameFirstShot(frame)}</Label>
-      </View>
-    )
-  }
 
   const GetFrameFormate = ({frame}: {frame: IFrame}) => {
+    if(frame.frame_number === 10) {
+      return (
+        <ResultContainer>
+        <Text>{formatFrameFirstShot(frame)}</Text>
+        <Text>{formatFrameSecondShot(frame)}</Text>
+        <Text>{formatFrameFirstShot(frame)}</Text>
+        </ResultContainer>
+
+      )
+    }
+
+
     if(isStrike(frame)) {
       return (
         <ResultContainer>
@@ -99,7 +94,9 @@ export function Scores({ frames }: ScoresProps) {
         </View>
 
         <View style={{justifyContent: 'center', alignItems: 'center', borderTopWidth: 2, borderTopColor: '#c9ccd1'}}>
-          <FrameNumberLabel style={{marginTop: 2}}>{frame.score}</FrameNumberLabel>
+          <FrameNumberLabel style={{marginTop: 2}}>
+            {isFrameComplete(frame) ? frame.score : ' '}
+          </FrameNumberLabel>
         </View>
       </ScoreCard>
     )

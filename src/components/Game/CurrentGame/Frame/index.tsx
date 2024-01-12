@@ -3,6 +3,8 @@ import { Container, FinalScoreContainer, FinalScoreText, PartialScoreContainer, 
 import { IFrame } from '../../../../entities/Frame';
 import { View } from 'react-native';
 import { useGame } from '../../../../hooks/useGame';
+import { isSplit } from '../../../../utils/splitHelper';
+import { isFrameComplete } from '../../../../utils/scoreHelper';
 
 interface FrameProps {
   data: IFrame;
@@ -11,8 +13,7 @@ interface FrameProps {
 
 export function Frame({ data, onPress }: FrameProps) {
   const { currentFrame } = useGame();
-
-  const { frame_number, status, first_shot, second_shot, third_shot, score, is_split } = data;
+  const { frame_number, status, first_shot, second_shot, third_shot, score, is_split, pins } = data;
 
   function getFirstShot() {
     if(first_shot === null) return '__'
@@ -41,19 +42,28 @@ export function Frame({ data, onPress }: FrameProps) {
     return third_shot;
   }
 
-
-  function getColor() {
-    if(status === 'pending') {
-      return '#ABB2B9'
+  function getStatus() {
+    if(frame_number === currentFrame.frame_number) {
+      return 'in_progress'
+    }
+    if(isFrameComplete(data)) {
+      return 'completed'
     }
 
-    if(status === 'completed') {
+    return 'pending'
+  }
+
+  function getColor() {
+    if(frame_number === currentFrame.frame_number) {
+      return '#3498DB'
+    }
+
+    if(isFrameComplete(data)) {
       return '#0D9488'
     }
 
-    if(status === 'in_progress') {
-      return '#3498DB'
-    }
+
+    return '#ABB2B9'
   }
 
   function ScoreComponent() {
@@ -97,16 +107,16 @@ export function Frame({ data, onPress }: FrameProps) {
         <FrameNumberText>{frame_number}</FrameNumberText>
       </FrameNumberContainer>
       <PartialScoreContainer>
-        {is_split ? <SplitComponent /> : <ScoreComponent />}
+        {isSplit(pins) ? <SplitComponent /> : <ScoreComponent />}
         <PartialScoreText>{getSecondShot()}</PartialScoreText>
 
         {frame_number === 10 && <PartialScoreText>{getThirdShot()}</PartialScoreText>}
       </PartialScoreContainer>
       <FinalScoreContainer>
-        <FinalScoreText>{score}</FinalScoreText>
+        <FinalScoreText>{isFrameComplete(data) ? score : ''}</FinalScoreText>
       </FinalScoreContainer>
       <Badge
-        type={status}
+        type={getStatus()}
       />
     </Container>
   )

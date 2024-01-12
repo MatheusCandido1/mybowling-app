@@ -8,8 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Toast from 'react-native-toast-message';
 import { useOnGoingGames } from "../../../hooks/useOnGoingGames";
 import { useGame } from "../../../hooks/useGame";
-import { useEffect, useState } from "react";
 import { useGroupGetAll } from "../../../hooks/useGroupGetAll";
+import { useGameShow } from "../../../hooks/useGameShow";
+import { useNavigation } from "@react-navigation/native";
 
 const schema = z.object({
   game_date: z.date(),
@@ -21,36 +22,17 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useNewGameController() {
+  const { handleResumeGame } = useGame();
+
+  const navigation = useNavigation();
+
   const { locations, isFetching: isFetchingLocations } = useLocations();
   const { balls, isFetching: isFetchingBalls } = useBalls();
   const { onGoingGames } = useOnGoingGames();
   const { handleNewGame } = useGame();
   const { groups } = useGroupGetAll();
 
-  const [enabledBalls, setEnabledBalls] = useState(false);
-
-  useEffect(() => {
-    if (balls.length > 0) {
-      setEnabledBalls(true);
-    }
-  }, [balls]);
-
   const shouldEnableGroups = groups.length > 0;
-
-
-  function toggleBalls() {
-    if (balls.length === 0) {
-      Toast.show({
-        type: 'info',
-        text1: 'Error',
-        text2: 'No balls available. Update your arsenal.',
-        visibilityTime: 3000,
-        autoHide: true,
-      });
-      return;
-    }
-    setEnabledBalls(!enabledBalls);
-  }
 
   const {
     handleSubmit,
@@ -72,6 +54,10 @@ export function useNewGameController() {
       return GamesService.create(data);
     },
   });
+
+  function handleContinueGame(game: any) {
+    handleResumeGame(game);
+  }
 
   async function onSubmit(data: FormData) {
     try {
@@ -102,9 +88,8 @@ export function useNewGameController() {
     isCreatingGame,
     reset,
     onGoingGames,
-    enabledBalls,
-    toggleBalls,
     groups,
     shouldEnableGroups,
+    handleContinueGame
   };
 }

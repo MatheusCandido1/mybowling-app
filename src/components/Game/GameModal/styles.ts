@@ -7,7 +7,7 @@ export const Overlay = styled.KeyboardAvoidingView`
   align-items: stretch;
 `;
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
   shadow-color: #000;

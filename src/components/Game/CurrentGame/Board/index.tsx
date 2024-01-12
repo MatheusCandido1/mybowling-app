@@ -1,23 +1,18 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGame } from "../../../../hooks/useGame";
-import { Container, TitleContainer, Title, InputContainer, ScoreInput, ScoreContainer } from "./styles";
+import { Container, TitleContainer, Title, InputContainer, ScoreInput, ScoreContainer, PinsBadgeText, PinsBadge } from "./styles";
 import { View } from "react-native";
 import { PinBoard } from "../PinBoard";
 import { Scores } from "../Scores";
-import { ScoreProgress } from "../ScoreProgress";
-import { SplitButton } from "../SplitButton";
 import { formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
-
-
+import { isDeviceSmall } from "../../../../utils/deviceDimensions";
 
 export function Board() {
   const inputFirstShot = useRef(null);
   const inputSecondShot = useRef(null);
   const inputThirdShot = useRef(null);
 
-  const [isSplit, setIsSplit] = useState(false);
-
-  const { currentFrame, frames, openNumPad, setSplit } = useGame();
+  const { currentFrame, frames, openNumPad } = useGame();
 
   function resetInputs() {
     inputFirstShot.current?.blur();
@@ -40,9 +35,19 @@ export function Board() {
   }
 
   return (
-    <Container>
+    <Container
+      scrollEnabled={isDeviceSmall}
+      contentContainerStyle={{
+        justifyContent: 'space-between',
+      }}
+    >
       <TitleContainer>
         <Title>Frame {currentFrame.frame_number}</Title>
+        <PinsBadge>
+          <PinsBadgeText>
+            Pins {currentFrame.pins ?? ""}
+          </PinsBadgeText>
+        </PinsBadge>
       </TitleContainer>
       <InputContainer>
         <ScoreInput
@@ -77,35 +82,27 @@ export function Board() {
               }}
             />
           )
-            :
+          :
           null
         }
       </InputContainer>
-      <SplitButton
-        onPress={() => setSplit(currentFrame.is_split ? false : true)}
-        disabled={currentFrame.first_shot === null}
-      />
-      {currentFrame.is_split ? (
         <View
         style={{
-          marginTop: 16,
+          marginTop: 24,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
+          minHeight: 220,
+          marginBottom: 28,
         }}
         >
           <PinBoard />
         </View>
-      ): null}
-
       <ScoreContainer>
-        <ScoreProgress />
         <Scores
           frames={frames}
         />
       </ScoreContainer>
-
-
     </Container>
   )
 }

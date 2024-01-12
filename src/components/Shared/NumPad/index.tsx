@@ -76,22 +76,32 @@ export function NumPad() {
   const {
     closeNumPad,
     updateValueForCurrentFrame,
-    currentFrame
+    currentFrame,
+    currentInputNumber
   } = useGame();
+
+  const allowStrikeOnSecondShot = currentFrame.first_shot === 10 && currentFrame.frame_number === 10;
+  const allowStrikeOnThirdShot = currentFrame.second_shot === 10 && currentFrame.frame_number === 10;
+
 
   function handlePressNumber(value: string) {
     updateValueForCurrentFrame(value);
     closeNumPad();
   }
+  const isEditingInput1 = currentInputNumber === 1;
+  const isEditingInput2 = currentInputNumber === 2;
 
-  // const allowSpare = currentFrame.first_shot !== null && currentFrame.second_shot === null;
-  // const allowStrike = currentFrame.first_shot === null;
+  const allowSpare = currentFrame.first_shot === null || isEditingInput1;
 
-  const allowStrike = true;
-  const allowSpare = true;
+  const allowStrike = (currentFrame.first_shot === null || isEditingInput1) || allowStrikeOnSecondShot || allowStrikeOnThirdShot;
+
 
   //const maxNumber = currentFrame?.firstShot ? (10 - (Number(currentFrame?.secondShot)+ 1)) : 10;
-  const maxNumber = currentFrame.first_shot !== null ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;
+  // const maxNumber =  allowEdit ? (currentFrame.first_shot !== null ? (10 - (Number(currentFrame?.first_shot)+1)) : 10) : 10;
+
+
+  const maxNumber = isEditingInput2 ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;
+
   const numPadNumbers = [
     ["1","2","3"],
     ["4","5","6"],
@@ -143,9 +153,9 @@ export function NumPad() {
           icon={<MaterialCommunityIcons name="slash-forward" size={18} color="#FFF" />}
           onPress={() => handlePressNumber("Spare")}
           style={{
-            backgroundColor: allowSpare ? '#0d9488' : '#E9E9E9',
-            borderColor: allowSpare ? '#0d9488' : '#E9E9E9',
-            pointerEvents: allowSpare ? 'auto' : 'none',
+            backgroundColor: !allowSpare ? '#0d9488' : '#E9E9E9',
+            borderColor: !allowSpare ? '#0d9488' : '#E9E9E9',
+            pointerEvents: !allowSpare ? 'auto' : 'none',
           }}
         />
         <ActionButton

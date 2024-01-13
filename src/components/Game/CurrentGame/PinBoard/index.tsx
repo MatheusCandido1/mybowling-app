@@ -10,6 +10,8 @@ export function PinBoard() {
 
   const [selectedPins, setSelectedPins] = useState<number[]>(currentFrame.pins?.split("-").map(Number) || []);
 
+  console.log(selectedPins)
+
 
   useEffect(() => {
     setSelectedPins(currentFrame.pins?.split("-").map(Number) || []);
@@ -77,8 +79,8 @@ export function PinBoard() {
           >
             <PinIcon
               key={index}
-              height={56}
-              width={56}
+              height={114}
+              width={114}
               color={selectedPins.includes(index) ? "#981b1b" : "#0d9488"}
             />
           </Pressable>

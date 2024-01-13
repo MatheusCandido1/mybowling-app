@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { PinBoard } from "../PinBoard";
 import { Scores } from "../Scores";
 import { formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
-import { isDeviceSmall } from "../../../../utils/deviceDimensions";
+import { isDeviceSmall, isDeviceSmallMedium } from "../../../../utils/deviceDimensions";
 
 export function Board() {
   const inputFirstShot = useRef(null);
@@ -36,7 +36,8 @@ export function Board() {
 
   return (
     <Container
-      scrollEnabled={isDeviceSmall}
+      scrollEnabled={isDeviceSmall || isDeviceSmallMedium}
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         justifyContent: 'space-between',
       }}
@@ -45,7 +46,7 @@ export function Board() {
         <Title>Frame {currentFrame.frame_number}</Title>
         <PinsBadge>
           <PinsBadgeText>
-            Pins {currentFrame.pins ?? ""}
+            Split {currentFrame.pins ?? ""}
           </PinsBadgeText>
         </PinsBadge>
       </TitleContainer>
@@ -88,12 +89,12 @@ export function Board() {
       </InputContainer>
         <View
         style={{
-          marginTop: 24,
+          marginTop: 172,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: 220,
-          marginBottom: 28,
+          marginBottom: 144,
         }}
         >
           <PinBoard />

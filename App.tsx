@@ -1,9 +1,8 @@
 import { QueryClient, QueryClientProvider  } from "@tanstack/react-query";
 import 'react-native-gesture-handler';
-import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import Toast, { BaseToast } from 'react-native-toast-message';
 import { AuthProvider } from "./src/contexts/AuthContext";
 import { AppWrapper } from "./src/Wrappers/AppWrapper";
-
 const toastConfig = {
   success: (props: any) => (
     <BaseToast
@@ -65,6 +64,7 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+
   return (
     <QueryClientProvider client={queryClient}>
         <AuthProvider>

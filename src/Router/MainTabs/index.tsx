@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
-const StackNavigator = createStackNavigator();
 import { Dimensions } from 'react-native';
 
 import { Dashboard } from '../../Screens/Dashboard';
@@ -17,14 +16,13 @@ import { HomeIcon } from '../../components/Icons/HomeIcon';
 import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
 import { isIpad } from '../../utils/getDevice';
-import { createStackNavigator } from '@react-navigation/stack';
 import { isAndroid } from '../../utils/getOS';
 
 
 export function MainTabs() {
   const { height } = Dimensions.get('window');
 
-  const shouldAddMargin = height > 700;
+  const shouldAddMargin = height > 750;
 
   const setDefaultMarginTop = isAndroid ? 0 : (shouldAddMargin ? 30 : 0);
 

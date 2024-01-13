@@ -17,6 +17,8 @@ export function Separator({ height, device }: SeparatorProps) {
   if(device === 'small' && isDeviceSmall) {
     return (<View style={{ height}} />
     )
+  } else {
+    return (<View style={{ height }} />)
   }
 
 }

@@ -19,8 +19,10 @@ import { useLoginController } from './useLoginController';
 import { Controller } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import { MainButton } from '../../../components/Shared/Buttons/MainButton';
+import { Separator } from '../../../components/Shared/Separator';
 
 export function Login() {
+
   const { errors, handleSubmit, onSubmit, control, isLoading, handleNewAccountPress } = useLoginController();
 
   return (
@@ -72,9 +74,12 @@ export function Login() {
              )}
            />
            <MainButton
-             onPress={handleSubmit(onSubmit)}
-             label={"Sign in"}
-             isLoading={isLoading}
+            onPress={handleSubmit(onSubmit)}
+            label={"Sign in"}
+            isLoading={isLoading}
+            style={{
+              marginTop: 14,
+            }}
            />
          </Form>
 
@@ -85,6 +90,9 @@ export function Login() {
              <CreateAccountLinkText>Don't have an account? Sign up!</CreateAccountLinkText>
            </CreateAccountLink>
          </Footer>
+         <Separator
+          height={40}
+         />
        </Content>
      </Container>
     </ScrollView>

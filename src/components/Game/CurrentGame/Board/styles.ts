@@ -43,12 +43,12 @@ export const InputContainer = styled.View`
 `;
 
 export const ScoreInput = styled.TextInput`
-  width: 48px;
-  height: 48px;
+  width: 112px;
+  height: 112px;
   background-color: #fff;
   border-radius: 8px;
   text-align: center;
-  font-size: 28px;
+  font-size: 56px;
   font-weight: bold;
   color: #000;
   border: 2px solid #0D9488;
@@ -57,4 +57,5 @@ export const ScoreInput = styled.TextInput`
 export const ScoreContainer = styled.View`
   flex: 1;
   justify-content: flex-end;
+  margin-top: 0px;
 `;

@@ -44,12 +44,9 @@ export const Subtitle = styled.Text`
 
 export const Form = styled.View`
   margin-top: 16px;
-  gap: 8px;
 `;
 
-export const Footer = styled.View`
-
-`;
+export const Footer = styled.View``;
 
 export const CreateAccountLink = styled.TouchableOpacity`
   margin-top: 24px;

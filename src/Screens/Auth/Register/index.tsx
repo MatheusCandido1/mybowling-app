@@ -10,10 +10,6 @@ import {
   TextContainer,
   CreateAccountLink,
   CreateAccountLinkText,
-  SocialButtonsContainer,
-  SocialButton,
-  LoginButton,
-  LoginButtonText,
   ButtonContainer
 } from './styles';
 
@@ -21,13 +17,10 @@ import HeroSvg from '../../../assets/img/hero.svg'
 import Logo from '../../../assets/img/logo.svg';
 import { CustomTextInput } from '../../../components/Shared/Forms/CustomTextInput';
 import { MainButton } from '../../../components/Shared/Buttons/MainButton';
-import { AntDesign } from "@expo/vector-icons";
 import { useRegisterController } from './useRegisterController';
 import { Controller } from 'react-hook-form';
-import { OverlayLoading } from '../../../components/Shared/OverlayLoading';
-import { KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Separator } from '../../../components/Shared/Separator';
-
 
 export function Register() {
   const { handleSubmit, onSubmit, control, isLoading, handleAlreadyUserPress, errors } = useRegisterController();
@@ -38,7 +31,7 @@ export function Register() {
         flexGrow: 1,
       }}
     >
-       <Container>
+      <Container>
        <LogoContainer>
          <Logo />
        </LogoContainer>
@@ -112,6 +105,9 @@ export function Register() {
              <CreateAccountLinkText>Already an user? Sign in!</CreateAccountLinkText>
            </CreateAccountLink>
          </Footer>
+         <Separator
+          height={40}
+         />
        </Content>
      </Container>
     </ScrollView>

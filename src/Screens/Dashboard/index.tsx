@@ -213,7 +213,7 @@ export function Dashboard() {
           <Content
             showsVerticalScrollIndicator={false}
             scrollEnabled={
-              height <= 700 ? true : false
+              height <= 750 ? true : false
             }
           >
             <Title>Dashboard</Title>
@@ -292,7 +292,7 @@ export function Dashboard() {
 
             </Swiper>
             </SplitsContainer>
-            {(height < 700 || isAndroid) && <View style={{height: 60}}></View>}
+            {(height < 750 || isAndroid) && <View style={{height: 60}}></View>}
           </Content>
         </>
 

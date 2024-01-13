@@ -5,13 +5,15 @@ interface MainButtonProps {
   label?: string;
   isLoading?: boolean;
   onPress?: () => void;
+  style?: object;
 }
 
-export function MainButton({ label, isLoading, onPress }: MainButtonProps) {
+export function MainButton({ label, isLoading, onPress, style }: MainButtonProps) {
   return (
     <Container
       onPress={onPress}
       disabled={isLoading}
+      style={style}
     >
       {isLoading ? (
          <ActivityIndicator

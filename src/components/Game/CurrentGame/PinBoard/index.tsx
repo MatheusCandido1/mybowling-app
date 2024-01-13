@@ -10,8 +10,6 @@ export function PinBoard() {
 
   const [selectedPins, setSelectedPins] = useState<number[]>(currentFrame.pins?.split("-").map(Number) || []);
 
-  console.log(selectedPins)
-
 
   useEffect(() => {
     setSelectedPins(currentFrame.pins?.split("-").map(Number) || []);

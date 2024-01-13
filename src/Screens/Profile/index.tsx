@@ -7,7 +7,9 @@ import {
   UserName,
   Menu,
   MenuItem,
-  MenuItemText
+  MenuItemText,
+  VersionText,
+  VersionContainer
 } from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
@@ -16,7 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 import { EditProfileModal } from "../../components/Profile/EditProfileModal";
 import { useProfileController } from "./useProfileController";
 import { UpdatePasswordModal } from "../../components/Profile/UpdatePasswordModal";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { appVersion } from "../../utils/getAppInfo";
+import { View } from "react-native";
 
 export function Profile() {
   const navigation = useNavigation();
@@ -75,12 +78,15 @@ export function Profile() {
 
         <MenuItem
           onPress={handleLogout}
-          style={{justifyContent: 'center'}}
+          style={{justifyContent: 'center', marginTop: 12}}
         >
           <MaterialIcons name="logout" size={28} color="#0d9488" />
           <MenuItemText>Logout</MenuItemText>
         </MenuItem>
       </Content>
+        <VersionContainer>
+        <VersionText>Version: {appVersion}</VersionText>
+        </VersionContainer>
       <EditProfileModal />
       <UpdatePasswordModal />
     </Container>

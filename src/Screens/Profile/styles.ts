@@ -51,3 +51,17 @@ export const MenuItemText = styled.Text`
   font-size: 16px;
   color: #0d9488;
 `;
+
+export const VersionContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+`;
+
+export const VersionText = styled.Text`
+  font-size: 14px;
+  color: #0d9488;
+  text-decoration: underline;
+  text-decoration-color: #0d9488;
+`;

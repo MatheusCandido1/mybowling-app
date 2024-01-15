@@ -3,6 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   avatar: string;
+  push_token: string;
   profile: {
     first_access: boolean;
   },

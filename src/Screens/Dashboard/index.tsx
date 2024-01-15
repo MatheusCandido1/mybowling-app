@@ -40,6 +40,7 @@ import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
 import { isAndroid } from "../../utils/getOS";
+import PushNotifications from "../../notifications/PushNotifications";
 
 
 export function Dashboard() {
@@ -217,6 +218,7 @@ export function Dashboard() {
             }
           >
             <Title>Dashboard</Title>
+            <PushNotifications />
             <StatsContainer>
               <ArsenalStatsCard>
                 <View

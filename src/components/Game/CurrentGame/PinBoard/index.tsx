@@ -77,8 +77,8 @@ export function PinBoard() {
           >
             <PinIcon
               key={index}
-              height={114}
-              width={114}
+              height={52}
+              width={52}
               color={selectedPins.includes(index) ? "#981b1b" : "#0d9488"}
             />
           </Pressable>

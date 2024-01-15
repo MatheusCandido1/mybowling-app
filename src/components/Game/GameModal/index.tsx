@@ -23,11 +23,12 @@ import { Controller } from "react-hook-form";
 import { ModalHeader } from "../../Shared/Game/ModalHeader";
 import { OnGoingGameCard } from "../OnGoingGames/OnGoingGameCard";
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { IGame } from "../../../entities/Game";
 import { Separator } from "../../Shared/Separator";
 import { NewGameModalHeight } from "../../../utils/modalHeightByDevice";
 import { DateInput } from "../../Shared/Forms/DateInput";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export function GameModal() {
@@ -167,7 +168,6 @@ export function GameModal() {
           ) : null
 
         }
-
         <InputContainer>
           <Controller
           name="ball_id"
@@ -183,17 +183,14 @@ export function GameModal() {
             )}
           />
         </InputContainer>
-        <InputContainer
+        <MainButton
           style={{
             marginTop: 4
           }}
-        >
-          <MainButton
-            onPress={handleSubmit(onSubmit)}
-            isLoading={isCreatingGame}
-            label="Start Game"
-          />
-        </InputContainer>
+          onPress={handleSubmit(onSubmit)}
+          isLoading={isCreatingGame}
+          label="Start Game"
+        />
       </Form>
     </>
     )

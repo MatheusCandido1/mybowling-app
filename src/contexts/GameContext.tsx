@@ -22,7 +22,7 @@ interface GameContextData {
   isGameDone: boolean;
   currentGame: IGame | null;
   handleSaveGame: () => void;
-  handleNewGame: (game: IGame) => void;
+  handleNewGame: (data: any) => void;
   handleResumeGame: (game: IGame) => void;
   currentInputNumber: number;
   resetGame: () => void;
@@ -81,8 +81,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setFrames(game.frames);
   }
 
-  function handleNewGame(game: IGame) {
-    setCurrentGame(game);
+  function handleNewGame(data: any) {
+    setFrames(data.frames);
+    setCurrentFrame(data.frames[0]);
+    setCurrentGame(data);
   }
 
   function openNumPad(inputNumber: number) {

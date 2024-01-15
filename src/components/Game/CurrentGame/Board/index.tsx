@@ -89,12 +89,12 @@ export function Board() {
       </InputContainer>
         <View
         style={{
-          marginTop: 172,
+          marginTop: 16,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: 220,
-          marginBottom: 144,
+          marginBottom: 32,
         }}
         >
           <PinBoard />

@@ -35,7 +35,6 @@ export function FrameCard({ frame }: FrameCardProps) {
     return (
       <CloseFrameContainer>
         <CloseFrameText>{isStrike ? 'X':'/'}</CloseFrameText>
-        <CloseFrameSubText>{isStrike ? 'Strike':'Spare'}</CloseFrameSubText>
       </CloseFrameContainer>
     )
   }
@@ -47,8 +46,27 @@ export function FrameCard({ frame }: FrameCardProps) {
       <CloseFrameText>{frame.first_shot === 0 || null ? '-': frame.first_shot}</CloseFrameText>
       <CloseFrameText>{frame.second_shot === 0 || null ? '-': frame.second_shot}</CloseFrameText>
       </View>
-      <CloseFrameSubText>Open Frame</CloseFrameSubText>
     </CloseFrameContainer>
+    )
+  }
+
+  const FormattedFrame = ({value}: {value: any}) => {
+    return (
+      <View>
+        <CloseFrameText>{value}</CloseFrameText>
+      </View>
+    )
+  }
+
+  const TenthFrame = () => {
+    return (
+      <CloseFrameContainer>
+        <View style={{flexDirection: 'row', gap: 4}}>
+        {frame.first_shot === 10 ? <FormattedFrame value="X" /> : <FormattedFrame value={frame.first_shot} />}
+        {Number(frame.first_shot) + Number(frame.second_shot) === 10 ? <FormattedFrame value="/" /> : frame.second_shot === 10 ? <FormattedFrame value="X" /> : <FormattedFrame value={frame.second_shot === 0 ? "-": frame.second_shot} />}
+        {frame.third_shot === 10 ? <FormattedFrame value="X" /> : <FormattedFrame value={frame.third_shot === 0 ? "-": frame.third_shot} /> }
+        </View>
+      </CloseFrameContainer>
     )
   }
 
@@ -68,6 +86,10 @@ export function FrameCard({ frame }: FrameCardProps) {
   }
 
   const BoardDisplay = () => {
+    if(frame.frame_number === 10) {
+      return <TenthFrame  />
+    }
+
     if(frame.pins) {
       return <SplitFrame split={frame.pins} />
     }

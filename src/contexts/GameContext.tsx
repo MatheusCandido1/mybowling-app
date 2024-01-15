@@ -5,6 +5,7 @@ import { IGame } from "../entities/Game";
 import { isGameComplete } from "../utils/scoreHelper";
 import { useMutation } from "@tanstack/react-query";
 import { framesService } from "../services/frameService";
+import { isSplit } from "../utils/splitHelper";
 
 interface GameContextData {
   frames: IFrame[];
@@ -14,7 +15,6 @@ interface GameContextData {
   openNumPad: (inputNumber: number) => void;
   closeNumPad: () => void;
   updateValueForCurrentFrame: (value: string) => void;
-  setSplit: (newValue: boolean) => void;
   framesList: any;
   setSplitValue: (newValue: string) => void;
   score: number;
@@ -46,7 +46,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const isGameDone = isGameComplete(frames);
 
-
   const navigation = useNavigation();
 
   function resetGame() {
@@ -71,14 +70,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }
 
   function handleResumeGame(game: IGame) {
-    setCurrentGame(game);
-    const mostRecentFrame = game.frames.find(f => f.status === 'in_progress');
-    setCurrentFrame(mostRecentFrame);
-    setTimeout(() =>
-      moveFrameToNext(mostRecentFrame!.frame_number - 1), 250
-    );
+      setCurrentGame(game);
+      const mostRecentFrame = game.frames.find(f => f.status === 'in_progress');
+      if(!mostRecentFrame) {
+        setCurrentFrame(game.frames[0]);
+        setFrames(game.frames);
+        moveFrameToNext(0);
+      } else {
+        setCurrentFrame(mostRecentFrame);
 
-    setFrames(game.frames);
+        setTimeout(() =>
+          moveFrameToNext(mostRecentFrame!.frame_number - 1), 250
+        );
+
+        setFrames(game.frames);
+
+      }
+    /*
+    */
   }
 
   function handleNewGame(data: any) {
@@ -103,7 +112,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     for (let i = 0; i < frames.length; i++) {
       const frame = frames[i];
 
-      if(frame.frame_number === 10) {
+      if (frame.frame_number === 10) {
         totalScore += (frame.first_shot || 0) + (frame.second_shot || 0) + (frame.third_shot || 0);
       } else {
         if (isStrike(frame)) {
@@ -127,7 +136,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     if (nextFrame) {
       if (isStrike(nextFrame)) {
-        return 10 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
+        if (currentIndex === 8) {
+          // In the 9th frame, calculate bonus for consecutive strikes in the last frame
+          return 20 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
+        } else {
+          return 10 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
+        }
       } else {
         return (nextFrame.first_shot || 0) + (nextFrame.second_shot || 0);
       }
@@ -163,23 +177,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return Number(frame.first_shot) + Number(frame.second_shot) === 10;
   }
 
-  function setSplit(newValue: boolean) {
-    const newFrames = [...frames];
-    const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
-    if(newValue === false) {
-      newFrames[index].is_split = false;
-      newFrames[index].pins = null;
-    } else {
-      newFrames[index].is_split = true;
-    }
-
-    setFrames(newFrames);
-  }
-
   function setSplitValue(newValue: string) {
     const newFrames = [...frames];
     const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
     newFrames[index].pins = newValue;
+    newFrames[index].is_split = isSplit(newValue);
     setFrames(newFrames);
   }
 
@@ -196,15 +198,16 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         newFrames[index].is_split = false;
       }
 
+      const first_shot = parseInt(value === "Strike" ? "10" : value);
 
-      newFrames[index].first_shot = parseInt(value === "Strike" ? "10" : value);
+      newFrames[index].first_shot = first_shot;
 
-      if(parseInt(value) === 10 || value === "Strike") {
+      if(first_shot === 10) {
         newFrames[index].status = 'completed';
-
+        newFrames[index].points = 10;
         updateFrame(newFrames[index])
 
-        if(index <= 8) {
+        if(index < 9) {
           newFrames[index+1].status = 'in_progress';
           setCurrentFrame(newFrames[index+1]);
           moveFrameToNext(currentFrame.frame_number);
@@ -217,22 +220,25 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
       if(index === 9) {
-        newFrames[index].second_shot = parseInt(value === "Strike" ? "10" : value);
+        if(value === "Spare") {
+          newFrames[index].second_shot = (10 - Number(newFrames[index].first_shot));
+        } else {
+          newFrames[index].second_shot = parseInt(value === "Strike" ? "10" : value);
+        }
+
+        const shouldAllowThirdShot = (currentFrame.first_shot === 10 || (Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10));
+
+        if(shouldAllowThirdShot) {
+          newFrames[index].status = 'in_progress';
+        } else {
+          newFrames[index].status = 'completed';
+        }
       } else {
         newFrames[index].second_shot = parseInt(value === "Spare" ? (10 - Number(newFrames[index].first_shot)).toString() : value);
+        newFrames[index].status = 'completed';
       }
-      /*
-      if(value === "Spare" && currentFrame.is_split && currentFrame.split !== null) {
-        Toast.show({
-          type: 'success',
-          text1: 'Split Converted',
-          text2: `Wow! You converted a ${currentFrame.split} split! Amazing job!`,
-          visibilityTime: 3000,
-          autoHide: true,
-        })
-      } */
 
-      newFrames[index].status = 'completed';
+      newFrames[index].points = Number(newFrames[index].first_shot) + Number(newFrames[index].second_shot);
       updateFrame(newFrames[index])
 
       if(index <= 8) {
@@ -252,32 +258,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       updateFrame(newFrames[index])
     }
 
-
     closeNumPad();
   }
 
 
 
-  function setAllFramesToPending() {
-    const newFrames = [...frames];
-    // change status of all frames to pending but keep the completed ones
-    newFrames.forEach(frame => {
-      if(frame.status !== 'completed') {
-        frame.status = 'pending';
-      }
-    });
-
-    setFrames(newFrames);
-  }
 
   function handleCurrentFrame(frame: IFrame) {
-    setAllFramesToPending();
-    // change status of current frame to completed
-    const index = frames.findIndex(f => f.frame_number === frame.frame_number);
-    const newFrames = [...frames];
-    newFrames[index].status = 'in_progress';
-
-    setFrames(newFrames);
     setCurrentFrame(frame);
   }
 
@@ -291,7 +278,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         openNumPad,
         closeNumPad,
         updateValueForCurrentFrame,
-        setSplit,
         framesList,
         setSplitValue,
         score,

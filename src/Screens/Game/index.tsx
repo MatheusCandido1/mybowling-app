@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { Header } from "../../components/Shared/Header";
 import { Container, Content, FrameSwiper, CurrentFrameContainer, SplitButtonText, SplitContainer, FinishGameContainer, FinishGameText } from "./styles"
 import { Frame } from "../../components/Game/CurrentGame/Frame";
@@ -7,18 +7,26 @@ import { Board } from "../../components/Game/CurrentGame/Board";
 import { NumPad } from "../../components/Shared/NumPad";
 import { MaterialCommunityIcons} from "@expo/vector-icons";
 import { useGameController } from "./useGameController";
+import { ConfirmPopup } from "../../components/Shared/ConfirmPopup";
+import { useEffect, useState } from "react";
 
 export function Game() {
   const {
     handleSubmit,
-    isUpdatingGame,
     frames,
     handleCurrentFrame,
     isNumPadVisible,
     framesList,
     isGameDone,
-    handleSaveGame,
   } = useGameController();
+
+  useEffect(() => {
+    if (isGameDone) {
+      setShowConfirmPopup(true);
+    }
+  }, [isGameDone]);
+
+  const [showConfirmPopup, setShowConfirmPopup] = useState(isGameDone);
 
   const FinishGameButton = () => {
     return (
@@ -35,6 +43,15 @@ export function Game() {
 
   return (
     <Container>
+      {isGameDone && (
+        <ConfirmPopup
+          showConfirmPopup={showConfirmPopup}
+          title="This game is complete!"
+          text="Do you want to save this game? If you don't save it, the stats will not be available on the dashboard."
+          handleCloseConfirmPopup={() => setShowConfirmPopup(false)}
+          handleConfirm={handleSubmit}
+        />
+      )}
       <FinishGameButton />
       <Header title="Game" />
       {isNumPadVisible ? <NumPad /> : null}

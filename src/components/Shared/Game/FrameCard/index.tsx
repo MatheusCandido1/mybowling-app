@@ -8,49 +8,24 @@ import {
   FrameNumberContainer,
   FrameNumber,
   FrameNumberLabel,
-  ShotInformationContainer,
-  NoDataAvailableContainer,
-  NoDataAvailableText,
-  CloseFrameContainer,
-  CloseFrameText,
-  CloseFrameSubText,
-  SplitFrameContainer,
+  FrameText,
   ScoreContainer,
   InformationLabel,
   InformationResult,
   InformationItem,
   ResultBadge,
-  ResultBadgeText
+  ResultBadgeText,
+  FrameContainer
  } from "./styles";
 import { isOpenFrame, isSpare, isStrike } from "../../../../utils/scoreHelper";
 import { isSplit } from "../../../../utils/splitHelper";
+import { formatFrameResult } from "../../../../utils/formatScore";
 
 interface FrameCardProps {
   frame: IFrame;
 }
 
 export function FrameCard({ frame }: FrameCardProps) {
-
-  const ClosedFrame = ({isStrike}: {isStrike: boolean}) => {
-    return (
-      <CloseFrameContainer>
-        <CloseFrameText>{isStrike ? 'X':'/'}</CloseFrameText>
-        <CloseFrameSubText>{isStrike ? 'Strike':'Spare'}</CloseFrameSubText>
-      </CloseFrameContainer>
-    )
-  }
-
-  const OpenFrame = () => {
-    return (
-    <CloseFrameContainer>
-      <View style={{flexDirection: 'row', gap: 8}}>
-      <CloseFrameText>{frame.first_shot === 0 || null ? '-': frame.first_shot}</CloseFrameText>
-      <CloseFrameText>{frame.second_shot === 0 || null ? '-': frame.second_shot}</CloseFrameText>
-      </View>
-      <CloseFrameSubText>Open Frame</CloseFrameSubText>
-    </CloseFrameContainer>
-    )
-  }
 
   function formatResult(frame: IFrame) {
     if(isStrike(frame)) {
@@ -71,18 +46,13 @@ export function FrameCard({ frame }: FrameCardProps) {
     if(frame.pins) {
       return <SplitFrame split={frame.pins} />
     }
-
-    if(frame.first_shot === 10) {
-      return <ClosedFrame isStrike />
-    }
-
-    if(frame.first_shot !== 10 && frame.points === 10) {
-      return <ClosedFrame isStrike={false} />
-    }
-
-    if(frame.first_shot !== 10 && frame.points !== 10) {
-      return <OpenFrame />
-    }
+    return (
+      <FrameContainer>
+        <FrameText>{formatFrameResult(1, frame)}</FrameText>
+        <FrameText>{formatFrameResult(2, frame)}</FrameText>
+        <FrameText>{formatFrameResult(3, frame)}</FrameText>
+      </FrameContainer>
+    )
   }
 
   return (

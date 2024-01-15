@@ -5,11 +5,19 @@ export function isLastFrame(frameIndex: number) {
 }
 
 export function isGameComplete(frames: IFrame[]) {
-  return frames.every(isFrameComplete)
-
+  return frames.every((frame) => frame.status === 'completed');
 }
 
 export function isFrameComplete(frame: IFrame) {
+  if(frame.frame_number === 10) {
+   if(isStrike(frame)) {
+     return frame.second_shot !== null && frame.third_shot !== null;
+   } else if(isSpare(frame)) {
+     return frame.third_shot !== null;
+   } else {
+      return frame.second_shot !== null;
+    }
+  }
   return frame.first_shot !== null && (isStrike(frame) || frame.second_shot !== null);
 }
 

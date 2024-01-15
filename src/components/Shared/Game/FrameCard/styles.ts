@@ -70,12 +70,6 @@ export const FrameNumber = styled.Text`
   color: #fff;
 `;
 
-export const ShotInformationContainer = styled.View`
-  width: 50%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 
 export const BoardContainer = styled.View`
   width: 35%;
@@ -84,38 +78,17 @@ export const BoardContainer = styled.View`
   align-items: flex-end;
 `;
 
-export const SplitFrameContainer = styled.View`
-padding-right: 16px;
-
-`;
-
-export const NoDataAvailableContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: flex-end;
-`;
-
-export const NoDataAvailableText = styled.Text`
-  font-size: 14px;
-  font-weight: bold;
-  color: #000;
-`;
-
-export const CloseFrameContainer = styled.View`
+export const FrameContainer = styled.View`
   width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
-
+  flex-direction: row;
+  gap: 4px;
 `;
 
-export const CloseFrameText = styled.Text`
+export const FrameText = styled.Text`
   font-size: 36px;
-  font-weight: bold;
-  color: #000;
-`;
-
-export const CloseFrameSubText = styled.Text`
-  font-size: 14px;
   font-weight: bold;
   color: #000;
 `;

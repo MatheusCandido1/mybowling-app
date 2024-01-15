@@ -3,6 +3,7 @@ import 'react-native-gesture-handler';
 import Toast, { BaseToast } from 'react-native-toast-message';
 import { AuthProvider } from "./src/contexts/AuthContext";
 import { AppWrapper } from "./src/Wrappers/AppWrapper";
+
 const toastConfig = {
   success: (props: any) => (
     <BaseToast

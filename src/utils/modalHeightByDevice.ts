@@ -9,7 +9,7 @@ import { isAndroid } from "./getOS"
 export const NewGameModalHeight = () => {
   if(isDeviceSmall) return { dimension: 90,px: '90px' }
   if(isDeviceSmallMedium) return { dimension: 150,px: '150px' }
-  if(isDeviceMedium) return { dimension: 200,px: '200px' }
+  if(isDeviceMedium) return { dimension: 170,px: '170px' }
   if(isDeviceBig) return { dimension: 280,px: '280px' }
 }
 

@@ -81,7 +81,8 @@ export function NumPad() {
   } = useGame();
 
   const allowStrikeOnSecondShot = currentFrame.first_shot === 10 && currentFrame.frame_number === 10;
-  const allowStrikeOnThirdShot = currentFrame.second_shot === 10 && currentFrame.frame_number === 10;
+  const allowStrikeOnThirdShot = ((Number(currentFrame.second_shot) + Number(currentFrame.first_shot) === 10) || (currentFrame.second_shot === 10))  && currentFrame.frame_number === 10;
+  const allowSpareOnThirdShot = currentFrame.frame_number === 10 && currentInputNumber === 3;
 
 
   function handlePressNumber(value: string) {
@@ -91,13 +92,9 @@ export function NumPad() {
   const isEditingInput1 = currentInputNumber === 1;
   const isEditingInput2 = currentInputNumber === 2;
 
-  const allowSpare = currentFrame.first_shot === null || isEditingInput1;
+  const allowSpare = (currentFrame.first_shot === null || isEditingInput1) || allowSpareOnThirdShot;
 
   const allowStrike = (currentFrame.first_shot === null || isEditingInput1) || allowStrikeOnSecondShot || allowStrikeOnThirdShot;
-
-
-  //const maxNumber = currentFrame?.firstShot ? (10 - (Number(currentFrame?.secondShot)+ 1)) : 10;
-  // const maxNumber =  allowEdit ? (currentFrame.first_shot !== null ? (10 - (Number(currentFrame?.first_shot)+1)) : 10) : 10;
 
 
   const maxNumber = isEditingInput2 ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;

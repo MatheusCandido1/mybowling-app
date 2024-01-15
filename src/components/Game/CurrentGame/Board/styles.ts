@@ -10,6 +10,7 @@ export const TitleContainer = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-top: 8px;
+  margin-bottom: 8px;
 `;
 
 export const Title = styled.Text`
@@ -43,12 +44,12 @@ export const InputContainer = styled.View`
 `;
 
 export const ScoreInput = styled.TextInput`
-  width: 112px;
-  height: 112px;
+  width: 64px;
+  height: 64px;
   background-color: #fff;
   border-radius: 8px;
   text-align: center;
-  font-size: 56px;
+  font-size: 32px;
   font-weight: bold;
   color: #000;
   border: 2px solid #0D9488;

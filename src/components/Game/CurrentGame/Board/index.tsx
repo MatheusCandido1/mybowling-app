@@ -6,6 +6,7 @@ import { PinBoard } from "../PinBoard";
 import { Scores } from "../Scores";
 import { formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
 import { isDeviceSmall, isDeviceSmallMedium } from "../../../../utils/deviceDimensions";
+import { isSplit } from "../../../../utils/splitHelper";
 
 export function Board() {
   const inputFirstShot = useRef(null);
@@ -34,6 +35,7 @@ export function Board() {
     return false;
   }
 
+
   return (
     <Container
       scrollEnabled={isDeviceSmall || isDeviceSmallMedium}
@@ -44,9 +46,23 @@ export function Board() {
     >
       <TitleContainer>
         <Title>Frame {currentFrame.frame_number}</Title>
-        <PinsBadge>
-          <PinsBadgeText>
-            Split {currentFrame.pins ?? ""}
+        <PinsBadge
+          style={{
+            backgroundColor: isSplit(currentFrame.pins) ? '#0D9488' : '#FFF',
+            shadowColor: isSplit(currentFrame.pins) ? '#0D9488' : '#000',
+            shadowOffset: { width: 0, height: isSplit(currentFrame.pins) ? 4 : 0 },
+            shadowOpacity: isSplit(currentFrame.pins) ? 0.4 : 0,
+            shadowRadius: isSplit(currentFrame.pins) ? 4 : 0,
+            borderWidth: 2,
+            borderColor: isSplit(currentFrame.pins) ? '#0D9488' : '#0D9488',
+          }}
+        >
+          <PinsBadgeText
+            style={{
+              color: isSplit(currentFrame.pins) ? '#FFF' : '#0D9488',
+            }}
+          >
+            {isSplit(currentFrame.pins) ? "Split" : "Pins"}: {currentFrame.pins}
           </PinsBadgeText>
         </PinsBadge>
       </TitleContainer>
@@ -89,12 +105,12 @@ export function Board() {
       </InputContainer>
         <View
         style={{
-          marginTop: 172,
+          marginTop: 16,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: 220,
-          marginBottom: 144,
+          marginBottom: 32,
         }}
         >
           <PinBoard />

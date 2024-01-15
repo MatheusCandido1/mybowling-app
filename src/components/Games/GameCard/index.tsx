@@ -15,6 +15,7 @@ import {
   UserName
 } from "./styles";
 import { Avatar } from "../../Shared/Avatar";
+import { formatFrameResult } from "../../../utils/formatScore";
 
 interface GameCardProps {
   location: ILocation,
@@ -60,6 +61,24 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
     return frame.third_shot;
   }
 
+  const SplitFormat = ({  children }:{children: React.ReactNode}) => {
+    return (
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          borderRadius: 10,
+          borderWidth: 1,
+          borderColor: '#000',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {children}
+      </View>
+    )
+  }
+
   const ScoreColumn = ({ frame }:{frame: IFrame}) => {
     return (
       <View
@@ -73,24 +92,16 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
         <View>
           <Text style={{fontWeight: 'bold'}}>{frame.frame_number}</Text>
         </View>
-        <View style={{flexDirection: 'row', gap: 4, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row', gap: 2, justifyContent: 'center', alignItems: 'center'}}>
           {frame.is_split ? (
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: '#000',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
+            <SplitFormat>
               <Text>{formatFirstShot(frame)}</Text>
-            </View>
-          ): ( <Text>{formatFirstShot(frame)}</Text> )}
-          {frame.second_shot ? <Text>{formatSecondShot(frame)}</Text> : null}
-          {frame.frame_number === 10 ? <Text>{formatThirdShot(frame)}</Text> : null}
+            </SplitFormat>
+          ): (
+            <Text>{formatFirstShot(frame)}</Text>
+          )}
+          <Text>{formatFrameResult(2, frame)}</Text>
+          <Text>{formatFrameResult(3, frame)}</Text>
         </View>
         <View>
           <Text style={{fontWeight: 'bold'}}>{frame.score}</Text>

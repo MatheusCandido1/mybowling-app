@@ -1,7 +1,7 @@
 import { Container, ScoreCard, FrameNumberLabel, Label, SplitResultContainer, ResultContainer } from "./styles";
 import { useGame } from "../../../../hooks/useGame";
 import { IFrame } from "../../../../entities/Frame";
-import { formatPoints, formatFrameFirstShot, formatFrameSecondShot } from "../../../../utils/formatScore";
+import { formatPoints, formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot, formatFrameResult } from "../../../../utils/formatScore";
 import { View, Text } from "react-native";
 import { isSplit } from "../../../../utils/splitHelper";
 import { isStrike, isSpare, isOpenFrame, isFrameComplete } from "../../../../utils/scoreHelper";
@@ -18,15 +18,14 @@ export function Scores({ frames }: ScoresProps) {
   const GetFrameFormate = ({frame}: {frame: IFrame}) => {
     if(frame.frame_number === 10) {
       return (
-        <ResultContainer>
-        <Text>{formatFrameFirstShot(frame)}</Text>
-        <Text>{formatFrameSecondShot(frame)}</Text>
-        <Text>{formatFrameFirstShot(frame)}</Text>
+        <ResultContainer style={{gap: 2}}>
+        <Text>{formatFrameResult(1, frame)}</Text>
+        <Text>{formatFrameResult(2, frame)}</Text>
+        <Text>{formatFrameResult(3, frame)}</Text>
         </ResultContainer>
 
       )
     }
-
 
     if(isStrike(frame)) {
       return (

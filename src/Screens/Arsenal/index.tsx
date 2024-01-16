@@ -47,10 +47,7 @@ export function Arsenal() {
         <BallItemInformationContainer>
           <BallItemText>{ball.name}</BallItemText>
           <BallItemText>{ball.weight} lbs</BallItemText>
-
-
         </BallItemInformationContainer>
-
       </BallItemContainer>
     );
   }
@@ -82,7 +79,7 @@ export function Arsenal() {
         </HeaderContainer>
 
         <View style={{height: 16}} />
-        {balls.length === 0 && <EmptyArsenal />}
+        {(balls.length === 0 && !isFetching) && <EmptyArsenal />}
 
         {isFetching ? (
           <OverlayLoading style="light" />
@@ -97,14 +94,10 @@ export function Arsenal() {
             <RefreshControl
               refreshing={isFetching}
               onRefresh={refetch}
-              colors={["gray","orange"]}
             />
           }
           />
-
         )}
-
-
       </Content>
       { showNewBallModal ? <NewBallModal /> : null}
       { showEditBallModal ? <EditBallModal /> : null}

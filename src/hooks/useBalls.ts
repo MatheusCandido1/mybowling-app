@@ -8,5 +8,7 @@ export function useBalls() {
     staleTime: Infinity
   });
 
+
+
   return { balls: data ?? [], isFetching, refetch }
 }

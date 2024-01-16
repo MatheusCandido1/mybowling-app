@@ -66,10 +66,10 @@ export const formatFrameFirstShot = (currentFrame: IFrame) => {
 export const formatFrameSecondShot = (currentFrame: IFrame) => {
   if(currentFrame.frame_number === 10) {
     if(currentFrame.second_shot === 10) return 'X';
+    if(currentFrame.second_shot === null) return '';
     if(isSpare(currentFrame)) return '/';
     if(currentFrame.second_shot === 0) return '-';
 
-    if(currentFrame.second_shot === null) return '';
     return currentFrame.second_shot.toString();
 
   } else {

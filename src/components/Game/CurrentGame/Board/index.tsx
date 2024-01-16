@@ -35,6 +35,11 @@ export function Board() {
     return false;
   }
 
+  function shouldBlockThirdInput() {
+    if(currentFrame.second_shot === null) return true;
+    return false;
+  }
+
 
   return (
     <Container
@@ -93,9 +98,9 @@ export function Board() {
               onFocus={() => onFocusEmitter(3)}
               selectionColor={'transparent'}
               value={formatFrameThirdShot(currentFrame)}
-              editable={true}
+              editable={!shouldBlockThirdInput()}
               style={{
-                opacity: shouldBlockSecondInput() ? 0.5 : 1
+                opacity: shouldBlockThirdInput() ? 0.5 : 1
               }}
             />
           )

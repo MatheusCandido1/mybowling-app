@@ -1,4 +1,3 @@
-import { Text, View } from "react-native";
 import { IFrame } from "../../../../entities/Frame";
 import { SplitFrame } from "../../../Dashboard/SplitFrame";
 import {
@@ -57,26 +56,29 @@ export function FrameCard({ frame }: FrameCardProps) {
 
   return (
     <Container>
-       <FrameNumberContainer>
-          <FrameNumberLabel>Frame</FrameNumberLabel>
-          <FrameNumber>{frame.frame_number}</FrameNumber>
-        </FrameNumberContainer>
+      <FrameNumberContainer>
+        <FrameNumberLabel>Frame</FrameNumberLabel>
+        <FrameNumber>{frame.frame_number}</FrameNumber>
+      </FrameNumberContainer>
+
+
       <InformationContainer>
         <InformationItem>
           <InformationLabel>First Shot:</InformationLabel>
           <InformationResult>{frame.first_shot}</InformationResult>
         </InformationItem>
+
         <InformationItem>
           <InformationLabel>Second Shot:</InformationLabel>
           <InformationResult>{frame.second_shot}</InformationResult>
         </InformationItem>
-        {frame.third_shot && (
+        {frame.third_shot !== null ? (
           <InformationItem>
             <InformationLabel>Third Shot:</InformationLabel>
-            <InformationResult>{frame.third_shot}</InformationResult>
+            <InformationResult>frame.third_shot</InformationResult>
           </InformationItem>
-        )}
-        <InformationItem>
+        ):null}
+          <InformationItem>
           <ResultBadge
             style={{
               backgroundColor: formatResult(frame) === 'Split Converted' ? '#0fab9e':'#ABB2B9'
@@ -86,7 +88,7 @@ export function FrameCard({ frame }: FrameCardProps) {
           </ResultBadge>
         </InformationItem>
 
-        {frame.is_split && (
+        {frame.is_split ? (
           <InformationItem>
           <ResultBadge
             style={{
@@ -96,9 +98,7 @@ export function FrameCard({ frame }: FrameCardProps) {
             <ResultBadgeText>{frame.pins}</ResultBadgeText>
           </ResultBadge>
         </InformationItem>
-
-        )}
-
+        ): null}
       </InformationContainer>
       <BoardContainer>
         <BoardDisplay />

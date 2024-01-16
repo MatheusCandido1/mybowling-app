@@ -5,12 +5,24 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://192.168.0.42:8000/api/v1"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "test": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://mybowlingapp-api-6725c2b4cf9f.herokuapp.com/api/v1"
+      }
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://mybowlingapp-api-6725c2b4cf9f.herokuapp.com/api/v1"
+      }
+    }
   },
   "submit": {
     "production": {

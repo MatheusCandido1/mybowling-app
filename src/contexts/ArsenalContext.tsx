@@ -12,6 +12,7 @@ interface ArsenalContextData {
   showEditBallModal: boolean;
   handleShowEditBallModal(ball: IBall): void;
   handleCloseEditBallModal(): void;
+  refetch(): void;
 }
 
 export const ArsenalContext = createContext({} as ArsenalContextData);
@@ -21,7 +22,7 @@ export function ArsenalProvider({children}: {children: React.ReactNode}) {
   const [showEditBallModal, setShowEditBallModal] = useState(false);
   const [selectedBall, setSelectedBall] = useState<IBall | null>(null);
 
-  const { balls, isFetching } = useBalls();
+  const { balls, isFetching, refetch } = useBalls();
 
   function handleShowNewBallModal() {
     setShotNewBallModal(true);
@@ -52,7 +53,8 @@ export function ArsenalProvider({children}: {children: React.ReactNode}) {
         selectedBall,
         showEditBallModal,
         handleShowEditBallModal,
-        handleCloseEditBallModal
+        handleCloseEditBallModal,
+        refetch
       }}
     >
       {children}

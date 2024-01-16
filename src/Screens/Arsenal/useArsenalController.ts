@@ -8,7 +8,8 @@ export function useArsenalController() {
     balls,
     isFetching,
     showEditBallModal,
-    handleShowEditBallModal
+    handleShowEditBallModal,
+    refetch
   } = useArsenal();
 
   return {
@@ -17,6 +18,7 @@ export function useArsenalController() {
     balls,
     isFetching,
     showEditBallModal,
-    handleShowEditBallModal
+    handleShowEditBallModal,
+    refetch
   }
 }

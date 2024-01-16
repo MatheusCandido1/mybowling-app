@@ -75,7 +75,7 @@ export function FrameCard({ frame }: FrameCardProps) {
         {frame.third_shot !== null ? (
           <InformationItem>
             <InformationLabel>Third Shot:</InformationLabel>
-            <InformationResult>frame.third_shot</InformationResult>
+            <InformationResult>{frame.third_shot}</InformationResult>
           </InformationItem>
         ):null}
           <InformationItem>

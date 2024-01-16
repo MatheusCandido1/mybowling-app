@@ -53,38 +53,50 @@ export function Arsenal() {
     );
   }
 
+  const Loading = () => {
+    return (
+      <View style={{flex: 1}} >
+        <OverlayLoading />
+      </View>
+    )
+  }
+
 
   return (
-    <Container>
+    <>
+    {isFetching ? <Loading /> : (
+      <Container>
       <Header
         title="Arsenal"
         onPress={() => navigation.goBack()}
       />
       <Content>
-       <HeaderContainer>
+        <HeaderContainer>
         <NewBallButton
           onPress={handleShowNewBallModal}
         >
           <NewBallButtonText>New Ball</NewBallButtonText>
           <BallIcon height={24} width={24} color={"#FFF"} />
         </NewBallButton>
-       </HeaderContainer>
+        </HeaderContainer>
 
-       <View style={{height: 16}} />
-       {balls.length === 0 && <EmptyArsenal />}
+        <View style={{height: 16}} />
+        {balls.length === 0 && <EmptyArsenal />}
 
-       <FlatList
+        <FlatList
         data={balls}
         keyExtractor={item => item.id}
         renderItem={({item}) => <BallItem ball={item} />}
         ItemSeparatorComponent={() => <View style={{height: 16}} />}
         showsVerticalScrollIndicator={false}
-       />
+        />
 
       </Content>
       { showNewBallModal ? <NewBallModal /> : null}
       { showEditBallModal ? <EditBallModal /> : null}
       { isFetching ? <OverlayLoading /> : null}
-    </Container>
+      </Container>
+    )}
+    </>
   )
 }

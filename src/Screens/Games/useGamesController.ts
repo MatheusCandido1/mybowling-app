@@ -16,7 +16,8 @@ export function useGamesController() {
     handleCloseFiltersModal,
     handleShowFiltersModal,
     games,
-    isFetchingGames
+    isFetchingGames,
+    refetchGames
    } = useGames();
 
   const [selectedGame, setSelectedGame] = useState<IGame | null>(null);
@@ -44,6 +45,7 @@ export function useGamesController() {
     handleShowDetailsModal,
     handleCloseDetailsModal,
     filters,
-    selectedGame
+    selectedGame,
+    refetchGames
   }
 }

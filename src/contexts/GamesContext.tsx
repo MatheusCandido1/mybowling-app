@@ -13,6 +13,7 @@ interface GamesContextData {
   games: any[];
   isFetchingGames: boolean;
   handleResetFilters: () => void;
+  refetchGames: () => void;
 }
 
 export const GamesContext = createContext({} as GamesContextData);
@@ -74,7 +75,8 @@ export function GamesProvider({children}: {children: React.ReactNode}) {
         handleCloseFiltersModal,
         games,
         isFetchingGames,
-        handleResetFilters
+        handleResetFilters,
+        refetchGames
       }}
     >
       {children}

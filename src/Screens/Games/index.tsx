@@ -12,6 +12,7 @@ import { Ball2Icon } from "../../components/Icons/Ball2Icon";
 import { useNavigation } from "@react-navigation/native";
 import { EmptyGames } from "../../components/Games/EmptyGames";
 import { formatBallName } from "../../utils/formatBallName";
+import { RefreshControl } from "react-native-gesture-handler";
 
 export function Games() {
   const navigation = useNavigation();
@@ -26,85 +27,96 @@ export function Games() {
     handleShowFiltersModal,
     handleCloseFiltersModal,
     filters,
-    selectedGame
+    selectedGame,
+    refetchGames
   } = useGamesController();
 
   return (
     <Container>
-      {isLoading && <OverlayLoading />}
-      {!isLoading && (
         <>
         <Header title="Games" onPress={() => navigation.goBack()} />
         <Content>
-          <SearchContainer>
-            <FilterContainer>
-              <FilterText
-                style={{ fontWeight: 'bold' }}
-              >Filters:
-            </FilterText>
-
-            <FilterItem>
-              <MaterialCommunityIcons name="calendar-arrow-right" size={24} color="#0d9488" />
-              <FilterText>
-                <FilterText style={{fontWeight: 'bold' }}>Start Date: </FilterText>
-                {formatFromDate(filters.start_date)}
+        <SearchContainer>
+              <FilterContainer>
+                <FilterText
+                  style={{ fontWeight: 'bold' }}
+                >Filters:
               </FilterText>
-            </FilterItem>
 
-            <FilterItem>
-              <MaterialCommunityIcons name="calendar-arrow-left" size={24} color="#0d9488" />
-              <FilterText>
-
-                <FilterText style={{fontWeight: 'bold'}}>End Date: </FilterText>
-                {formatFromDate(filters.end_date)}
-              </FilterText>
-            </FilterItem>
-            { filters.ball !== null ? (
               <FilterItem>
-              <Ball2Icon  height={24} width={24} color={filters.ball.color} />
-              <FilterText>
-                <FilterText style={{fontWeight: 'bold'}}>Ball: </FilterText>
-                {formatBallName(filters.ball)}
-              </FilterText>
-              </FilterItem>
-              ): null
-            }
-            { filters.location !== null ? (
-              <FilterItem>
-                <Entypo name="location" size={24} color="#0d9488" />
+                <MaterialCommunityIcons name="calendar-arrow-right" size={24} color="#0d9488" />
                 <FilterText>
-                <FilterText style={{fontWeight: 'bold'}}>Location: </FilterText>
-                {filters.location.name}
+                  <FilterText style={{fontWeight: 'bold' }}>Start Date: </FilterText>
+                  {formatFromDate(filters.start_date)}
                 </FilterText>
               </FilterItem>
-            ): null}
+
+              <FilterItem>
+                <MaterialCommunityIcons name="calendar-arrow-left" size={24} color="#0d9488" />
+                <FilterText>
+
+                  <FilterText style={{fontWeight: 'bold'}}>End Date: </FilterText>
+                  {formatFromDate(filters.end_date)}
+                </FilterText>
+              </FilterItem>
+              { filters.ball !== null ? (
+                <FilterItem>
+                <Ball2Icon  height={24} width={24} color={filters.ball.color} />
+                <FilterText>
+                  <FilterText style={{fontWeight: 'bold'}}>Ball: </FilterText>
+                  {formatBallName(filters.ball)}
+                </FilterText>
+                </FilterItem>
+                ): null
+              }
+              { filters.location !== null ? (
+                <FilterItem>
+                  <Entypo name="location" size={24} color="#0d9488" />
+                  <FilterText>
+                  <FilterText style={{fontWeight: 'bold'}}>Location: </FilterText>
+                  {filters.location.name}
+                  </FilterText>
+                </FilterItem>
+              ): null}
 
 
-            </FilterContainer>
-          </SearchContainer>
-          {games.length === 0 && <EmptyGames />}
-          <GamesContainer>
-            <FlatList
-              data={games}
-              keyExtractor={(item: any) => item.id}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-              renderItem={({ item }) => (
-              <GameCard
-                location={item.location}
-                date={item.game_date}
-                totalScore={item.total_score}
-                frames={item.frames}
-                onShowDetails={() => handleShowDetailsModal(item)}
-              />
-              )}
-            >
+              </FilterContainer>
+            </SearchContainer>
+          {isLoading ? (
+            <OverlayLoading style="light" />
+          ) : (
+            <>
+            {games.length === 0 && <EmptyGames />}
+            <GamesContainer>
+              <FlatList
+                data={games}
+                keyExtractor={(item: any) => item.id}
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={refetchGames}
+                  />
+                }
+                renderItem={({ item }) => (
+                <GameCard
+                  location={item.location}
+                  date={item.game_date}
+                  totalScore={item.total_score}
+                  frames={item.frames}
+                  onShowDetails={() => handleShowDetailsModal(item)}
+                />
+                )}
+              >
+              </FlatList>
+            </GamesContainer>
+            </>
+          )}
 
-            </FlatList>
-          </GamesContainer>
         </Content>
         </>
-      )}
+
       {showDetailsModal ? (
         <GameDetailsModal
           showModal={showDetailsModal}

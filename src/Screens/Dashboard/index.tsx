@@ -218,7 +218,7 @@ export function Dashboard() {
             }
           >
             <Title>Dashboard</Title>
-            <PushNotifications />
+            {process.env.mode === "DEV" ? <PushNotifications />:null}
             <StatsContainer>
               <ArsenalStatsCard>
                 <View

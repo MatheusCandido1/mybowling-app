@@ -1,10 +1,11 @@
 import { Groups } from "../Screens/Groups";
 import { GroupsProvider } from "../contexts/GroupsContext";
 
-export function GroupsWrapper() {
+export function GroupsWrapper({ route }: { route: any}) {
+
   return (
     <GroupsProvider>
-      <Groups />
+      <Groups showInvites={route.params.showInvites} />
     </GroupsProvider>
   )
 }

@@ -37,6 +37,21 @@ const toastConfig = {
       }}
     />
   ),
+  warning: (props: any) => (
+    <BaseToast
+    {...props}
+    style={{
+      borderLeftColor: '#ffb347',
+    }}
+    contentContainerStyle={{
+      paddingHorizontal: 15,
+   }}
+    text1Style={{
+      fontSize: 15,
+      fontWeight: '400'
+    }}
+  />
+  ),
   error: (props: any) => (
     <BaseToast
       {...props}

@@ -4,6 +4,7 @@ export interface IUser {
   email: string;
   avatar: string;
   push_token: string;
+  notifications_not_read: number;
   profile: {
     first_access: boolean;
   },

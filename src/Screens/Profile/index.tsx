@@ -30,7 +30,8 @@ export function Profile() {
     handleGroupsPress,
     user,
     loggedUser,
-    handleLogout
+    handleLogout,
+    handleNotificationsPress
   } = useProfileController();
 
 
@@ -72,6 +73,13 @@ export function Profile() {
           >
             <MaterialCommunityIcons name="account-lock-open" size={28} color="#0d9488" />
             <MenuItemText>Update Password</MenuItemText>
+          </MenuItem>
+
+          <MenuItem
+            onPress={handleNotificationsPress}
+          >
+            <MaterialCommunityIcons name="bell-ring-outline" size={28} color="#0d9488" />
+            <MenuItemText>Notifications</MenuItemText>
           </MenuItem>
 
         </Menu>

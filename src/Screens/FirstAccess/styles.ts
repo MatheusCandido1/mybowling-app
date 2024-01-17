@@ -43,6 +43,7 @@ export const CheckContainer = styled.View`
 
 export const CheckboxContainer = styled.View`
   gap: 16px;
+  margin-bottom: 16px;
 `;
 
 

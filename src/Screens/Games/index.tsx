@@ -25,7 +25,6 @@ export function Games() {
     handleCloseDetailsModal,
     handleShowDetailsModal,
     handleShowFiltersModal,
-    handleCloseFiltersModal,
     filters,
     selectedGame,
     refetchGames

@@ -16,8 +16,6 @@ export const CheckBoxContainer = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-export const TextContainer = styled.TouchableOpacity``;
-
 export const CheckBoxText = styled.Text`
   color: #FFF;
   font-size: 12px;

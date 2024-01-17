@@ -15,8 +15,6 @@ export function useGroupsController() {
 
   const queryClient = useQueryClient();
 
-
-
   const {
     showNewGroupModal,
     handleShowNewGroupModal,
@@ -28,7 +26,7 @@ export function useGroupsController() {
 
   function handleGroupPress(group: IGroup) {
     navigation.navigate(
-      'GroupStack', {
+      'InternalStack', {
         screen: 'group',
         params: { group: group}
       }
@@ -66,6 +64,7 @@ export function useGroupsController() {
     selectedGroup,
     selectedMenu,
     showInviteModal,
-    refreshGroups
+    refreshGroups,
+    handleShowInviteModal
   }
 }

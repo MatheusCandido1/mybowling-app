@@ -22,7 +22,10 @@ import {
   SplitTitleContainer,
   SplitTitle,
   GroupsContainer,
-  GroupContainerTitle
+  GroupContainerTitle,
+  NotificationContainer,
+  NotificationCounterContainer,
+  NotificationCounterText
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
@@ -41,6 +44,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
 import { isAndroid } from "../../utils/getOS";
 import PushNotifications from "../../notifications/PushNotifications";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export function Dashboard() {
@@ -57,6 +61,8 @@ export function Dashboard() {
     first_name: loggedUser?.name.split(' ')[0],
   }
 
+
+
   const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;
   const highScoreAllTime = stats.highest_score;
@@ -64,7 +70,7 @@ export function Dashboard() {
   const splits_converted = stats.splits_converted || [];
 
   function navigateToGroups() {
-    navigation.navigate('GroupStack', {screen: 'groups'});
+    navigation.navigate('InternalStack', {screen: 'groups'});
   }
 
   const Header = () => {
@@ -85,7 +91,14 @@ export function Dashboard() {
               </GroupContainerTitle>
 
             </GroupsContainer>
-            <MaterialIcons name="notifications-none" size={30} color="white" />
+            <NotificationContainer
+              onPress={() => navigation.navigate('InternalStack', {screen: 'notifications'})}
+            >
+              <NotificationCounterContainer>
+                <NotificationCounterText>{loggedUser?.notifications_not_read}</NotificationCounterText>
+              </NotificationCounterContainer>
+              <MaterialIcons name="notifications-none" size={30} color="white" />
+            </NotificationContainer>
 
           </IconContainer>
         </HeaderContainer>

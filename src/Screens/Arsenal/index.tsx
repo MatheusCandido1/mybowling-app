@@ -21,6 +21,7 @@ import { EditBallModal } from "../../components/Arsenal/EditBallModal";
 import { useNavigation } from "@react-navigation/native";
 import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
 import { EmptyArsenal } from "../../components/Arsenal/EmptyArsenal";
+import { RefreshControl } from "react-native-gesture-handler";
 
 export function Arsenal() {
   const navigation = useNavigation();
@@ -32,6 +33,7 @@ export function Arsenal() {
     isFetching,
     showEditBallModal,
     handleShowEditBallModal,
+    refetch
   } = useArsenalController();
 
   const BallItem = ({ ball }: {ball: IBall}) => {
@@ -45,46 +47,60 @@ export function Arsenal() {
         <BallItemInformationContainer>
           <BallItemText>{ball.name}</BallItemText>
           <BallItemText>{ball.weight} lbs</BallItemText>
-
-
         </BallItemInformationContainer>
-
       </BallItemContainer>
     );
   }
 
+  const Loading = () => {
+    return (
+      <View style={{flex: 1}} >
+        <OverlayLoading />
+      </View>
+    )
+  }
+
 
   return (
-    <Container>
+      <Container>
       <Header
         title="Arsenal"
         onPress={() => navigation.goBack()}
       />
       <Content>
-       <HeaderContainer>
+
+      <HeaderContainer>
         <NewBallButton
           onPress={handleShowNewBallModal}
         >
           <NewBallButtonText>New Ball</NewBallButtonText>
           <BallIcon height={24} width={24} color={"#FFF"} />
         </NewBallButton>
-       </HeaderContainer>
+        </HeaderContainer>
 
-       <View style={{height: 16}} />
-       {balls.length === 0 && <EmptyArsenal />}
+        <View style={{height: 16}} />
+        {(balls.length === 0 && !isFetching) && <EmptyArsenal />}
 
-       <FlatList
-        data={balls}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => <BallItem ball={item} />}
-        ItemSeparatorComponent={() => <View style={{height: 16}} />}
-        showsVerticalScrollIndicator={false}
-       />
-
+        {isFetching ? (
+          <OverlayLoading style="light" />
+        ): (
+          <FlatList
+          data={balls}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => <BallItem ball={item} />}
+          ItemSeparatorComponent={() => <View style={{height: 16}} />}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching}
+              onRefresh={refetch}
+            />
+          }
+          />
+        )}
       </Content>
       { showNewBallModal ? <NewBallModal /> : null}
       { showEditBallModal ? <EditBallModal /> : null}
-      { isFetching ? <OverlayLoading /> : null}
-    </Container>
+      </Container>
   )
 }

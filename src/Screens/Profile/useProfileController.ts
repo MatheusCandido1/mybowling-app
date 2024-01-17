@@ -16,7 +16,12 @@ export function useProfileController() {
   }
 
   function handleGroupsPress() {
-    navigation.navigate('GroupStack', { screen: 'Groups'});
+    navigation.navigate('InternalStack', { screen: 'groups'});
+  }
+
+
+  function handleNotificationsPress() {
+    navigation.navigate('InternalStack', { screen: 'notifications'});
   }
 
   function handleLogout() {
@@ -37,6 +42,7 @@ export function useProfileController() {
     handleGroupsPress,
     logout,
     loggedUser,
-    handleLogout
+    handleLogout,
+    handleNotificationsPress
   }
 }

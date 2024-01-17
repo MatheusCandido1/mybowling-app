@@ -55,6 +55,7 @@ export function useFirstAccessController() {
         autoHide: true,
       })
     } catch (error) {
+      console.log(error.response.data)
     }
   }
 

@@ -14,22 +14,42 @@ import { GroupCard } from '../../components/Groups/GroupCard';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
 import { EmptyGroups } from '../../components/Groups/EmptyGroups';
-import { useState } from 'react';
 import { InvitesModal } from '../../components/Groups/InvitesModal';
 import { InvitesButton } from '../../components/Groups/InvitesButton';
+import { useEffect } from 'react';
+import Toast from 'react-native-toast-message';
 
 
-export function Groups() {
+
+export function Groups({ showInvites}: { showInvites: boolean}) {
+
   const {
     groups,
     showNewGroupModal,
     handleShowNewGroupModal,
     handleGroupPress,
-    selectedGroup,
-    selectedMenu,
     showInviteModal,
-    refreshGroups
+    refreshGroups,
+    handleShowInviteModal,
+    invites
   } = useGroupsController();
+
+  useEffect(() => {
+    if (showInvites) {
+      if(invites.length > 0) {
+      handleShowInviteModal();
+      } else {
+        Toast.show({
+          type: 'warning',
+          text1: 'Invites',
+          text2: 'There are no invites available.',
+          visibilityTime: 2000,
+          autoHide: true,
+        });
+      }
+      return;
+    }
+  }, [showInvites]);
 
   const navigation = useNavigation();
 

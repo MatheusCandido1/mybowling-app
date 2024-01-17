@@ -67,12 +67,9 @@ function NumberButton({ onPress, value, children, style, textColor  }: NumberBut
   )
 }
 
-interface NumPadProps {
-  closeNumPad?: () => void;
-}
-
-
 export function NumPad() {
+  //const [maxNumber, setMaxNumber] = React.useState(10);
+
   const {
     closeNumPad,
     updateValueForCurrentFrame,
@@ -96,8 +93,21 @@ export function NumPad() {
 
   const allowStrike = (currentFrame.first_shot === null || isEditingInput1) || allowStrikeOnSecondShot || allowStrikeOnThirdShot;
 
+  const getMaxNumber = () => {
+    if(isEditingInput1) {
+      return 10;
+    }
+    if(isEditingInput2) {
+      if((currentFrame.frame_number === 10) && currentFrame.first_shot === 10) {
+        return 10;
+      } else {
+        return (10 - (Number(currentFrame?.first_shot)+1));
+      }
+    }
+  }
 
-  const maxNumber = isEditingInput2 ? (10 - (Number(currentFrame?.first_shot)+1)) : 10;
+  const maxNumber = getMaxNumber();
+
 
   const numPadNumbers = [
     ["1","2","3"],

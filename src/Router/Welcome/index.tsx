@@ -24,7 +24,7 @@ export function Welcome() {
               headerShown: false,
             }}
           >
-            <StackNavigator.Screen name="login" component={FirstAccess} />
+            <StackNavigator.Screen name="welcome" component={FirstAccess} />
           </StackNavigator.Navigator>
         </NavigationContainer>
       </SafeAreaView>

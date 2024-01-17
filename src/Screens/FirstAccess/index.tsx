@@ -1,4 +1,4 @@
-import { Text, Touchable, View } from 'react-native'
+import { Linking, Text, Touchable, View } from 'react-native'
 import { CheckContainer, Container, IconContainer, ItemContainer, ItemText, CheckboxContainer } from './styles'
 import Swiper from 'react-native-swiper'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -8,6 +8,7 @@ import { Ball2Icon } from '../../components/Icons/Ball2Icon'
 import { PinIcon } from '../../components/Icons/PinIcon'
 import { Checkbox } from '../../components/Shared/Forms/Checkbox'
 import Logo2 from '../../assets/img/logo2.svg';
+import PushNotifications from '../../notifications/PushNotifications'
 
 export function FirstAccess() {
   const { onSubmit, terms, handleTermCheck, promotions, handlePromotionCheck } = useFirstAccessController();
@@ -96,8 +97,19 @@ export function FirstAccess() {
     )
   }
 
+  const handleOpenTerms = () => {
+    return (<Text> By creating an account, you agree to our
+        <Text>{' '}</Text>
+        <Text style={{color: 'white', textDecorationLine:"underline"}} onPress={() => Linking.openURL("https://www.privacypolicies.com/live/b7b86ab6-eb8d-47d0-9c28-a7ca406a45a3")}>
+        Privacy Policy
+      </Text>
+      .
+    </Text>)
+  }
+
   return (
     <Container>
+    <PushNotifications />
       <Swiper
         showsPagination={true}
         loop={false}
@@ -145,19 +157,19 @@ export function FirstAccess() {
             <Checkbox
               isSelected={terms}
               setSelection={handleTermCheck}
-              text="By creating an account, you agree to our Terms of Service and Privacy Policy."
+              content={handleOpenTerms()}
             />
              <Checkbox
               isSelected={promotions}
               setSelection={handlePromotionCheck}
-              text="If would like to sign up for marketing emails from BowlingApp, to keep up to date with the latest news and updates, offers, and more, please check the box below"
+              content={
+                <Text>
+                  If would like to sign up for marketing emails from BowlingApp, to keep up to date with the latest news and updates, offers, and more, please check the box below
+                </Text>
+              }
             />
 
           </CheckboxContainer>
-          <Text style={{color: 'white'}}>
-
-          </Text>
-
 
 
           <TouchableOpacity

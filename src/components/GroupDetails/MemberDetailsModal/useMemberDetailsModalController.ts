@@ -55,7 +55,7 @@ export function useMemberDetailsModalController() {
       handleCloseMemberDetailsModal();
 
       if(!isLoggedUserAdmin) {
-        navigation.navigate('GroupStack', {screen: 'groups'});
+        navigation.navigate('InternalStack', {screen: 'groups'});
       }
     } catch (error) {
       Toast.show({

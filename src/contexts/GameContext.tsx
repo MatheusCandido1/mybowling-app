@@ -203,7 +203,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       newFrames[index].first_shot = first_shot;
 
       if(first_shot === 10) {
-        newFrames[index].status = 'completed';
+        if(index === 9) {
+          newFrames[index].status = 'in_progress';
+        } else {
+          newFrames[index].status = 'completed';
+        }
+
         newFrames[index].points = 10;
         updateFrame(newFrames[index])
 
@@ -227,6 +232,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         }
 
         const shouldAllowThirdShot = (currentFrame.first_shot === 10 || (Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10));
+
 
         if(shouldAllowThirdShot) {
           newFrames[index].status = 'in_progress';

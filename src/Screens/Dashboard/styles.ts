@@ -7,6 +7,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
+
 export const Navbar = styled.View`
   padding: 24px;
   height: 225px;
@@ -25,6 +26,27 @@ export const HeaderContainer = styled.View`
 export const Content = styled.ScrollView`
   flex: 1;
   padding: 24px;
+`;
+
+export const NotificationContainer = styled.TouchableOpacity`
+`;
+
+export const NotificationCounterContainer = styled.View`
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  background-color: #FFF;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const NotificationCounterText = styled.Text`
+  font-size: 12px;
+  font-weight: bold;
+  color: #0d9488;
 `;
 
 export const DateContainer = styled.View`

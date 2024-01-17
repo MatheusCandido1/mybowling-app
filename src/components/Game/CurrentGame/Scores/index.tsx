@@ -18,9 +18,9 @@ export function Scores({ frames }: ScoresProps) {
     if(frame.frame_number === 10) {
       return (
         <ResultContainer>
-        <Text>{formatFrameResult(1, frame)}</Text>
-        <Text>{formatFrameResult(2, frame)}</Text>
-        <Text>{formatFrameResult(3, frame)}</Text>
+          <Text>{formatFrameResult(1, frame)}</Text>
+          <Text>{formatFrameResult(2, frame)}</Text>
+          <Text>{formatFrameResult(3, frame)}</Text>
         </ResultContainer>
 
       )
@@ -40,7 +40,7 @@ export function Scores({ frames }: ScoresProps) {
         <SplitResultContainer>
           <Text style={{marginTop: isAndroid ? -1:0}}>{frame.first_shot}</Text>
         </SplitResultContainer>
-        <Text>{isSpare(frame) ? '/':frame.second_shot}</Text>
+        <Text>{isSpare(frame) ? '/':frame.second_shot === 0 ? '-':frame.second_shot}</Text>
         </View>
       )
     }

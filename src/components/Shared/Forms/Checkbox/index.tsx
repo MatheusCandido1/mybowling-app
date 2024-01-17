@@ -1,13 +1,13 @@
-import { CheckBoxContainer, Container, TextContainer, CheckBoxText } from "./styles";
+import { CheckBoxContainer, Container, CheckBoxText } from "./styles";
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 interface CheckboxProps {
   isSelected: boolean;
   setSelection: (value: boolean) => void;
-  text: string;
+  content: React.ReactNode;
 }
 
-export function Checkbox({  isSelected, setSelection, text }: CheckboxProps) {
+export function Checkbox({  isSelected, setSelection, content }: CheckboxProps) {
 
   return (
     <Container>
@@ -16,13 +16,9 @@ export function Checkbox({  isSelected, setSelection, text }: CheckboxProps) {
       >
         {isSelected ? <MaterialCommunityIcons name="check" size={18} color="#FFF" /> : null}
       </CheckBoxContainer>
-      <TextContainer
-        onPress={() => setSelection(!isSelected)}
-      >
         <CheckBoxText>
-          {text}
+          {content}
         </CheckBoxText>
-      </TextContainer>
 
     </Container>
   )

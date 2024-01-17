@@ -1,3 +1,7 @@
+import { intlFormatDistance } from "date-fns";
+import moment from "moment";
+
+
 export function formatDate(date: string, type: 'long' | 'short' = 'long') {
   const dateToFormat = new Date(date);
 
@@ -6,6 +10,10 @@ export function formatDate(date: string, type: 'long' | 'short' = 'long') {
     month: type,
     year: 'numeric',
   }).format(dateToFormat);
+}
+
+export function formatDistance(date: string) {
+  return moment(new Date(date)).toNow();
 }
 
 export function formatFromDate(date: Date) {

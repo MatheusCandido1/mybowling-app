@@ -9,6 +9,7 @@ import { MaterialCommunityIcons} from "@expo/vector-icons";
 import { useGameController } from "./useGameController";
 import { ConfirmPopup } from "../../components/Shared/ConfirmPopup";
 import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export function Game() {
   const {
@@ -20,6 +21,8 @@ export function Game() {
     isGameDone,
   } = useGameController();
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     if (isGameDone) {
       setShowConfirmPopup(true);
@@ -27,6 +30,11 @@ export function Game() {
   }, [isGameDone]);
 
   const [showConfirmPopup, setShowConfirmPopup] = useState(isGameDone);
+
+  function handleGoBack() {
+    handleSubmit();
+    navigation.goBack();
+  }
 
   const FinishGameButton = () => {
     return (
@@ -53,7 +61,7 @@ export function Game() {
         />
       )}
       <FinishGameButton />
-      <Header title="Game" />
+      <Header title="Game" onPress={handleGoBack}  />
       {isNumPadVisible ? <NumPad /> : null}
       <Content>
 

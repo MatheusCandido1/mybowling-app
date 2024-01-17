@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 import { MainTabs } from '../MainTabs';
-import { GroupStack } from '../GroupStack';
+import { InternalStack } from '../InternalStack';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +25,7 @@ export const RootNavigator = () => {
         }}
       >
         <Stack.Screen name="Tabs" component={MainTabs} />
-        <Stack.Screen name="GroupStack" component={GroupStack} />
+        <Stack.Screen name="InternalStack" component={InternalStack} />
       </Stack.Navigator>
     </NavigationContainer>
     </SafeAreaView>

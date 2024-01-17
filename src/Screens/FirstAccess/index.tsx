@@ -109,7 +109,7 @@ export function FirstAccess() {
 
   return (
     <Container>
-    {process.env.mode === "DEV" ? <PushNotifications />:null}
+    <PushNotifications />
       <Swiper
         showsPagination={true}
         loop={false}

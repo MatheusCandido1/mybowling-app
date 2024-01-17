@@ -2,12 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { NotificationsService } from "../../../services/notificationService";
 import { INotification } from "../../../entities/Notification";
+import { useAuth } from "../../../hooks/useAuth";
 
 export function useNotificationCardController() {
 
+  const { updateLoggedUser } = useAuth();
+
   const [showNotificationPopup, setShowNotificationPopup] = useState(false);
-
-
 
   const {
     mutateAsync: toggleRead,
@@ -18,8 +19,9 @@ export function useNotificationCardController() {
 
   async function handleToggleRead(id: string) {
     try {
-      await toggleRead(id);
+      const response = await toggleRead(id);
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      updateLoggedUser(response.user)
     } catch (error) {
       console.log(error)
     }

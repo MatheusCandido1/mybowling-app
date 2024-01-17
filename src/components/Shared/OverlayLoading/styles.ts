@@ -11,7 +11,6 @@ export const Container = styled.View`
 export const HorizontalRow = styled.View`
   height: 2px;
   width: 40px;
-  background-color: #FFF;
   border-radius: 4px;
   margin-top: 4px;
 `;

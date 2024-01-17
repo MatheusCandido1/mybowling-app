@@ -48,7 +48,7 @@ export function OverlayLoading({ style = 'dark' }: OverlayLoadingProps) {
           color={style === 'light' ? "#0d9488" : "#FFF"}
         />
       </Animated.View>
-      <HorizontalRow />
+      <HorizontalRow style={{backgroundColor: style == 'light' ? '#0d9488':'#FFF'}} />
       </Container>
   )
 }

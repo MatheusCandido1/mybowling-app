@@ -17,7 +17,10 @@ export function useGamesController() {
     handleShowFiltersModal,
     games,
     isFetchingGames,
-    refetchGames
+    refetchGames,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
    } = useGames();
 
   const [selectedGame, setSelectedGame] = useState<IGame | null>(null);
@@ -35,6 +38,12 @@ export function useGamesController() {
     setShowDetailsModal(false);
   }
 
+  const onReachEnd = () => {
+    if(hasNextPage && !isFetchingGames) {
+      fetchNextPage();
+    }
+  }
+
   return {
     games,
     isLoading: isFetchingGames,
@@ -46,6 +55,9 @@ export function useGamesController() {
     handleCloseDetailsModal,
     filters,
     selectedGame,
-    refetchGames
+    refetchGames,
+    onReachEnd,
+    hasNextPage,
+    isFetchingNextPage
   }
 }

@@ -1,5 +1,4 @@
 import { IBall } from "../../entities/Ball";
-import { IGame } from "../../entities/Game";
 import { ILocation } from "../../entities/Location";
 import { httpClient } from "../HttpClient";
 
@@ -10,10 +9,16 @@ export type GamesFilters = {
   location: ILocation | null;
 }
 
-export async function getAll(filters: GamesFilters) {
+export async function getAll(filters: GamesFilters, page: number = 1) {
   const response = await httpClient.get<any>('/games', {
-    params: filters
+    params: {
+      page,
+      start_date: filters.start_date,
+      end_date: filters.end_date,
+      ball_id: filters.ball?.id,
+      location_id: filters.location?.id
+    }
   });
 
-  return response.data.data;
+  return response.data;
 }

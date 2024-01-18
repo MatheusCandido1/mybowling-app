@@ -64,3 +64,16 @@ export const GamesContainer = styled.View`
   flex: 1;
   margin-top: 16px;
 `;
+
+export const NoNextPageContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+`;
+
+export const NoNextPageText = styled.Text`
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+  text-align: center;
+`;

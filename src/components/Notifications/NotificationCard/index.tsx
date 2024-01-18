@@ -66,8 +66,8 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
           <Date>{formatDistance(notification.created_at)}</Date>
         </DateContainer>
         <ActionContainer onPress={onPress}>
-          <ToggleText>{isRead ? 'Mark as Read':'Mark as Unread'}</ToggleText>
-          <Ionicons name={!isRead ? 'mail': 'mail-open'} size={22} color="#FFF" />
+          <ToggleText>{!isRead ? 'Mark as Read':'Mark as Unread'}</ToggleText>
+          <Ionicons name={isRead ? 'mail': 'mail-open'} size={22} color="#FFF" />
         </ActionContainer>
       </FooterContainer>
     </Container>

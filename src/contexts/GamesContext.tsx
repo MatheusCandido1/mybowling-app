@@ -14,6 +14,9 @@ interface GamesContextData {
   isFetchingGames: boolean;
   handleResetFilters: () => void;
   refetchGames: () => void;
+  hasNextPage: boolean;
+  fetchNextPage: () => void;
+  isFetchingNextPage: boolean;
 }
 
 export const GamesContext = createContext({} as GamesContextData);
@@ -39,8 +42,9 @@ export function GamesProvider({children}: {children: React.ReactNode}) {
     location: null
   });
 
+  const { data, isFetchingGames, refetchGames, hasNextPage, fetchNextPage, isFetchingNextPage } = useGamesGetAll(filters);
 
-  const { games, isFetchingGames, refetchGames } = useGamesGetAll(filters);
+  const games = data?.pages.map(page => page.data).flat() ?? [];
 
   useEffect(() => {
     refetchGames();
@@ -76,7 +80,10 @@ export function GamesProvider({children}: {children: React.ReactNode}) {
         games,
         isFetchingGames,
         handleResetFilters,
-        refetchGames
+        refetchGames,
+        hasNextPage,
+        fetchNextPage,
+        isFetchingNextPage
       }}
     >
       {children}

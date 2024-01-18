@@ -1,4 +1,4 @@
-import { FlatList, View, Text, TouchableOpacity } from "react-native";
+import { FlatList, View, Text, TouchableOpacity, Button } from "react-native";
 import { IFrame } from "../../../entities/Frame";
 import { ILocation } from "../../../entities/Location";
 import { formatDate } from "../../../utils/formatDate";
@@ -12,10 +12,21 @@ import {
   DateBadge,
   Footer,
   SecondFooter,
-  UserName
+  UserName,
+  DeleteButton,
+  DeleteButtonText,
+  SwipeContainer,
+  EditButton,
+  EditButtonText,
+  PrintButton,
+  PrintButtonText
 } from "./styles";
 import { Avatar } from "../../Shared/Avatar";
 import { formatFrameResult } from "../../../utils/formatScore";
+import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { ConfirmPopup } from "../../Shared/ConfirmPopup";
+import { useGameCardController } from "./useGameCardController";
 
 interface GameCardProps {
   location: ILocation,
@@ -24,9 +35,21 @@ interface GameCardProps {
   frames: IFrame[],
   onShowDetails?: () => void;
   user?: any;
+  id: string;
 }
 
-export function GameCard({ location, date, totalScore, frames, onShowDetails, user }: GameCardProps) {
+export function GameCard({ location, date, totalScore, frames, onShowDetails, user, id }: GameCardProps) {
+
+  const {
+    showConfirmDelete,
+    handleShowConfirmDelete,
+    handleHideConfirmDelete,
+    swipeableRef,
+    handleDeleteGame
+  } = useGameCardController();
+
+
+
 
   function splitConverted(frame: IFrame) {
     if(frame.is_split && frame.points === 10) return true;
@@ -110,7 +133,41 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
     )
   }
 
+  const LeftSwipeActions = () => {
+    return (
+      <SwipeContainer>
+        <EditButton>
+          <EditButtonText>Edit</EditButtonText>
+          <MaterialCommunityIcons name="playlist-edit" size={20} color="#3eb0f7"  />
+        </EditButton>
+        <PrintButton>
+          <PrintButtonText>PDF</PrintButtonText>
+          <FontAwesome5 name="file-pdf" size={20} color="#ffb347"  />
+        </PrintButton>
+        <DeleteButton
+          onPress={handleShowConfirmDelete}
+        >
+          <DeleteButtonText>Delete</DeleteButtonText>
+          <MaterialCommunityIcons name="delete" size={20} color="#D2042D"  />
+        </DeleteButton>
+      </SwipeContainer>
+    )
+  };
+
   return (
+    <>
+    <ConfirmPopup
+      showConfirmPopup={showConfirmDelete}
+      title="Delete Game"
+      text="Are you sure you want to delete this game?"
+      handleConfirm={() => handleDeleteGame(id)}
+      handleCloseConfirmPopup={handleHideConfirmDelete}
+    />
+    <Swipeable
+    ref={swipeableRef}
+    renderRightActions={LeftSwipeActions}
+    rightThreshold={0}
+    >
     <Container
       style={{
         height: user ? 180 : 144,
@@ -174,5 +231,7 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
         </SecondFooter>
       ): null}
     </Container>
+    </Swipeable>
+    </>
   )
 }

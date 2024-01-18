@@ -1,7 +1,7 @@
 import { Header } from "../../components/Shared/Header";
-import { Container, Content, SearchContainer, SearchButton, GamesContainer, FilterText, FilterItem, FilterContainer, SearchButtonText} from "./styles";
+import { Container, Content, SearchContainer, SearchButton, GamesContainer, FilterText, FilterItem, FilterContainer, SearchButtonText, NoNextPageContainer, NoNextPageText} from "./styles";
 import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
-import { FlatList, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, Text, View } from "react-native";
 import { GameCard } from "../../components/Games/GameCard";
 import { useGamesController } from "./useGamesController";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
@@ -12,7 +12,7 @@ import { Ball2Icon } from "../../components/Icons/Ball2Icon";
 import { useNavigation } from "@react-navigation/native";
 import { EmptyGames } from "../../components/Games/EmptyGames";
 import { formatBallName } from "../../utils/formatBallName";
-import { RefreshControl } from "react-native-gesture-handler";
+import { RefreshControl, FlatList } from "react-native-gesture-handler";
 
 export function Games() {
   const navigation = useNavigation();
@@ -27,8 +27,29 @@ export function Games() {
     handleShowFiltersModal,
     filters,
     selectedGame,
-    refetchGames
+    refetchGames,
+    onReachEnd,
+    hasNextPage,
+    isFetchingNextPage
   } = useGamesController();
+
+  function fetchingNextPage() {
+    if(isFetchingNextPage) {
+      return (
+        <View style={{marginTop: 12}}>
+          <ActivityIndicator />
+        </View>
+      )
+    }
+    return null;
+  }
+
+  //Outside of the component
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 0; //Distance from the bottom you want it to trigger.
+    return layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - paddingToBottom;
+  };
 
   return (
     <Container>
@@ -81,17 +102,23 @@ export function Games() {
 
               </FilterContainer>
             </SearchContainer>
-          {isLoading ? (
-            <OverlayLoading style="light" />
-          ) : (
-            <>
             {games.length === 0 && <EmptyGames />}
             <GamesContainer>
               <FlatList
                 data={games}
+                onScroll={({nativeEvent}) => {
+                  if (isCloseToBottom(nativeEvent)) {
+                    if(!isFetchingNextPage && hasNextPage) {
+                      onReachEnd();
+                    }
+                  }
+                }}
+                scrollEventThrottle={1000}
                 keyExtractor={(item: any) => item.id}
                 showsVerticalScrollIndicator={false}
                 ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                onEndReachedThreshold={0}
+                ListFooterComponent={() => fetchingNextPage() }
                 refreshControl={
                   <RefreshControl
                     refreshing={isLoading}
@@ -100,18 +127,18 @@ export function Games() {
                 }
                 renderItem={({ item }) => (
                 <GameCard
+                  id={item.id}
                   location={item.location}
                   date={item.game_date}
                   totalScore={item.total_score}
                   frames={item.frames}
                   onShowDetails={() => handleShowDetailsModal(item)}
+
                 />
                 )}
               >
               </FlatList>
             </GamesContainer>
-            </>
-          )}
 
         </Content>
         </>

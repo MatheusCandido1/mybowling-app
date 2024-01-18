@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export function useNotificationController() {
 
-  const { notifications, isFetching } = useNotifications();
+  const { notifications, isFetching, refetch } = useNotifications();
   const { updateLoggedUser } = useAuth();
 
 
@@ -38,6 +38,7 @@ export function useNotificationController() {
     handleBackButtonPress,
     notifications,
     isFetching,
-    handleToggleRead
+    handleToggleRead,
+    refetchNotifications: refetch,
   }
 }

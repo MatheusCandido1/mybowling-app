@@ -85,6 +85,7 @@ export function Games() {
               onEndReachedThreshold={0.4}
               renderItem={({ item }) => (
                 <GameCard
+                  id={item.id}
                   location={item.location}
                   date={item.game_date}
                   totalScore={item.total_score}

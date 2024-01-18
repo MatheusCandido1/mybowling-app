@@ -5,6 +5,8 @@ export const Container = styled.View`
   border-radius: 8px;
   border: 3px solid #0d9488;
   width: 100%;
+  elevation: 4;
+  background-color: #FFF;
 `;
 
 export const Header = styled.View`
@@ -108,6 +110,73 @@ export const SecondFooter   = styled.View`
 export const UserName = styled.Text`
   font-size: 14px;
   color: #FFF;
+  font-weight: bold;
+  text-align: center;
+`;
+
+export const SwipeContainer = styled.View`
+  height: 100%;
+  width: 124px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+
+export const PrintButton = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  padding: 8px;
+  border-radius: 8px;
+  flex-direction: row;
+  width: 90px;
+  gap: 4px;
+  border: 2px solid #ffb347;
+`;
+
+export const PrintButtonText = styled.Text`
+  font-size: 14px;
+  color: #ffb347;
+  font-weight: bold;
+  text-align: center;
+`;
+
+export const EditButton = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  padding: 8px;
+  border-radius: 8px;
+  flex-direction: row;
+  width: 90px;
+  gap: 4px;
+  border: 2px solid #3eb0f7;
+`;
+
+export const EditButtonText = styled.Text`
+  font-size: 14px;
+  color: #3eb0f7;
+  font-weight: bold;
+  text-align: center;
+`;
+
+
+export const DeleteButton = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  padding: 8px;
+  border-radius: 8px;
+  flex-direction: row;
+  width: 90px;
+  gap: 4px;
+  border: 2px solid #D2042D;
+`;
+
+export const DeleteButtonText = styled.Text`
+  font-size: 14px;
+  color: #D2042D;
   font-weight: bold;
   text-align: center;
 `;

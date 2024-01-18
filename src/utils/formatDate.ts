@@ -13,7 +13,7 @@ export function formatDate(date: string, type: 'long' | 'short' = 'long') {
 }
 
 export function formatDistance(date: string) {
-  return moment(new Date(date)).toNow();
+  return moment(new Date(date)).fromNow();
 }
 
 export function formatFromDate(date: Date) {

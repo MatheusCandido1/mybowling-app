@@ -67,11 +67,12 @@ export function FrameCard({ frame }: FrameCardProps) {
           <InformationLabel>First Shot:</InformationLabel>
           <InformationResult>{frame.first_shot}</InformationResult>
         </InformationItem>
-
+        {frame.second_shot !== null ? (
         <InformationItem>
           <InformationLabel>Second Shot:</InformationLabel>
           <InformationResult>{frame.second_shot}</InformationResult>
         </InformationItem>
+        ) : null}
         {frame.third_shot !== null ? (
           <InformationItem>
             <InformationLabel>Third Shot:</InformationLabel>

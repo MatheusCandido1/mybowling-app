@@ -231,6 +231,7 @@ export function Dashboard() {
             }
           >
             <Title>Dashboard</Title>
+            <PushNotifications />
             <StatsContainer>
               <ArsenalStatsCard>
                 <View

@@ -10,6 +10,8 @@ import { useGameController } from "./useGameController";
 import { ConfirmPopup } from "../../components/Shared/ConfirmPopup";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { OverlayLoading } from "../../components/Shared/OverlayLoading";
+import { SuperOverlayLoading } from "../../components/Shared/SuperOverlayLoading";
 
 export function Game() {
   const {
@@ -19,6 +21,7 @@ export function Game() {
     isNumPadVisible,
     framesList,
     isGameDone,
+    isUpdatingGame
   } = useGameController();
 
   const navigation = useNavigation();
@@ -58,6 +61,7 @@ export function Game() {
           text="Do you want to save this game? If you don't save it, the stats will not be available on the dashboard."
           handleCloseConfirmPopup={() => setShowConfirmPopup(false)}
           handleConfirm={handleSubmit}
+          loading={isUpdatingGame}
         />
       )}
       <FinishGameButton />

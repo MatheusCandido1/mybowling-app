@@ -1,4 +1,4 @@
-import { Modal, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Modal, TouchableOpacity } from "react-native";
 import {
   Overlay,
   Container,
@@ -22,11 +22,12 @@ interface ConfirmPopupProps {
   title: string;
   text: string;
   confirmText?: string;
+  loading?: boolean;
 
 }
 
 
-export function ConfirmPopup({ showConfirmPopup, handleCloseConfirmPopup, handleConfirm, title, text, confirmText = 'Yes' }: ConfirmPopupProps) {
+export function ConfirmPopup({ showConfirmPopup, handleCloseConfirmPopup, handleConfirm, title, text, confirmText = 'Yes', loading = false }: ConfirmPopupProps) {
   return (
     <Modal
       transparent
@@ -40,6 +41,7 @@ export function ConfirmPopup({ showConfirmPopup, handleCloseConfirmPopup, handle
             <PopupTitle>{title}</PopupTitle>
             <TouchableOpacity
               onPress={handleCloseConfirmPopup}
+              disabled={loading}
             >
               <MaterialCommunityIcons name="close" size={24} color="#000" />
             </TouchableOpacity>
@@ -50,11 +52,18 @@ export function ConfirmPopup({ showConfirmPopup, handleCloseConfirmPopup, handle
           <PopupFooter>
             <ConfirmActionButton
               onPress={handleConfirm}
+              disabled={loading}
+              style={{
+                backgroundColor: loading ? 'rgba(13, 148, 136, 0.75)' : 'rgba(13, 148, 136, 1)',
+              }}
             >
-              <ConfirmActionButtonText>{confirmText}</ConfirmActionButtonText>
+              {loading ? <ActivityIndicator color="#FFF" /> : (
+                <ConfirmActionButtonText>{confirmText}</ConfirmActionButtonText>
+              )}
             </ConfirmActionButton>
             <CancelActionButton
               onPress={handleCloseConfirmPopup}
+              disabled={loading}
             >
               <CancelActionButtonText>Cancel</CancelActionButtonText>
             </CancelActionButton>

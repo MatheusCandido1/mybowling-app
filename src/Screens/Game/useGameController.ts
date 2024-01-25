@@ -14,7 +14,6 @@ export function useGameController() {
     framesList,
     isGameDone,
     handleSaveGame,
-    currentFrame,
     score,
     currentGame,
     resetGame,

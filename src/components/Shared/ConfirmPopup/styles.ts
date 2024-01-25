@@ -68,7 +68,7 @@ export const ConfirmActionButton = styled.TouchableOpacity`
   padding: 8px 16px;
   justify-content: center;
   align-items: center;
-  background-color: #0d9488;
+  width: 60px;
 `;
 
 export const ConfirmActionButtonText = styled.Text`

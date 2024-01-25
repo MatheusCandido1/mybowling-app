@@ -115,6 +115,7 @@ export function FirstAccess() {
         loop={false}
         activeDotColor="#FFF"
       >
+
         <View
           style={{
             flex: 1,
@@ -139,6 +140,32 @@ export function FirstAccess() {
             <Text style={{color: '#FFF', fontSize: 18, fontWeight: 'bold'}}>Slide to start!</Text>
           </View>
 
+
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#0d9488',
+            paddingLeft: 24,
+            paddingRight: 24,
+          }}
+        >
+
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#0d9488',
+            paddingLeft: 24,
+            paddingRight: 24,
+          }}
+        >
 
         </View>
 

@@ -3,11 +3,7 @@ import { useEffect, useRef } from "react";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 
-interface OverlayLoadingProps {
-  style?: 'light' | 'dark' | 'transparent';
-}
-
-export function OverlayLoading({ style = 'dark' }: OverlayLoadingProps) {
+export function SuperOverlayLoading() {
 
   const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -32,11 +28,7 @@ export function OverlayLoading({ style = 'dark' }: OverlayLoadingProps) {
   });
 
   return (
-    <Container
-      style={{
-        backgroundColor: style === 'light' ? "#FFF" : "#0d9488",
-      }}
-    >
+    <Container>
       <Animated.View
         style={{
           transform: [{ rotate }],
@@ -45,10 +37,10 @@ export function OverlayLoading({ style = 'dark' }: OverlayLoadingProps) {
         <FontAwesome5
           name="bowling-ball"
           size={40}
-          color={style === 'light' ? "#0d9488" : "#FFF"}
+          color={"#0d9488"}
         />
       </Animated.View>
-      <HorizontalRow style={{backgroundColor: style == 'light' ? '#0d9488':'#FFF'}} />
+      <HorizontalRow style={{backgroundColor: '#0d9488'}} />
       </Container>
   )
 }

@@ -158,6 +158,7 @@ export const AllTimeScoreCard = styled.View`
   justify-content: flex-start;
   align-items: center;
   background-color: #0d9488;
+  height: 172px;
   border: ${isAndroid ? '3px' : '2px'} solid #0d9488;
 `;
 
@@ -197,4 +198,11 @@ export const SplitItemContainer = styled.View`
   border-top-color: #0d9488;
   flex-direction: row;
   padding: 8px;
+`;
+
+export const ScoreItemContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 `;

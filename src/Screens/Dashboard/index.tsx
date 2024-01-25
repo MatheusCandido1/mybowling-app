@@ -25,7 +25,8 @@ import {
   GroupContainerTitle,
   NotificationContainer,
   NotificationCounterContainer,
-  NotificationCounterText
+  NotificationCounterText,
+  ScoreItemContainer
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
@@ -38,13 +39,11 @@ import Swiper from 'react-native-swiper'
 import { SplitFrame } from "../../components/Dashboard/SplitFrame";
 import { useAuth } from "../../hooks/useAuth";
 import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
-import { Avatar } from "../../components/Shared/Avatar";
 import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
 import { isAndroid } from "../../utils/getOS";
 import PushNotifications from "../../notifications/PushNotifications";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export function Dashboard() {
@@ -61,13 +60,16 @@ export function Dashboard() {
     first_name: loggedUser?.name.split(' ')[0],
   }
 
-
-
   const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;
-  const highScoreAllTime = stats.highest_score;
 
   const splits_converted = stats.splits_converted || [];
+
+
+  const scores = [
+    {headerTitle: 'Highest Score', score: stats.highest_score || 0, footer: 'All Time'},
+    {headerTitle: 'Highest Score', score: stats.highest_score_this_month || 0, footer: 'This Month'},
+  ]
 
   function navigateToGroups() {
     navigation.navigate('InternalStack', {screen: 'groups'});
@@ -142,6 +144,37 @@ export function Dashboard() {
     index: number;
   }
 
+  interface ScoreItemProps {
+    headerTitle: string;
+    score: string;
+    footer: string;
+  }
+
+  const ScoreItem = ({ headerTitle, score, footer}: ScoreItemProps) => {
+    return (
+      <ScoreItemContainer>
+        <View style={{width: '100%', alignItems: 'center', backgroundColor: '#FFF', height: 28, justifyContent: 'center', borderTopLeftRadius: 6, borderTopRightRadius: 6}}>
+          <Text style={{color: '#0d9488', fontWeight: 'bold'}}>
+            {headerTitle}
+          </Text>
+        </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: -12,
+          }}>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 48}}>
+              {score}
+            </Text>
+            <Text style={{textAlign: 'center', color: 'white'}}>{footer}</Text>
+           </View>
+
+      </ScoreItemContainer>
+    )
+  }
+
 
   const BallItem = ({ ball, totalScore, totalGames, index } : BallItemProps) => {
     const percentage = (totalGames / totalGamesAllTime) * 100;
@@ -181,7 +214,6 @@ export function Dashboard() {
   }
 
   const SplitItem = ({ split, attempts, converted, rate }: SplitItemProps) => {
-
     return (
       <SplitItemContainer>
         <View style={{width: '35%'}}>
@@ -264,21 +296,25 @@ export function Dashboard() {
 
               </ArsenalStatsCard>
               <AllTimeScoreCard>
-                <View
-                  style={{width: '100%', alignItems: 'center', backgroundColor: '#FFF', height: 28, justifyContent: 'center', borderTopLeftRadius: 6, borderTopRightRadius: 6}}
-                >
-                  <Text style={{color: '#0d9488', fontWeight: 'bold'}}>Highest Score</Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                <Swiper
+                  showsPagination={true}
+                  loop
+                  paginationStyle={{
+                    bottom: 6,
                   }}
+                  activeDotColor="#FFF"
+                  autoplay
+                  autoplayTimeout={3}
                 >
-                  <Text style={{color: 'white', fontWeight: 'bold', fontSize: 48}}>{highScoreAllTime}</Text>
-                  <Text style={{textAlign: 'center', color: 'white'}}>All Time</Text>
-                </View>
+                {stats && scores.length > 0 && scores.map((score: any, index: number) => (
+                  <ScoreItem
+                    key={index}
+                    headerTitle={score.headerTitle}
+                    score={score.score}
+                    footer={score.footer}
+                  />
+                  ))}
+                </Swiper>
               </AllTimeScoreCard>
             </StatsContainer>
 

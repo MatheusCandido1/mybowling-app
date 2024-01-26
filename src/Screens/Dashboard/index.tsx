@@ -263,7 +263,7 @@ export function Dashboard() {
             }
           >
             <Title>Dashboard</Title>
-            <PushNotifications />
+            {/* <PushNotifications /> */}
             <StatsContainer>
               <ArsenalStatsCard>
                 <View

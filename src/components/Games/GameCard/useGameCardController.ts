@@ -2,8 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { GamesService } from "../../../services/gamesService";
 import Toast from "react-native-toast-message";
+import { useGames } from "../../../hooks/useGames";
 
 export function useGameCardController() {
+
+  const { handleShowEditModal } = useGames();
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -57,6 +60,7 @@ export function useGameCardController() {
     handleShowConfirmDelete,
     handleHideConfirmDelete,
     swipeableRef,
-    handleDeleteGame
+    handleDeleteGame,
+    handleShowEditModal
   }
 }

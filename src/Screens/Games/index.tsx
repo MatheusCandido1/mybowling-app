@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { EmptyGames } from "../../components/Games/EmptyGames";
 import { formatBallName } from "../../utils/formatBallName";
 import { RefreshControl, FlatList } from "react-native-gesture-handler";
+import { EditGameModal } from "../../components/Games/EditGameModal";
 
 export function Games() {
   const navigation = useNavigation();
@@ -156,6 +157,8 @@ export function Games() {
           showModal={showFiltersModal}
         />
       ) : null}
+
+      <EditGameModal />
 
 
         <SearchButton

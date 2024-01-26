@@ -17,6 +17,9 @@ interface GamesContextData {
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
+  showEditModal: boolean;
+  handleShowEditModal: () => void;
+  handleCloseEditModal: () => void;
 }
 
 export const GamesContext = createContext({} as GamesContextData);
@@ -24,6 +27,15 @@ export const GamesContext = createContext({} as GamesContextData);
 export function GamesProvider({children}: {children: React.ReactNode}) {
 
   const [showFiltersModal, setShowFiltersModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  function handleShowEditModal() {
+    setShowEditModal(true);
+  }
+
+  function handleCloseEditModal() {
+    setShowEditModal(false);
+  }
 
   function handleShowFiltersModal() {
     setShowFiltersModal(true);
@@ -83,7 +95,10 @@ export function GamesProvider({children}: {children: React.ReactNode}) {
         refetchGames,
         hasNextPage,
         fetchNextPage,
-        isFetchingNextPage
+        isFetchingNextPage,
+        showEditModal,
+        handleShowEditModal,
+        handleCloseEditModal
       }}
     >
       {children}

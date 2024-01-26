@@ -45,43 +45,16 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
     handleShowConfirmDelete,
     handleHideConfirmDelete,
     swipeableRef,
-    handleDeleteGame
+    handleDeleteGame,
+    handleShowEditModal,
   } = useGameCardController();
 
-
-
-
-  function splitConverted(frame: IFrame) {
-    if(frame.is_split && frame.points === 10) return true;
-  }
 
   function formatFirstShot(frame: IFrame) {
     if(frame.first_shot === 10) return 'X';
     if(frame.first_shot === 0) return '-';
     if(frame.first_shot === null) return '';
     return frame.first_shot;
-  }
-
-  function formatSecondShot(frame: IFrame) {
-    if(frame.frame_number === 10) {
-      if(frame.second_shot === 10) return 'X';
-      if(frame.second_shot === 0) return '-';
-      if(frame.second_shot === null) return '';
-      return frame.second_shot;
-    } else {
-      if(frame.first_shot === 10) return '';
-      if(frame.second_shot === 10 || (frame.points === 10) ) return '/';
-      if(frame.second_shot === 0) return '-';
-      if(frame.second_shot === null) return '';
-      return frame.second_shot;
-    }
-  }
-
-  function formatThirdShot(frame: IFrame) {
-    if(frame.third_shot === 10) return 'X';
-    if(frame.third_shot === 0) return '-';
-    if(frame.third_shot === null) return '';
-    return frame.third_shot;
   }
 
   const SplitFormat = ({  children }:{children: React.ReactNode}) => {
@@ -136,7 +109,9 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
   const LeftSwipeActions = () => {
     return (
       <SwipeContainer>
-        <EditButton>
+        <EditButton
+          onPress={handleShowEditModal}
+        >
           <EditButtonText>Edit</EditButtonText>
           <MaterialCommunityIcons name="playlist-edit" size={20} color="#3eb0f7"  />
         </EditButton>

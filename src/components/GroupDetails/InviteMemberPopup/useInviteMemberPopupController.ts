@@ -14,7 +14,7 @@ type FormData = z.infer<typeof schema>;
 
 export function useInviteMemberPopupController() {
 
-  const { selectedGroupId } = useGroup();
+  const { selectedGroup } = useGroup();
 
   const [feedback, setFeedback] = useState<string>('');
 
@@ -42,7 +42,7 @@ export function useInviteMemberPopupController() {
     try {
       await mutateAsync({
         ...data,
-        group_id: selectedGroupId,
+        group_id: selectedGroup!.id,
       });
 
       setFeedback('SUCCESS');

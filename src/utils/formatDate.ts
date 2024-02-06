@@ -16,6 +16,10 @@ export function formatDistance(date: string) {
   return moment(new Date(date)).fromNow();
 }
 
+export function getMonthName(month: number) {
+  return new Date(0, month).toLocaleString('en-US', { month: 'long' });
+}
+
 export function formatFromDate(date: Date) {
   return Intl.DateTimeFormat('en-US', {
     day: 'numeric',

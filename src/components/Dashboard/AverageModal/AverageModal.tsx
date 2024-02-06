@@ -6,14 +6,96 @@ import {
   Header,
   Title,
   Content,
+  MonthlyContainer,
+  MonthlyHeader,
+  YearContainer,
+  MonthContainer,
+  MonthText,
+  YearText,
+  MonthlyContent,
 } from "./styles";
-import {
-  LineChart,
-} from "react-native-chart-kit";
+import {  LineChart } from "react-native-gifted-charts";
+import { getMonthName } from "../../../utils/formatDate";
+
 import { useAverageModalController } from "./useAverageModalController";
 
 export function AverageModal() {
-  const { labels, values, showAverageModal, handleCloseAverageModal } = useAverageModalController();
+  const {
+    showAverageModal,
+    handleCloseAverageModal,
+    monthlyValues,
+    handleMonthChange,
+    handleYearChange,
+    params
+  } = useAverageModalController();
+
+  const YearlyComponent = () => {
+  }
+
+  const MonthlyComponent = () => {
+    return (
+      <MonthlyContainer>
+        <MonthlyHeader>
+          <MonthContainer>
+            <TouchableOpacity
+              onPress={() => handleMonthChange("decrement")}
+            >
+            <MaterialCommunityIcons name="chevron-left" size={24} color="#000" />
+            </TouchableOpacity>
+            <MonthText>{getMonthName(params.month)}</MonthText>
+
+            <TouchableOpacity
+              onPress={() => handleMonthChange("increment")}
+            >
+            <MaterialCommunityIcons name="chevron-right" size={24} color="#000" />
+            </TouchableOpacity>
+
+          </MonthContainer>
+          <YearContainer>
+          <TouchableOpacity
+            onPress={() => handleYearChange("decrement")}
+          >
+            <MaterialCommunityIcons name="chevron-left" size={24} color="#000" />
+            </TouchableOpacity>
+            <YearText>{params.year}</YearText>
+
+            <TouchableOpacity
+              onPress={() => handleYearChange("increment")}
+            >
+            <MaterialCommunityIcons name="chevron-right" size={24} color="#000" />
+            </TouchableOpacity>
+          </YearContainer>
+        </MonthlyHeader>
+
+        <MonthlyContent>
+          <LineChart
+            height={300}
+            maxValue={300}
+            areaChart1
+            curved
+            data={monthlyValues}
+            color1="#0d9488"
+            color2="#0d9488"
+            color3="#0d9488"
+            startFillColor1="#0d9488"
+            yAxisColor={"#0d9488"}
+            xAxisColor={"#0d9488"}
+            yAxisIndicesColor={"#0d9488"}
+            spacing={42}
+            noOfSections={6}
+            textColor1="#000"
+            initialSpacing={8}
+            textFontSize1={14}
+            isAnimated
+            thickness={3}
+            yAxisTextStyle={{color: '#0d9488', fontSize: 14, fontWeight: 'bold'}}
+
+          />
+        </MonthlyContent>
+
+      </MonthlyContainer>
+    )
+  }
 
   return (
     <Modal
@@ -30,49 +112,7 @@ export function AverageModal() {
           </TouchableOpacity>
         </Header>
         <Content>
-          <View
-            style={{
-              width: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-        <LineChart
-    data={{
-      labels: labels,
-      datasets: [
-        {
-          data: values
-        }
-      ],
-      legend: ["Average Per Month"]
-    }}
-    width={Dimensions.get('window').width * 0.85} // from react-native
-    height={340}
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundGradientFrom: "#55b4ab",
-      backgroundGradientTo: "#0d9488",
-      decimalPlaces: 0, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16,
-        width: "100%",
-        backgroundColor: "#0F0"
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#09675f"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16,
-    }}
-  /></View>
+          <MonthlyComponent />
 
         </Content>
       </Container>

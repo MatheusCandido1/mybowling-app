@@ -10,7 +10,7 @@ export function useDashboardGetAll() {
 
   return {
     stats: data ?? [],
-    average_per_month: data.average_per_month ?? [],
+    average_per_month: data.games_by_date ?? [],
     isFetching
    }
 }

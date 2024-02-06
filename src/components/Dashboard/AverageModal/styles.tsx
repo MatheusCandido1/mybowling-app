@@ -40,3 +40,42 @@ export const Content = styled.View`
   flex: 1;
   padding: 0 28px;
 `;
+
+export const MonthlyContainer = styled.View`
+  flex: 1;
+`;
+
+export const MonthlyHeader = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+`;
+
+export const MonthContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MonthText = styled.Text`
+  font-size: 16px;
+  color: #0d9488;
+  font-weight: bold;
+  padding: 8px 16px;
+`;
+
+export const YearContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const YearText = styled.Text`
+  font-size: 16px;
+  color: #0d9488;
+  font-weight: bold;
+  padding: 8px 16px;
+`;
+
+export const MonthlyContent = styled.View``;

@@ -4285,6 +4285,11 @@ getenv@^1.0.0:
   resolved "https://registry.yarnpkg.com/getenv/-/getenv-1.0.0.tgz#874f2e7544fbca53c7a4738f37de8605c3fcfc31"
   integrity sha512-7yetJWqbS9sbn0vIfliPsFgoXMKn/YMF+Wuiog97x+urnSRRRZ7xB+uVkwGKzRgq9CDFfMQnE9ruL5DHv9c6Xg==
 
+gifted-charts-core@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/gifted-charts-core/-/gifted-charts-core-0.0.15.tgz#40ebf11e1b81e36dc8c4a749ebfbd0fe981ee8d4"
+  integrity sha512-3FIaUSPYA/T1W+f+3mFa+p01Ygu/8/g5mo+6foFSrnmQGx+/ovbwQ1PNo9zmJ8CxlzuCXMUelyqydVo6hynI8Q==
+
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
@@ -6555,6 +6560,18 @@ react-native-gesture-handler@~2.12.0:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-gifted-charts@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-charts/-/react-native-gifted-charts-1.4.5.tgz#2b22440d0065ec629dff6eeedb0c1ec4701520fc"
+  integrity sha512-2UicTa1SOs68+h/bOBb6wTCZvA/W0seYn0KabpSx4cBHMU4Oma0psbScrZmrLzzbxGFM7IxdN6Jnduqy6+mZtA==
+  dependencies:
+    gifted-charts-core "^0.0.15"
+
+react-native-linear-gradient@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
+  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
 react-native-modal-datetime-picker@^17.1.0:
   version "17.1.0"

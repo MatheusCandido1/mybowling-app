@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { isDeviceSmall } from "../../../utils/deviceDimensions";
+import { MembersDetailsModalHeight } from "../../../utils/modalHeightByDevice";
 
 
 export const Overlay = styled.KeyboardAvoidingView`
@@ -12,7 +12,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: ${isDeviceSmall ? '300px':'450px'};
+  margin-top: ${MembersDetailsModalHeight()?.px};
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;

@@ -11,8 +11,7 @@ import {
   VersionText,
   VersionContainer
 } from "./styles";
-import { useAuth } from "../../hooks/useAuth";
-import { MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Avatar } from "../../components/Shared/Avatar";
 import { useNavigation } from "@react-navigation/native";
 import { EditProfileModal } from "../../components/Profile/EditProfileModal";
@@ -20,6 +19,7 @@ import { useProfileController } from "./useProfileController";
 import { UpdatePasswordModal } from "../../components/Profile/UpdatePasswordModal";
 import { appVersion } from "../../utils/getAppInfo";
 import { View } from "react-native";
+import { isDeviceSmall } from "../../utils/deviceDimensions"
 
 export function Profile() {
   const navigation = useNavigation();
@@ -51,8 +51,11 @@ export function Profile() {
           </AvatarRounded>
           <UserName>Hi, {user.first_name} 👋</UserName>
         </AvatarContainer>
-        <Menu>
-
+        <Menu
+          scrollEnabled={isDeviceSmall}
+          showsVerticalScrollIndicator={isDeviceSmall}
+        >
+          <View>
 
           <MenuItem
             onPress={handleGroupsPress}
@@ -81,6 +84,7 @@ export function Profile() {
             <MaterialCommunityIcons name="bell-ring-outline" size={28} color="#0d9488" />
             <MenuItemText>Notifications</MenuItemText>
           </MenuItem>
+          </View>
 
         </Menu>
 

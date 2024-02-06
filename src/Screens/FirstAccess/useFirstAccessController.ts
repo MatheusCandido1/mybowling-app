@@ -8,6 +8,7 @@ import { useState } from "react";
 export function useFirstAccessController() {
   const [terms, setTerms] = useState(false);
   const [promotions, setPromotions] = useState(false);
+  const [showPushNotification, setShowPushNotification] = useState(false);
 
   function handleTermCheck() {
     setTerms(!terms);
@@ -24,6 +25,10 @@ export function useFirstAccessController() {
       return UsersService.firstAccess();
     },
   })
+
+  const handleShowPushNotification = () => {
+    setShowPushNotification(true);
+  }
 
   const onSubmit = async () => {
     try {
@@ -65,6 +70,8 @@ export function useFirstAccessController() {
     terms,
     promotions,
     handlePromotionCheck,
-    handleTermCheck
+    handleTermCheck,
+    showPushNotification,
+    handleShowPushNotification
   }
 }

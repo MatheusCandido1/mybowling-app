@@ -27,6 +27,7 @@ import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ConfirmPopup } from "../../Shared/ConfirmPopup";
 import { useGameCardController } from "./useGameCardController";
+import { isIpad } from "../../../utils/getDevice";
 
 interface GameCardProps {
   location: ILocation,
@@ -79,7 +80,7 @@ export function GameCard({ location, date, totalScore, frames, onShowDetails, us
     return (
       <View
         style={{
-          width: 44,
+          width: isIpad() ? 94:44,
           height: 64,
           alignItems: 'center',
           justifyContent: 'center',

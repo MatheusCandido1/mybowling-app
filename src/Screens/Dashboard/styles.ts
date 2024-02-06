@@ -99,7 +99,38 @@ export const AverageContainer = styled.View`
   margin-top: 32px;
 `;
 
-export const AverageCard = styled.View`
+export const RecentGamesContainer = styled.View`
+  width: 100%;
+`;
+
+export const RecentGameCard = styled.View`
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
+  border: 2px solid #0d9488;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const RecentGameCardTitle = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+`;
+
+export const RecentGameCardDate = styled.Text`
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFF;
+`;
+
+export const RecentGameCardSubtitle = styled.Text`
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+`;
+
+export const AverageCard = styled.TouchableOpacity`
   border-radius: 8px;
   padding: 12px 0;
   width: 48%;
@@ -134,6 +165,12 @@ export const StatsContainer = styled.View`
   margin-top: 16px;
   width: 100%;
   gap: 16px;
+`;
+
+export const GamesPlayedLabel = styled.Text`
+  font-size: 12px;
+  font-weight: 500;
+  color: #767676;
 `;
 
 export const ArsenalStatsCard = styled.View`

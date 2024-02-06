@@ -19,8 +19,6 @@ export function MemberDetailsModal() {
     allowRemove
  } = useMemberDetailsModalController();
 
-
-
   return (
     <Modal
       visible={showMemberDetailsModal}

@@ -93,7 +93,7 @@ export function EditBallModal() {
           )}
         />
 
-        <InputContainer style={{marginTop: 8}}>
+        <InputContainer style={{marginTop: 16}}>
         <MainButton
           onPress={handleSubmit(onSubmit)}
           label="Save Ball"

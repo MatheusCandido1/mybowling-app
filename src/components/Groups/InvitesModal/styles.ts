@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { InvitesModalHeight } from "../../../utils/modalHeightByDevice";
 
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.6);
@@ -10,7 +11,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: 300px;
+  margin-top: ${InvitesModalHeight()?.px};
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;

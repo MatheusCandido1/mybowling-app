@@ -26,7 +26,13 @@ import {
   NotificationContainer,
   NotificationCounterContainer,
   NotificationCounterText,
-  ScoreItemContainer
+  ScoreItemContainer,
+  GamesPlayedLabel,
+  RecentGamesContainer,
+  RecentGameCard,
+  RecentGameCardTitle,
+  RecentGameCardDate,
+  RecentGameCardSubtitle
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
@@ -43,17 +49,18 @@ import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
 import { isAndroid } from "../../utils/getOS";
-import PushNotifications from "../../notifications/PushNotifications";
+import { AverageModal } from "../../components/Dashboard/AverageModal/AverageModal";
+import { EmptyRecentGames } from "../../components/Dashboard/EmptyRecentGames";
 
 
 export function Dashboard() {
-  const { height } = Dimensions.get('window');
+  const { height, width } = Dimensions.get('window');
 
   const navigation = useNavigation();
 
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
-  const { stats, isLoading } = useDashboardController();
+  const { stats, isLoading, handleShowAverageModal } = useDashboardController();
   const { loggedUser } = useAuth();
 
   const user = {
@@ -64,6 +71,8 @@ export function Dashboard() {
   const totalGamesAllTime = stats.total_games;
 
   const splits_converted = stats.splits_converted || [];
+
+  const recent_games = stats.most_recent_games || [];
 
 
   const scores = [
@@ -112,7 +121,9 @@ export function Dashboard() {
   const Average = () => {
     return (
       <AverageContainer>
-        <AverageCard>
+        <AverageCard
+          onPress={handleShowAverageModal}
+        >
           <AverageCardTitle>{currentMonth} Average</AverageCardTitle>
           <View style={{alignItems: 'center', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -123,15 +134,13 @@ export function Dashboard() {
                   <MaterialIcons name="arrow-drop-down" size={30} color="red" />
                )}
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 10}}>Last month average:</Text>
-              <Text style={{fontSize: 10, fontWeight: 'bold'}}>{stats.last_month_average}</Text>
-            </View>
+            <GamesPlayedLabel>Games played: {stats.current_month_games}</GamesPlayedLabel>
           </View>
         </AverageCard>
-        <AverageCard>
+        <AverageCard disabled>
           <AverageCardTitle>All Time Average</AverageCardTitle>
           <AverageText>{stats.all_time_average}</AverageText>
+          <GamesPlayedLabel>Games played: {stats.total_games}</GamesPlayedLabel>
         </AverageCard>
       </AverageContainer>
     )
@@ -172,6 +181,43 @@ export function Dashboard() {
            </View>
 
       </ScoreItemContainer>
+    )
+  }
+
+  const RecentGame = ({ data }: {data: Object}) => {
+
+    const formattedDate = new Date(data.game_date).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric'
+    });
+
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 6,
+          flex: 3
+        }}
+      >
+      <RecentGameCard>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 2, backgroundColor: '#0d9488', width: '100%', height: 24}}>
+          <MaterialIcons name="calendar-today" size={16} color="white" />
+          <RecentGameCardDate>{formattedDate}</RecentGameCardDate>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View>
+            <RecentGameCardSubtitle>Score</RecentGameCardSubtitle>
+          <RecentGameCardTitle>{data.total_score}</RecentGameCardTitle>
+          </View>
+        </View>
+      </RecentGameCard>
+    </View>
     )
   }
 
@@ -259,11 +305,10 @@ export function Dashboard() {
           <Content
             showsVerticalScrollIndicator={false}
             scrollEnabled={
-              height <= 750 ? true : false
+              true
             }
           >
             <Title>Dashboard</Title>
-            {/* <PushNotifications /> */}
             <StatsContainer>
               <ArsenalStatsCard>
                 <View
@@ -318,6 +363,27 @@ export function Dashboard() {
               </AllTimeScoreCard>
             </StatsContainer>
 
+            <RecentGamesContainer>
+              <Title style={{marginVertical: 16}}>Recent Games</Title>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  gap: 8,
+                  flex: 3
+                }}
+              >
+                {recent_games && recent_games.length > 0 ? recent_games.map((game: any, index: number) => (
+                  <RecentGame
+                    key={index}
+                    data={game}
+                  />
+                )) : (
+                  <EmptyRecentGames />
+                )}
+              </View>
+            </RecentGamesContainer>
+
             <SplitsContainer>
             <Title style={{marginBottom: 16}}>Splits</Title>
             {splits_converted.length == 0 && <EmptySplits />}
@@ -343,11 +409,12 @@ export function Dashboard() {
 
             </Swiper>
             </SplitsContainer>
-            {(height < 750 || isAndroid) && <View style={{height: 60}}></View>}
+            <View style={{height: 60}}></View>
           </Content>
         </>
 
       )}
+      <AverageModal />
     </Container>
   );
 }

@@ -29,10 +29,9 @@ export const UserName = styled.Text`
   color: #000;
 `;
 
-export const Menu = styled.View`
+export const Menu = styled.ScrollView`
   flex: 1;
   margin-top: 16px;
-  justify-content: flex-start;
 `;
 
 export const MenuItem = styled.TouchableOpacity`

@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 import { Dimensions } from 'react-native';
 
-import { Dashboard } from '../../Screens/Dashboard';
+import { DashboardWrapper } from '../../Wrappers/DashboardWrapper';
 import { GameWrapper } from '../../Wrappers/GameWrapper';
 import { GamesWrapper } from '../../Wrappers/GamesWrapper';
 import { ArsenalWrapper } from '../../Wrappers/ArsenalWrapper';
@@ -42,7 +42,7 @@ export function MainTabs() {
       >
         <Tab.Screen
           name="Dashboard"
-          component={Dashboard}
+          component={DashboardWrapper}
           options={{
             title: 'Games',
             tabBarIcon: ({ focused }) => (

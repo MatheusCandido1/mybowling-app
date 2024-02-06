@@ -11,7 +11,15 @@ import Logo2 from '../../assets/img/logo2.svg';
 import PushNotifications from '../../notifications/PushNotifications'
 
 export function FirstAccess() {
-  const { onSubmit, terms, handleTermCheck, promotions, handlePromotionCheck } = useFirstAccessController();
+  const {
+    onSubmit,
+    terms,
+    handleTermCheck,
+    promotions,
+    handlePromotionCheck,
+    handleShowPushNotification,
+    showPushNotification
+  } = useFirstAccessController();
 
   const AverageMonitoringComponent = () => {
     return (
@@ -109,11 +117,11 @@ export function FirstAccess() {
 
   return (
     <Container>
-    <PushNotifications />
       <Swiper
         showsPagination={true}
         loop={false}
         activeDotColor="#FFF"
+
       >
 
         <View
@@ -153,22 +161,31 @@ export function FirstAccess() {
             paddingRight: 24,
           }}
         >
+          <Text style={{color: '#FFF', fontSize: 28, fontWeight: 'bold', marginBottom: 24}}>
+            Get Notified!
+          </Text>
+          <Text style={{color: '#FFF', textAlign: 'center'}}>
+            Allow MyBowling to send you push notifications when you have new messages, group invites, and more. Click the button below to enable notifications.
+          </Text>
+          {showPushNotification ? <PushNotifications /> : null}
+
+          <TouchableOpacity
+            onPress={handleShowPushNotification}
+            style={{
+              backgroundColor: '#FFF',
+              height: 48,
+              width: 200,
+              borderRadius: 6,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 24,
+            }}
+          >
+
+            <Text style={{color: '#0d9488', fontWeight: 'bold'}}>Enable Notifications</Text>
+          </TouchableOpacity>
 
         </View>
-
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#0d9488',
-            paddingLeft: 24,
-            paddingRight: 24,
-          }}
-        >
-
-        </View>
-
         <View
           style={{
             flex: 1,

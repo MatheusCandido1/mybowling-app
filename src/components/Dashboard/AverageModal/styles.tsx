@@ -1,5 +1,7 @@
-import styled from "styled-components/native"
-import { EditGameModalHeight } from "../../../utils/modalHeightByDevice";
+import styled from "styled-components/native";
+
+import { AverageHistoryModalHeight } from '../../../utils/modalHeightByDevice';
+
 
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.6);
@@ -11,7 +13,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
-  margin-top: ${EditGameModalHeight()?.px};
+  margin-top: ${AverageHistoryModalHeight()!.px};
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;
@@ -36,26 +38,5 @@ export const Title = styled.Text`
 
 export const Content = styled.View`
   flex: 1;
-  padding: 0 24px;
-`;
-
-
-export const InputContainer = styled.View``;
-
-export const FrameButton = styled.TouchableOpacity`
-  height: 44px;
-  background-color: #3eb0f7;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  padding: 0 16px;
-  align-self: flex-start;
-  flex-direction: row;
-  width: 100%;
-`;
-
-export const FrameButtonText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  color: #FFF;
+  padding: 0 28px;
 `;

@@ -156,7 +156,7 @@ export function GameModal() {
               defaultValue=""
               render={({ field: { onChange, value }}) => (
                 <SelectInput
-                  label="Select the group (optional)"
+                  label="Select group (optional)"
                   items={groups}
                   onChange={onChange}
                   value={value}

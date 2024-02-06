@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
+import { GamesFilterModalHeight } from "../../../utils/modalHeightByDevice";
 
-import { isDeviceSmall } from "../../../utils/deviceDimensions";
 
 export const Overlay = styled.KeyboardAvoidingView`
   background: rgba(0,0,0,0.4);
@@ -12,6 +12,7 @@ export const Overlay = styled.KeyboardAvoidingView`
 export const Container = styled.View`
   flex: 1;
   background-color: #FFF;
+  margin-top: ${GamesFilterModalHeight()?.px};
   shadow-color: #000;
   shadow-offset: 0px 0px;
   shadow-opacity: 0.25;

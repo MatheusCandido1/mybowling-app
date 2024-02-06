@@ -7,9 +7,6 @@ import { MainButton } from "../../Shared/Buttons/MainButton";
 import { useGamesFilterModalController } from "./useGamesFilterModalController";
 import { SecondaryButton } from "../../Shared/Buttons/SecondaryButton";
 import { DateInput } from "../../Shared/Forms/DateInput";
-import { FilterGamesModalHeight } from "../../../utils/modalHeightByDevice";
-
-
 
 interface GameFilterModalProps {
   showModal: boolean;
@@ -29,8 +26,6 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
     handleResetCurrentFilters
   } = useGamesFilterModalController();
 
-  const ModalHeight = FilterGamesModalHeight()?.dimension;
-
   return (
     <Modal
       visible={showModal}
@@ -38,11 +33,7 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
       transparent
       >
         <Overlay>
-          <Container
-            style={{
-              marginTop: ModalHeight
-            }}
-          >
+          <Container>
             <Header>
               <Title>Filter Games</Title>
               <TouchableOpacity

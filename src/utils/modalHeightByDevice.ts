@@ -56,6 +56,14 @@ export const NewGroupModalHeight = () => {
   if(isDeviceBig) return { px: '525px' }
 }
 
+export const AccountSettingsModalHeight = () => {
+  if(isIpad()) return { px: '1000px' }
+  if(isDeviceSmall) return { px: '325px' }
+  if(isDeviceSmallMedium) return { px: '410px' }
+  if(isDeviceMedium) return { px: '465px' }
+  if(isDeviceBig) return { px: '550px' }
+}
+
 export const EditProfileModalHeight = () => {
   if(isIpad()) return { px: '895px' }
   if(isDeviceSmall) return { px: '215px' }

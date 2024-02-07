@@ -7,6 +7,9 @@ interface ProfileContextData {
   showUpdatePasswordModal: boolean;
   handleCloseUpdatePasswordModal(): void;
   handleShowUpdatePasswordModal(): void;
+  showDeleteAccountModal: boolean;
+  handleShowDeleteAccountModal(): void;
+  handleCloseDeleteAccountModal(): void;
 }
 
 export const ProfileContext = createContext({} as ProfileContextData);
@@ -14,6 +17,15 @@ export const ProfileContext = createContext({} as ProfileContextData);
 export function ProfileProvider({children}: {children: React.ReactNode}) {
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+
+  function handleShowDeleteAccountModal() {
+    setShowDeleteAccountModal(true);
+  }
+
+  function handleCloseDeleteAccountModal() {
+    setShowDeleteAccountModal(false);
+  }
 
   function handleShowUpdateProfileModal() {
     setShowUpdateProfileModal(true);
@@ -38,7 +50,10 @@ export function ProfileProvider({children}: {children: React.ReactNode}) {
       handleShowUpdateProfileModal,
       showUpdatePasswordModal,
       handleCloseUpdatePasswordModal,
-      handleShowUpdatePasswordModal
+      handleShowUpdatePasswordModal,
+      showDeleteAccountModal,
+      handleShowDeleteAccountModal,
+      handleCloseDeleteAccountModal
     }}>
       {children}
     </ProfileContext.Provider>

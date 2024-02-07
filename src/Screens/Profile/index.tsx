@@ -20,6 +20,7 @@ import { UpdatePasswordModal } from "../../components/Profile/UpdatePasswordModa
 import { appVersion } from "../../utils/getAppInfo";
 import { View } from "react-native";
 import { isDeviceSmall } from "../../utils/deviceDimensions"
+import { DeleteAccountModal } from "../../components/Profile/DeleteAccountModal";
 
 export function Profile() {
   const navigation = useNavigation();
@@ -31,7 +32,8 @@ export function Profile() {
     user,
     loggedUser,
     handleLogout,
-    handleNotificationsPress
+    handleNotificationsPress,
+    handleShowDeleteAccountModal
   } = useProfileController();
 
 
@@ -45,7 +47,7 @@ export function Profile() {
         <AvatarContainer>
           <AvatarRounded>
             <Avatar
-              size={135}
+              size={100}
               imageUri={loggedUser?.avatar}
             />
           </AvatarRounded>
@@ -84,6 +86,13 @@ export function Profile() {
             <MaterialCommunityIcons name="bell-ring-outline" size={28} color="#0d9488" />
             <MenuItemText>Notifications</MenuItemText>
           </MenuItem>
+
+          <MenuItem
+            onPress={handleShowDeleteAccountModal}
+          >
+            <MaterialCommunityIcons name="account-wrench" size={28} color="#0d9488" />
+            <MenuItemText>Account Settings</MenuItemText>
+          </MenuItem>
           </View>
 
         </Menu>
@@ -101,6 +110,7 @@ export function Profile() {
         </VersionContainer>
       <EditProfileModal />
       <UpdatePasswordModal />
+      <DeleteAccountModal />
     </Container>
   )
 }

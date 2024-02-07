@@ -31,7 +31,8 @@ export function useProfileController() {
 
   const {
     handleShowUpdateProfileModal,
-    handleShowUpdatePasswordModal
+    handleShowUpdatePasswordModal,
+    handleShowDeleteAccountModal
   } = useProfile();
 
 
@@ -43,6 +44,7 @@ export function useProfileController() {
     logout,
     loggedUser,
     handleLogout,
-    handleNotificationsPress
+    handleNotificationsPress,
+    handleShowDeleteAccountModal
   }
 }

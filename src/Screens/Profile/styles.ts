@@ -17,8 +17,8 @@ export const AvatarContainer = styled.View`
 `;
 
 export const AvatarRounded = styled.View`
-  width: 135px;
-  height: 135px;
+  width: 100px;
+  height: 100px;
   border-radius: 68px;
 `;
 

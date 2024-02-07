@@ -6,6 +6,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 import { Login } from '../../Screens/Auth/Login';
 import { Register } from '../../Screens/Auth/Register';
+import { ResetPassword } from '../../Screens/Auth/ResetPassword';
+import { NewPassword } from '../../Screens/Auth/NewPassword';
 
 const StackNavigator = createStackNavigator();
 
@@ -27,6 +29,14 @@ export function AuthStack() {
           >
             <StackNavigator.Screen name="login" component={Login} />
             <StackNavigator.Screen name="register" component={Register}  />
+            <StackNavigator.Screen name="resetPassword" component={ResetPassword} />
+            <StackNavigator.Screen
+              name="newPassword"
+              component={NewPassword}
+              options={{
+                gestureEnabled: false,
+              }}
+             />
           </StackNavigator.Navigator>
         </NavigationContainer>
       </SafeAreaView>

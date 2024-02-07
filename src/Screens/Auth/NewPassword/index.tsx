@@ -5,24 +5,23 @@ import {
   Title,
   Subtitle,
   Form,
-  Footer,
   LogoContainer,
   TextContainer,
-  CreateAccountLink,
-  CreateAccountLinkText,
+  ButtonContainer
 } from './styles';
+
 import HeroSvg from '../../../assets/img/hero.svg'
 import Logo from '../../../assets/img/logo.svg';
 import { CustomTextInput } from '../../../components/Shared/Forms/CustomTextInput';
-import { useLoginController } from './useLoginController';
+import { MainButton } from '../../../components/Shared/Buttons/MainButton';
+import { useNewPasswordController } from './useNewPasswordController';
 import { Controller } from 'react-hook-form';
 import { ScrollView } from 'react-native';
-import { MainButton } from '../../../components/Shared/Buttons/MainButton';
 import { Separator } from '../../../components/Shared/Separator';
 
-export function Login() {
+export function NewPassword({ route }) {
 
-  const { errors, handleSubmit, onSubmit, control, isLoading, handleNewAccountPress, handleForgotPasswordPress } = useLoginController();
+  const { handleSubmit, onSubmit, control, isLoading, errors } = useNewPasswordController();
 
   return (
     <ScrollView
@@ -30,7 +29,7 @@ export function Login() {
         flexGrow: 1,
       }}
     >
-       <Container>
+      <Container>
        <LogoContainer>
          <Logo />
        </LogoContainer>
@@ -39,24 +38,10 @@ export function Login() {
        </HeroContainer>
        <Content>
          <TextContainer>
-           <Title>Welcome!</Title>
-           <Subtitle>Sign in to your account to check your bowling stats!</Subtitle>
+           <Title>Create New Password</Title>
+           <Subtitle>Hey, make sure you create a strong password, okay?!</Subtitle>
          </TextContainer>
          <Form>
-           <Controller
-             name="email"
-             control={control}
-             defaultValue={""}
-             render={({ field: { onChange, value }}) => (
-               <CustomTextInput
-                 label={"Email"}
-                 icon={"envelope"}
-                 value={value}
-                 onChangeText={onChange}
-                 error={errors.email?.message}
-               />
-             )}
-           />
            <Controller
              name="password"
              control={control}
@@ -72,28 +57,32 @@ export function Login() {
                />
              )}
            />
-           <MainButton
-            onPress={handleSubmit(onSubmit)}
-            label={"Sign in"}
-            isLoading={isLoading}
-            style={{
-              marginTop: 14,
-            }}
+           <Controller
+             name="password_confirmation"
+             control={control}
+             defaultValue={""}
+             render={({ field: { onChange, value }}) => (
+               <CustomTextInput
+                 label={"Password Confirmation"}
+                 icon={"lock"}
+                 value={value}
+                 onChangeText={onChange}
+                 isPassword
+                 error={errors.password?.message}
+               />
+             )}
            />
+
+          <ButtonContainer>
+           <MainButton
+              onPress={handleSubmit(onSubmit)}
+              label="Update Password"
+              isLoading={isLoading}
+            />
+            </ButtonContainer>
+
          </Form>
 
-         <Footer>
-           <CreateAccountLink
-              onPress={handleNewAccountPress}
-           >
-             <CreateAccountLinkText>Don't have an account? Sign up!</CreateAccountLinkText>
-           </CreateAccountLink>
-           <CreateAccountLink
-              onPress={handleForgotPasswordPress}
-           >
-             <CreateAccountLinkText>Forgot your password?</CreateAccountLinkText>
-           </CreateAccountLink>
-         </Footer>
          <Separator
           height={40}
          />

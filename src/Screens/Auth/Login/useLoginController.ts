@@ -60,5 +60,9 @@ export function useLoginController() {
     navigation.navigate('register');
   }
 
-  return { onSubmit, handleSubmit, control, register, errors, isLoading, handleNewAccountPress }
+  function handleForgotPasswordPress() {
+    navigation.navigate('resetPassword');
+  }
+
+  return { onSubmit, handleSubmit, control, register, errors, isLoading, handleNewAccountPress, handleForgotPasswordPress }
 }

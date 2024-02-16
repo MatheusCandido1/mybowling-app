@@ -36,6 +36,9 @@ export const formatFrameResult = (shot: number, currentFrame: IFrame) => {
   }
 
   if(shot === 3) {
+    if(Number(currentFrame.second_shot) + Number(currentFrame.third_shot) === 10) {
+      return '/';
+    }
     if(currentFrame.third_shot === null) {
       return '';
     }

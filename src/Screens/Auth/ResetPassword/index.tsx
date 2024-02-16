@@ -34,7 +34,8 @@ export function ResetPassword() {
     isValidUser,
     code,
     onUpdateCode,
-    onPaste
+    onPaste,
+    handleAlreadyUserPress
   } = useResetPasswordController();
 
 
@@ -112,12 +113,9 @@ export function ResetPassword() {
 
          <Footer>
            <CreateAccountLink
+              onPress={handleAlreadyUserPress}
            >
-             <CreateAccountLinkText>Don't have an account? Sign up!</CreateAccountLinkText>
-           </CreateAccountLink>
-           <CreateAccountLink
-           >
-             <CreateAccountLinkText>Forgot your password?</CreateAccountLinkText>
+           <CreateAccountLinkText>Back to Login</CreateAccountLinkText>
            </CreateAccountLink>
          </Footer>
          <Separator

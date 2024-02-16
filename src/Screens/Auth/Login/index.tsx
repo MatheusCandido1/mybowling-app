@@ -88,11 +88,13 @@ export function Login() {
            >
              <CreateAccountLinkText>Don't have an account? Sign up!</CreateAccountLinkText>
            </CreateAccountLink>
+           {/*
            <CreateAccountLink
               onPress={handleForgotPasswordPress}
            >
              <CreateAccountLinkText>Forgot your password?</CreateAccountLinkText>
            </CreateAccountLink>
+          */}
          </Footer>
          <Separator
           height={40}

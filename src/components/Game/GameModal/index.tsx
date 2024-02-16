@@ -10,7 +10,9 @@ import {
   FilterText,
   FilterButton,
   GroupButtonQuantity,
-  GroupButtonQuantityText
+  GroupButtonQuantityText,
+  NoGamesFoundContainer,
+  NoGamesFoundText
 } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
@@ -79,6 +81,7 @@ export function GameModal() {
     return (
       <>
         <OnGoingHeader>
+          {onGoingGames.length > 0 ? (
           <FilterButton onPress={handleFilterOnGoingGames}>
             <FilterText>{filter}</FilterText>
             <MaterialCommunityIcons
@@ -92,12 +95,18 @@ export function GameModal() {
 
             />
           </FilterButton>
+          ): null}
         </OnGoingHeader>
         <FlatList
           data={sortedOnGoingGames}
           keyExtractor={item => item.id}
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <NoGamesFoundContainer>
+              <NoGamesFoundText>No existing games found.</NoGamesFoundText>
+            </NoGamesFoundContainer>
+          }
           renderItem={({ item }) => (
             <OnGoingGameCard
               game={item}

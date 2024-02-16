@@ -128,3 +128,11 @@ export const SwitchMessage = styled.Text`
   font-size: 12px;
   color: #0d9488;
 `;
+
+export const NoGamesFoundContainer = styled.View``;
+
+export const NoGamesFoundText = styled.Text`
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+`;

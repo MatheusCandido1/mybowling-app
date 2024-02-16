@@ -121,6 +121,10 @@ export function useResetPasswordController() {
     }
   });
 
+  function handleAlreadyUserPress() {
+    navigation.navigate('login');
+  }
+
   return {
     register,
     handleSubmit,
@@ -130,6 +134,7 @@ export function useResetPasswordController() {
     isValidUser,
     code,
     onUpdateCode,
-    onPaste
+    onPaste,
+    handleAlreadyUserPress
   }
 }

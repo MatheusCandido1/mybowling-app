@@ -165,7 +165,7 @@ export function FirstAccess() {
             Get Notified!
           </Text>
           <Text style={{color: '#FFF', textAlign: 'center'}}>
-            Allow MyBowling to send you push notifications when you have new messages, group invites, and more. Click the button below to enable notifications.
+            Allow SplitMate to send you push notifications when you have new messages, group invites, and more. Click the button below to enable notifications.
           </Text>
           {showPushNotification ? <PushNotifications /> : null}
 

@@ -32,7 +32,15 @@ import {
   RecentGameCard,
   RecentGameCardTitle,
   RecentGameCardDate,
-  RecentGameCardSubtitle
+  RecentGameCardSubtitle,
+  FloatingAverageContainer,
+  FloatingAverageLabel,
+  FloatingAverageTitle,
+  FloatingStatsContainer,
+  StatsText,
+  StatsBadgeText,
+  StatsBadge,
+  FloatingContent
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -73,6 +81,11 @@ export function Dashboard() {
   const splits_converted = stats.splits_converted || [];
 
   const recent_games = stats.most_recent_games || [];
+
+  const gamesToday = {
+    average: stats.games_today?.average || 0,
+    games: stats.games_today?.total_games || 0,
+  }
 
 
   const scores = [
@@ -120,6 +133,7 @@ export function Dashboard() {
 
   const Average = () => {
     return (
+      <>
       <AverageContainer>
         <AverageCard
           onPress={handleShowAverageModal}
@@ -150,6 +164,29 @@ export function Dashboard() {
           <GamesPlayedLabel>Games played: {stats.total_games}</GamesPlayedLabel>
         </AverageCard>
       </AverageContainer>
+      {gamesToday.games > 0 ? (
+
+        <FloatingAverageContainer>
+        <FloatingAverageTitle>Today</FloatingAverageTitle>
+        <FloatingStatsContainer>
+          <FloatingContent>
+              <StatsText>Average:</StatsText>
+              <StatsBadge>
+                <StatsBadgeText>{gamesToday.average}</StatsBadgeText>
+              </StatsBadge>
+            </FloatingContent>
+            <FloatingContent>
+              <StatsText>Games Played:</StatsText>
+              <StatsBadge>
+                <StatsBadgeText>{gamesToday.games}</StatsBadgeText>
+              </StatsBadge>
+            </FloatingContent>
+
+        </FloatingStatsContainer>
+
+      </FloatingAverageContainer>
+      ) : null}
+      </>
     )
   }
 

@@ -50,6 +50,7 @@ export const MonthlyHeader = styled.View`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  margin-bottom: 8px;
 `;
 
 export const MonthContainer = styled.View`
@@ -79,3 +80,61 @@ export const YearText = styled.Text`
 `;
 
 export const MonthlyContent = styled.View``;
+
+export const StatsContainer = styled.View`
+  background-color: #f5f5f5;
+  height: 60px;
+  width: 100%;
+  margin-bottom: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 0 16px;
+  gap: 12px;
+`;
+
+export const AverageContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 4px;
+`;
+
+export const StatsText = styled.Text`
+  font-size: 16px;
+  color: #0d9488;
+  font-weight: bold;
+`;
+
+export const StatsBadge = styled.View`
+  width: 36px;
+  height: 36px;
+  background-color: #0d9488;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+`;
+
+export const StatsBadgeText = styled.Text`
+  font-size: 14px;
+  color: #FFF;
+  font-weight: bold;
+`;
+
+
+export const GamesContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 4px;
+`;
+
+export const LocalLoading = styled.View`
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+`;

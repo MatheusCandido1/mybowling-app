@@ -28,7 +28,7 @@ export function useDeleteAccountModalController() {
       Toast.show({
         type: 'success',
         text1: 'Account Deleted',
-        text2: 'Thank you for using My Bowling App!',
+        text2: 'Thank you for using SplitMate!',
         visibilityTime: 2000,
         autoHide: true,
       })

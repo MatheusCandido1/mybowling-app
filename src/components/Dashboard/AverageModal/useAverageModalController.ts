@@ -15,7 +15,11 @@ export function useAverageModalController() {
 
   const {
     monthly,
-    refetch
+    average,
+    total_games,
+    refetch,
+    isRefetching,
+    isFetching
   } = useDashboardMonthly(params)
 
   function handleYearChange(type: 'increment' | 'decrement') {
@@ -60,7 +64,9 @@ export function useAverageModalController() {
     handleCloseAverageModal
   } = useDashboard();
 
-  const { average_per_month } = useDashboardGetAll();
+  const {
+    average_per_month
+  } = useDashboardGetAll();
 
 
   const labels = average_per_month.map((stat) => stat.game_date);
@@ -74,6 +80,8 @@ export function useAverageModalController() {
     label: format(new Date(stat.game_date), `do`),
   }));
 
+  const isLoading = isRefetching || isFetching;
+
   return {
     labels,
     values,
@@ -82,6 +90,9 @@ export function useAverageModalController() {
     monthlyValues,
     handleMonthChange,
     params,
-    handleYearChange
+    handleYearChange,
+    average,
+    total_games,
+    isLoading
   }
 }

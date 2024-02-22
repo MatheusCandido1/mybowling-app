@@ -4,7 +4,7 @@ import { MonthlyInterface } from "../services/dashboardService/monthly";
 
 export function useDashboardMonthly(params: MonthlyInterface) {
 
-  const { data = [], isFetching, refetch } = useQuery(
+  const { data = [], isFetching, refetch, isRefetching} = useQuery(
     ['dashboard', 'monthly'], () =>
     DashboardService.monthly(params),
     {
@@ -13,8 +13,11 @@ export function useDashboardMonthly(params: MonthlyInterface) {
   );
 
   return {
-    monthly: data ?? [],
+    monthly: data.games ?? [],
+    average: data.average ?? 0,
+    total_games: data.total_games ?? 0,
     isFetching,
+    isRefetching,
     refetch
    }
 }

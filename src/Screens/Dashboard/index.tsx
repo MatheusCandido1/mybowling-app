@@ -35,7 +35,7 @@ import {
   RecentGameCardSubtitle
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useDashboardController } from "./useDashboardController";
 import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 import { Ball2Icon } from "../../components/Icons/Ball2Icon";
@@ -134,7 +134,14 @@ export function Dashboard() {
                   <MaterialIcons name="arrow-drop-down" size={30} color="red" />
                )}
             </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 4}}>
             <GamesPlayedLabel>Games played: {stats.current_month_games}</GamesPlayedLabel>
+            <TouchableOpacity
+              onPress={handleShowAverageModal}
+            >
+              <MaterialIcons name="info-outline" size={20} color="#0d9488" />
+            </TouchableOpacity>
+            </View>
           </View>
         </AverageCard>
         <AverageCard disabled>

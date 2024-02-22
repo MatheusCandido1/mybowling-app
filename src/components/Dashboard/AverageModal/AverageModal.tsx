@@ -1,4 +1,4 @@
-import { Dimensions, Modal, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, Modal, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   Overlay,
@@ -13,11 +13,21 @@ import {
   MonthText,
   YearText,
   MonthlyContent,
+  StatsContainer,
+  AverageContainer,
+  GamesContainer,
+  StatsText,
+  StatsBadgeText,
+  StatsBadge,
+  LocalLoading,
 } from "./styles";
 import {  LineChart } from "react-native-gifted-charts";
 import { getMonthName } from "../../../utils/formatDate";
 
 import { useAverageModalController } from "./useAverageModalController";
+import { OverlayLoading } from "../../Shared/OverlayLoading";
+import { SuperOverlayLoading } from "../../Shared/SuperOverlayLoading";
+import { BowlingLoader } from "../../Shared/BowlingLoader";
 
 export function AverageModal() {
   const {
@@ -26,7 +36,10 @@ export function AverageModal() {
     monthlyValues,
     handleMonthChange,
     handleYearChange,
-    params
+    params,
+    average,
+    total_games,
+    isLoading
   } = useAverageModalController();
 
   const YearlyComponent = () => {
@@ -66,33 +79,55 @@ export function AverageModal() {
             </TouchableOpacity>
           </YearContainer>
         </MonthlyHeader>
+        <>
+          <StatsContainer>
+            <AverageContainer>
+              <StatsText>Average:</StatsText>
+              <StatsBadge>
+                <StatsBadgeText>{isLoading ? '...' : average}</StatsBadgeText>
+              </StatsBadge>
+            </AverageContainer>
+            <GamesContainer>
+              <StatsText>Games Played:</StatsText>
+              <StatsBadge>
+                <StatsBadgeText>{isLoading ? '...' : total_games}</StatsBadgeText>
+              </StatsBadge>
+            </GamesContainer>
 
-        <MonthlyContent>
-          <LineChart
-            height={300}
-            maxValue={300}
-            areaChart1
-            curved
-            data={monthlyValues}
-            color1="#0d9488"
-            color2="#0d9488"
-            color3="#0d9488"
-            startFillColor1="#0d9488"
-            yAxisColor={"#0d9488"}
-            xAxisColor={"#0d9488"}
-            yAxisIndicesColor={"#0d9488"}
-            spacing={42}
-            noOfSections={6}
-            textColor1="#000"
-            initialSpacing={8}
-            textFontSize1={14}
-            isAnimated
-            thickness={3}
-            yAxisTextStyle={{color: '#0d9488', fontSize: 14, fontWeight: 'bold'}}
+          </StatsContainer>
+          </>
 
-          />
-        </MonthlyContent>
+        {(isLoading) ? (
+          <LocalLoading>
+            <BowlingLoader />
+          </LocalLoading>
+        ): (
+          <MonthlyContent>
+            <LineChart
+              height={300}
+              maxValue={300}
+              areaChart1
+              curved
+              data={monthlyValues}
+              color1="#0d9488"
+              color2="#0d9488"
+              color3="#0d9488"
+              startFillColor1="#0d9488"
+              yAxisColor={"#0d9488"}
+              xAxisColor={"#0d9488"}
+              yAxisIndicesColor={"#0d9488"}
+              spacing={42}
+              noOfSections={6}
+              textColor1="#000"
+              initialSpacing={8}
+              textFontSize1={14}
+              isAnimated
+              thickness={3}
+              yAxisTextStyle={{color: '#0d9488', fontSize: 14, fontWeight: 'bold'}}
 
+            />
+          </MonthlyContent>
+        )}
       </MonthlyContainer>
     )
   }

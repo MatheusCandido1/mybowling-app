@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SplitMate",
-    "slug": "splitmateapp",
+    "slug": "mybowlingapp",
     "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -9,7 +9,7 @@ import {
   NumberTouchable,
   NumberTouchableText,
 } from "./styles";
-import { MaterialCommunityIcons, FontAwesome5, Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5, AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { useGame } from "../../../hooks/useGame";
 
@@ -113,7 +113,6 @@ export function NumPad() {
     ["1","2","3"],
     ["4","5","6"],
     ["7","8","9"],
-    ["0","Delete"],
   ]
 
   return (
@@ -129,7 +128,7 @@ export function NumPad() {
     >
     <Animated.View
     style={{
-      height: 375,
+      height: 305,
       width: '100%',
       backgroundColor: '#FFF',
       bottom: 0,
@@ -167,10 +166,11 @@ export function NumPad() {
         />
         <ActionButton
           text="Empty"
-          icon={<MaterialCommunityIcons name="block-helper" size={18} color="#FFF" />}
+          icon={<AntDesign name="minuscircleo" size={18} color="#FFF" />}
           onPress={() => handlePressNumber("0")}
         />
         <ActionButton
+          text="Hide"
           icon={<MaterialCommunityIcons name="chevron-double-down" size={24} color="#FFF" />}
           onPress={closeNumPad}
         />
@@ -180,13 +180,6 @@ export function NumPad() {
           <NumbersRow key={rowIndex}>
             {row.map((number, columnIndex) => (
               <React.Fragment key={columnIndex}>
-                {number === "Delete" ? (
-                  <NumberButton
-                    onPress={() => handlePressNumber("Delete")}
-                  >
-                    <Feather name="delete" size={24} color="#000" />
-                  </NumberButton>
-                ) : (
                   <NumberButton
                     key={columnIndex}
                     value={number}
@@ -196,7 +189,6 @@ export function NumPad() {
                     }}
                     textColor={maxNumber < Number(number) ? 'rgba(0, 0, 0, 0.4)' : '#000'}
                   />
-                )}
               </React.Fragment>
             ))}
           </NumbersRow>

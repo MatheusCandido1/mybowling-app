@@ -25,8 +25,6 @@ import {  LineChart } from "react-native-gifted-charts";
 import { getMonthName } from "../../../utils/formatDate";
 
 import { useAverageModalController } from "./useAverageModalController";
-import { OverlayLoading } from "../../Shared/OverlayLoading";
-import { SuperOverlayLoading } from "../../Shared/SuperOverlayLoading";
 import { BowlingLoader } from "../../Shared/BowlingLoader";
 
 export function AverageModal() {
@@ -41,9 +39,6 @@ export function AverageModal() {
     total_games,
     isLoading
   } = useAverageModalController();
-
-  const YearlyComponent = () => {
-  }
 
   const MonthlyComponent = () => {
     return (
@@ -96,38 +91,43 @@ export function AverageModal() {
 
           </StatsContainer>
           </>
+          {(total_games === 0 && !isLoading) ? (
+            <View style={{height: '50%', justifyContent: 'center', alignItems: 'center'}}>
+              <StatsText style={{color: '#000'}}>No games played this month.</StatsText>
+            </View>
+          ) :
+            (isLoading) ? (
+              <LocalLoading>
+                <BowlingLoader />
+              </LocalLoading>
+            ): (
+                <MonthlyContent>
+                <LineChart
+                  height={300}
+                  maxValue={300}
+                  areaChart1
+                  curved
+                  data={monthlyValues}
+                  color1="#0d9488"
+                  color2="#0d9488"
+                  color3="#0d9488"
+                  startFillColor1="#0d9488"
+                  yAxisColor={"#0d9488"}
+                  xAxisColor={"#0d9488"}
+                  yAxisIndicesColor={"#0d9488"}
+                  spacing={42}
+                  noOfSections={6}
+                  textColor1="#000"
+                  initialSpacing={8}
+                  textFontSize1={14}
+                  isAnimated
+                  thickness={3}
+                  yAxisTextStyle={{color: '#0d9488', fontSize: 14, fontWeight: 'bold'}}
 
-        {(isLoading) ? (
-          <LocalLoading>
-            <BowlingLoader />
-          </LocalLoading>
-        ): (
-          <MonthlyContent>
-            <LineChart
-              height={300}
-              maxValue={300}
-              areaChart1
-              curved
-              data={monthlyValues}
-              color1="#0d9488"
-              color2="#0d9488"
-              color3="#0d9488"
-              startFillColor1="#0d9488"
-              yAxisColor={"#0d9488"}
-              xAxisColor={"#0d9488"}
-              yAxisIndicesColor={"#0d9488"}
-              spacing={42}
-              noOfSections={6}
-              textColor1="#000"
-              initialSpacing={8}
-              textFontSize1={14}
-              isAnimated
-              thickness={3}
-              yAxisTextStyle={{color: '#0d9488', fontSize: 14, fontWeight: 'bold'}}
 
-            />
-          </MonthlyContent>
-        )}
+                />
+              </MonthlyContent>
+            )}
       </MonthlyContainer>
     )
   }

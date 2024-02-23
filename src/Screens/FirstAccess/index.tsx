@@ -137,7 +137,7 @@ export function FirstAccess() {
           <Text style={{color: 'white'}}>
             Welcome to the
           </Text>
-          <Text style={{fontWeight: 'bold', color: 'white', fontSize: 28, marginBottom: 24}}> BowlingApp!</Text>
+          <Text style={{fontWeight: 'bold', color: 'white', fontSize: 28, marginBottom: 24}}> SplitMate!</Text>
           <AverageMonitoringComponent />
           <ArsenalManagementComponent />
           <ScoreTrackingComponent />
@@ -208,7 +208,7 @@ export function FirstAccess() {
               setSelection={handlePromotionCheck}
               content={
                 <Text>
-                  If would like to sign up for marketing emails from BowlingApp, to keep up to date with the latest news and updates, offers, and more, please check the box below
+                  If you would like to sign up for marketing emails from SplitMate, to keep up to date with the latest news and updates, offers, and more, please check the box below
                 </Text>
               }
             />

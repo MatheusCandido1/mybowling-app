@@ -137,8 +137,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (nextFrame) {
       if (isStrike(nextFrame)) {
         if (currentIndex === 8) {
-          // In the 9th frame, calculate bonus for consecutive strikes in the last frame
-          return 20 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
+          return (nextFrame.first_shot || 0) + (nextFrame.second_shot || 0);
         } else {
           return 10 + (nextNextFrame ? nextNextFrame.first_shot || 0 : 0);
         }
@@ -194,7 +193,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if(newFrames[index].first_shot !== null) {
         newFrames[index].first_shot = null;
         newFrames[index].second_shot = null;
+        newFrames[index].third_shot = null;
+        newFrames[index].points = 0;
         newFrames[index].pins = null;
+        newFrames[index].pins2 = null;
         newFrames[index].is_split = false;
       }
 
@@ -258,7 +260,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if(currentInputNumber === 3) {
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
-      newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value)
+      newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value);
+      newFrames[index].points = Number(newFrames[index].first_shot) + Number(newFrames[index].second_shot) + Number(newFrames[index].third_shot);
       newFrames[index].status = 'completed';
       setFrames(newFrames);
       updateFrame(newFrames[index])

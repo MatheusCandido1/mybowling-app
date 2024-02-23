@@ -1,12 +1,14 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.View`
   width: 100%;
   height: 120px;
   border-radius: 8px;
   justify-content: space-between;
   flex-direction: row;
   border: 2px solid #0d9488;
+  elevation: 4;
+  background-color: #FFF;
 `;
 
 export const InformationContainer = styled.View`
@@ -30,7 +32,7 @@ export const InformationItem = styled.View`
   gap: 6px;
 `;
 
-export const ButtonContainer = styled.View`
+export const ButtonContainer = styled.TouchableOpacity`
   width: 20%;
   height: 100%;
   align-items: center;
@@ -50,4 +52,32 @@ export const ButtonText = styled.Text`
   font-size: 14px;
   font-weight: bold;
   color: #FFF;
+`;
+
+export const SwipeContainer = styled.View`
+  height: 100%;
+  width: 124px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+
+export const DeleteButton = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  padding: 8px;
+  border-radius: 8px;
+  flex-direction: row;
+  width: 90px;
+  gap: 4px;
+  border: 2px solid #D2042D;
+`;
+
+export const DeleteButtonText = styled.Text`
+  font-size: 14px;
+  color: #D2042D;
+  font-weight: bold;
+  text-align: center;
 `;

@@ -12,7 +12,6 @@ export function useAverageModalController() {
     month: new Date().getMonth()
   });
 
-
   const {
     monthly,
     average,
@@ -56,8 +55,6 @@ export function useAverageModalController() {
       month: type === 'increment' ? prevState.month + 1 : prevState.month - 1
     }));
   }
-
-
 
   const {
     showAverageModal,

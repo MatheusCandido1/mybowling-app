@@ -25,8 +25,11 @@ export function Frame({ data, onPress }: FrameProps) {
   function getSecondShot() {
     if(frame_number === 10) {
       if(second_shot === 10) return 'X';
+      if(second_shot === null) return '';
+      if(second_shot === 0) return '-';
+      if(Number(first_shot) + Number(second_shot) === 10) return '/';
+      return second_shot;
     }
-
 
     if(first_shot === 10) return ''
     if(second_shot === null) return '__'
@@ -109,7 +112,6 @@ export function Frame({ data, onPress }: FrameProps) {
       <PartialScoreContainer>
         {isSplit(pins) ? <SplitComponent /> : <ScoreComponent />}
         <PartialScoreText>{getSecondShot()}</PartialScoreText>
-
         {frame_number === 10 && <PartialScoreText>{getThirdShot()}</PartialScoreText>}
       </PartialScoreContainer>
       <FinalScoreContainer>

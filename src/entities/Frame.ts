@@ -6,6 +6,7 @@ export interface IFrame {
   second_shot: number | null,
   third_shot: number | null,
   pins?: string | null,
+  pins2?: string | null,
   is_split?: boolean | null,
   points: number,
   score: number

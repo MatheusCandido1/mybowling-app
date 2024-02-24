@@ -64,7 +64,7 @@ export const PinsFilter = styled.View`
 export const Content = styled.ScrollView``;
 
 export const Footer = styled.View`
-  height: 100px;
+  height: 36px;
 `;
 export const EmptySplitContainer = styled.View`
   flex: 1;

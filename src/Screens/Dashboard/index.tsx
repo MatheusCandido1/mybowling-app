@@ -387,11 +387,15 @@ export function Dashboard() {
             <SplitLinkContainer>
             <Title>Splits</Title>
 
-            <TouchableOpacity
-              onPress={handleShowSplitModal}
-            >
+
+            {splits_converted.length > 0 ? (
+              <TouchableOpacity
+                onPress={handleShowSplitModal}
+              >
                 <SeeMoreSplitsText>View All</SeeMoreSplitsText>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            ): null}
+
             </SplitLinkContainer>
             {splits_converted.length == 0 && <EmptySplits />}
             <Swiper

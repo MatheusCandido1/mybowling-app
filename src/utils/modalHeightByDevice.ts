@@ -114,8 +114,8 @@ export const ArsenalModalHeight = () => {
 
 export const SplitModalHeight = () => {
   if(isIpad()) return { px: '900px' }
-  if(isDeviceSmall) return { px: '300px' }
-  if(isDeviceSmallMedium) return { px: '370px' }
+  if(isDeviceSmall) return { px: '105px' }
+  if(isDeviceSmallMedium) return { px: '155px' }
   if(isDeviceMedium) return { px: '275px' }
-  if(isDeviceBig) return { px: '540px' }
+  if(isDeviceBig) return { px: '350px' }
 }

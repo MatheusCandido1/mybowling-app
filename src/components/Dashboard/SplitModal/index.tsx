@@ -21,6 +21,7 @@ import { SplitCard } from "../SplitCard";
 import { Dropdown } from "../../Shared/Dropdown";
 import { useEffect, useState } from "react";
 import { PinsDropdown } from "../../Shared/PinsDropdown";
+import _ from 'lodash';
 
 
 export function SplitModal() {
@@ -41,7 +42,7 @@ export function SplitModal() {
 
   const items = ["Attempts", "Converted", "Rate"];
 
-  const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSort, setSelectedSort] = useState('Rate');
   const [selectedSplit, setSelectedSplit] = useState('');
 
   function handleSearchSplit(splitValue: string) {
@@ -58,22 +59,18 @@ export function SplitModal() {
   }
 
   function handleSelectSort(value: string) {
-    if(value === selectedSort) {
-      setSelectedSort('');
-      return;
+
+    let newSortedSplits: any = [];
+
+    if(value === 'Attempts') {
+      newSortedSplits = _.orderBy(splits, ["attempted"], ['desc']);
+    } else if(value === 'Converted') {
+      newSortedSplits = _.orderBy(splits, ["converted"], ['desc']);
+    } else if(value === 'Rate') {
+      newSortedSplits = _.orderBy(splits, ["rate"], ['desc']);
+    } else {
+      newSortedSplits = splits;
     }
-    const newSortedSplits = splits.sort((a, b) => {
-      if(selectedSort === "Attempts") {
-        return b.attempted > a.attempted ? 1 : -1;
-      }
-      if(selectedSort === "Converted") {
-        return b.converted > a.converted ? 1 : -1;
-      }
-      if(selectedSort === "Rate") {
-        return b.rate - a.rate > 0 ? 1 : -1;
-      }
-      return 0;
-    });
 
     setSortedSplits(newSortedSplits)
     setSelectedSort(value);

@@ -10,7 +10,6 @@ export const Container = styled.SafeAreaView`
 
 export const Navbar = styled.View`
   padding: 24px;
-  //height: 225px;
   background-color: #0d9488;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
@@ -211,32 +210,6 @@ export const SplitsContainer = styled.View`
   height: 166px;
 `;
 
-export const SplitStatsContainer = styled.View`
-  width: 65%;
-  align-items: center;
-`;
-
-export const SplitTitleContainer = styled.View`
-  background-color: #0d9488;
-  border-radius: 8px;
-  padding: 4px 8px;
-`;
-
-export const SplitTitle = styled.Text`
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFF;
-`;
-
-export const SplitItemContainer = styled.View`
-  border-bottom-width: 2px;
-  border-bottom-color: #0d9488;
-  border-top-width: 2px;
-  border-top-color: #0d9488;
-  flex-direction: row;
-  padding: 8px;
-`;
-
 export const ScoreItemContainer = styled.View`
   width: 100%;
   height: 100%;
@@ -303,4 +276,18 @@ export const FloatingContent = styled.View`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+`;
+
+
+export const SplitLinkContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+export const SeeMoreSplitsText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #0d9488;
 `;

@@ -17,10 +17,6 @@ import {
   ArsenalStatsCardTitle,
   BallContainer,
   SplitsContainer,
-  SplitItemContainer,
-  SplitStatsContainer,
-  SplitTitleContainer,
-  SplitTitle,
   GroupsContainer,
   GroupContainerTitle,
   NotificationContainer,
@@ -34,13 +30,14 @@ import {
   RecentGameCardDate,
   RecentGameCardSubtitle,
   FloatingAverageContainer,
-  FloatingAverageLabel,
   FloatingAverageTitle,
   FloatingStatsContainer,
   StatsText,
   StatsBadgeText,
   StatsBadge,
-  FloatingContent
+  FloatingContent,
+  SeeMoreSplitsText,
+  SplitLinkContainer
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -55,20 +52,24 @@ import { useAuth } from "../../hooks/useAuth";
 import { EmptyBalls } from "../../components/Dashboard/EmptyBalls";
 import { EmptySplits } from "../../components/Dashboard/EmptySplits";
 import { useNavigation } from "@react-navigation/native";
-import { Dimensions } from 'react-native';
-import { isAndroid } from "../../utils/getOS";
 import { AverageModal } from "../../components/Dashboard/AverageModal/AverageModal";
 import { EmptyRecentGames } from "../../components/Dashboard/EmptyRecentGames";
+import { SplitModal } from "../../components/Dashboard/SplitModal";
+import { SplitCard } from "../../components/Dashboard/SplitCard";
 
 
 export function Dashboard() {
-  const { height, width } = Dimensions.get('window');
-
   const navigation = useNavigation();
 
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
-  const { stats, isLoading, handleShowAverageModal } = useDashboardController();
+  const {
+    stats,
+    isLoading,
+    handleShowAverageModal,
+    handleShowSplitModal
+   } = useDashboardController();
+
   const { loggedUser } = useAuth();
 
   const user = {
@@ -295,52 +296,6 @@ export function Dashboard() {
         </BallContainer>
     )
   }
-
-  interface SplitItemProps {
-    split: string;
-    attempts: number;
-    converted: number;
-    rate: number;
-  }
-
-  const SplitItem = ({ split, attempts, converted, rate }: SplitItemProps) => {
-    return (
-      <SplitItemContainer>
-        <View style={{width: '35%'}}>
-          <SplitFrame split={split} />
-        </View>
-        <SplitStatsContainer >
-          <SplitTitleContainer>
-            <SplitTitle>{split}</SplitTitle>
-          </SplitTitleContainer>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-            }}
-          >
-            <Text>Attempted: <Text style={{fontWeight: 'bold'}}>{attempts}</Text> </Text>
-            <Text>Converted: <Text style={{fontWeight: 'bold'}}>{converted}</Text> </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 2,
-              }}
-            >
-              <Text>Conversion Rate: <Text style={{fontWeight: 'bold'}}>{rate}%</Text> </Text>
-              <MaterialIcons name="info-outline" size={20} color="#0d9488" />
-            </View>
-
-          </View>
-        </SplitStatsContainer>
-      </SplitItemContainer>
-    )
-  }
-
   return (
     <Container>
       {isLoading ? ( <OverlayLoading /> ) : (
@@ -429,7 +384,15 @@ export function Dashboard() {
             </RecentGamesContainer>
 
             <SplitsContainer>
-            <Title style={{marginBottom: 16}}>Splits</Title>
+            <SplitLinkContainer>
+            <Title>Splits</Title>
+
+            <TouchableOpacity
+              onPress={handleShowSplitModal}
+            >
+                <SeeMoreSplitsText>View All</SeeMoreSplitsText>
+            </TouchableOpacity>
+            </SplitLinkContainer>
             {splits_converted.length == 0 && <EmptySplits />}
             <Swiper
               loop
@@ -441,8 +404,8 @@ export function Dashboard() {
               autoplayTimeout={3}
             >
 
-              {splits_converted.length > 0 && splits_converted.map((split: any, index: any) => (
-                <SplitItem
+              {splits_converted.length > 0 && splits_converted.slice(0,3).map((split: any, index: any) => (
+                <SplitCard
                   split={split.pins}
                   attempts={split.attempted}
                   converted={split.converted}
@@ -452,6 +415,7 @@ export function Dashboard() {
               ))}
 
             </Swiper>
+
             </SplitsContainer>
             <View style={{height: 60}}></View>
           </Content>
@@ -459,6 +423,7 @@ export function Dashboard() {
 
       )}
       <AverageModal />
+      <SplitModal />
     </Container>
   );
 }

@@ -97,11 +97,11 @@ export const FilterGamesByGroupModalHeight = () => {
 }
 
 export const AverageHistoryModalHeight = () => {
-  if(isIpad()) return { px: '825px' }
-  if(isDeviceSmall) return { px: '90px' }
-  if(isDeviceSmallMedium) return { px: '150px' }
-  if(isDeviceMedium) return { px: '240px' }
-  if(isDeviceBig) return { px: '330px' }
+  if(isIpad()) return { px: '795px' }
+  if(isDeviceSmall) return { px: '60px' }
+  if(isDeviceSmallMedium) return { px: '120px' }
+  if(isDeviceMedium) return { px: '210px' }
+  if(isDeviceBig) return { px: '300px' }
 }
 
 export const ArsenalModalHeight = () => {

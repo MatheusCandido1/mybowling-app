@@ -50,7 +50,7 @@ export const MonthlyHeader = styled.View`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 `;
 
 export const MonthContainer = styled.View`
@@ -109,9 +109,9 @@ export const StatsText = styled.Text`
 `;
 
 export const StatsBadge = styled.View`
-  width: 36px;
-  height: 36px;
-  background-color: #0d9488;
+  width: 38px;
+  height: 38px;
+  border: 2px solid #0d9488;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
@@ -120,7 +120,7 @@ export const StatsBadge = styled.View`
 
 export const StatsBadgeText = styled.Text`
   font-size: 14px;
-  color: #FFF;
+  color: #0d9488;
   font-weight: bold;
 `;
 
@@ -138,3 +138,51 @@ export const LocalLoading = styled.View`
   justify-content: center;
   height: 200px;
 `;
+
+export const HeaderContainer = styled.View`
+  padding: 0 24px;
+  margin-bottom: 16px;
+`;
+
+export const GroupButtonContainer = styled.View`
+  width: 100%;
+  height: 32px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const TypeButton = styled.TouchableOpacity`
+  width: 30%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-radius: 8px;
+`;
+
+export const TypeButtonText = styled.Text`
+  font-size: 14px;
+  color: #0d9488;
+  font-weight: bold;
+  text-align: center;
+`;
+
+export const WeeklyContainer = styled.View``;
+
+export const WeeklyHeader = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+`;
+
+export const WeekContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const YearlyContainer = styled.View``;

@@ -3,7 +3,9 @@ import { useDashboard } from "../../../hooks/useDashboard";
 import { useDashboardGetAll } from "../../../hooks/useDashboardGetAll";
 import { useDashboardMonthly } from "../../../hooks/useDashboardMonthly";
 import { MonthlyInterface } from "../../../services/dashboardService/monthly";
-import { format } from 'date-fns';
+import { format, getISOWeek } from 'date-fns';
+import { useDashboardWeekly } from "../../../hooks/useDashboardWeekly";
+import { WeeklyInterface } from "../../../services/dashboardService/weekly";
 
 
 export function useAverageModalController() {
@@ -11,6 +13,38 @@ export function useAverageModalController() {
     year: new Date().getFullYear(),
     month: new Date().getMonth()
   });
+
+  const [week, setWeek] = useState<WeeklyInterface>({
+    week: getISOWeek(new Date())
+  });
+  const [begginingOfWeek, setBegginingOfWeek] = useState<String>();
+  const [endOfWeek, setEndOfWeek] = useState<String>();
+
+  useEffect(() => {
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const daysToAdd = (week.week - 1) * 7;
+    const firstDayOfWeek = new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + daysToAdd));
+
+    const beginningOfWeekDate = new Date(firstDayOfWeek);
+    const endOfWeekDate = new Date(firstDayOfWeek);
+    endOfWeekDate.setDate(firstDayOfWeek.getDate() + 6);
+
+    setBegginingOfWeek(format(beginningOfWeekDate, 'LL/dd')); // Adjust the date format as needed
+    setEndOfWeek(format(endOfWeekDate, 'LL/dd')); // Adjust the date format as needed
+  }, [week, setWeek]);
+
+  const [type, setType] = useState<'weekly' | 'monthly' | 'yearly'>('monthly');
+
+  function handleTypeChange(type: 'weekly' | 'monthly' | 'yearly') {
+    refetchAll();
+    setType(type);
+  }
+
+  function refetchAll() {
+    refetch();
+    refetchWeekly();
+  }
 
   const {
     monthly,
@@ -20,6 +54,37 @@ export function useAverageModalController() {
     isRefetching,
     isFetching
   } = useDashboardMonthly(params)
+
+  const {
+    weekly,
+    weekAverage,
+    weekTotalGames,
+    isFetchingWeekly,
+    isRefetchingWeekly,
+    refetchWeekly,
+  } = useDashboardWeekly(week);
+
+
+  useEffect(() => {
+    refetchWeekly();
+  }, [week]);
+
+  function handleWeekChange(type: 'increment' | 'decrement') {
+    setWeek((prevState) => {
+      let newWeek;
+
+      if (type === 'increment') {
+        newWeek = prevState.week + 1 > 52 ? 1 : prevState.week + 1;
+      } else {
+        newWeek = prevState.week - 1 < 1 ? 52 : prevState.week - 1;
+      }
+
+      return {
+        ...prevState,
+        week: newWeek
+      };
+    });
+  }
 
   function handleYearChange(type: 'increment' | 'decrement') {
     setParams((prevState) => ({
@@ -77,7 +142,15 @@ export function useAverageModalController() {
     label: format(new Date(stat.game_date), `do`),
   }));
 
+  const weeklyValues = weekly.map((stat) => ({
+    value: stat.total_score,
+    dataPointText: stat.total_score,
+    label: format(new Date(stat.game_date), `do`),
+  }));
+
   const isLoading = isRefetching || isFetching;
+
+  const isLoadingWeekly = isRefetchingWeekly || isFetchingWeekly;
 
   return {
     labels,
@@ -90,6 +163,17 @@ export function useAverageModalController() {
     handleYearChange,
     average,
     total_games,
-    isLoading
+    isLoading,
+    type,
+    handleTypeChange,
+    week,
+    handleWeekChange,
+    begginingOfWeek,
+    endOfWeek,
+    weekly,
+    weekAverage,
+    weekTotalGames,
+    isLoadingWeekly,
+    weeklyValues
   }
 }

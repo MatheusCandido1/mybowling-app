@@ -6,7 +6,9 @@ import { MonthlyInterface } from "../../../services/dashboardService/monthly";
 import { format, getISOWeek } from 'date-fns';
 import { useDashboardWeekly } from "../../../hooks/useDashboardWeekly";
 import { WeeklyInterface } from "../../../services/dashboardService/weekly";
-
+import moment from "moment";
+import { YearlyInterface } from "../../../services/dashboardService/yearly";
+import { useDashboardYearly } from "../../../hooks/useDashboardYearly";
 
 export function useAverageModalController() {
   const [params, setParams] = useState<MonthlyInterface>({
@@ -17,6 +19,11 @@ export function useAverageModalController() {
   const [week, setWeek] = useState<WeeklyInterface>({
     week: getISOWeek(new Date())
   });
+
+  const [currentYear, setCurrentYear] = useState<YearlyInterface>({
+    year: new Date().getFullYear()
+  });
+
   const [begginingOfWeek, setBegginingOfWeek] = useState<String>();
   const [endOfWeek, setEndOfWeek] = useState<String>();
 
@@ -44,6 +51,7 @@ export function useAverageModalController() {
   function refetchAll() {
     refetch();
     refetchWeekly();
+    refetchYearly();
   }
 
   const {
@@ -63,6 +71,19 @@ export function useAverageModalController() {
     isRefetchingWeekly,
     refetchWeekly,
   } = useDashboardWeekly(week);
+
+  const {
+    yearly,
+    isFetchingYearly,
+    isRefetchingYearly,
+    refetchYearly,
+    yearAverage,
+    yearTotalGames
+  } = useDashboardYearly(currentYear);
+
+  useEffect(() => {
+    refetchYearly();
+  }, [currentYear]);
 
 
   useEffect(() => {
@@ -93,6 +114,12 @@ export function useAverageModalController() {
     }));
   }
 
+  function handleCurrentYearChange(type: 'increment' | 'decrement') {
+    setCurrentYear((prevState) => ({
+      year: type === 'increment' ? prevState.year + 1 : prevState.year - 1
+    }));
+  }
+
   useEffect(() => {
     refetch();
   }, [params]);
@@ -106,6 +133,7 @@ export function useAverageModalController() {
       }));
       return;
     };
+
     if(type === 'increment' && params.month === 11) {
       setParams((prevState) => ({
         ...prevState,
@@ -114,6 +142,7 @@ export function useAverageModalController() {
       }));
       return;
     };
+
 
     setParams((prevState) => ({
       ...prevState,
@@ -139,18 +168,28 @@ export function useAverageModalController() {
   const monthlyValues = monthly.map((stat) => ({
     value: stat.total_score,
     dataPointText: stat.total_score,
-    label: format(new Date(stat.game_date), `do`),
+    label: moment(stat.game_date).format('Do'),
   }));
 
   const weeklyValues = weekly.map((stat) => ({
     value: stat.total_score,
     dataPointText: stat.total_score,
-    label: format(new Date(stat.game_date), `do`),
+    label: moment(stat.game_date).format('Do'),
   }));
+
+  const yearlyValues = yearly.map((stat) => ({
+    value: stat.average_score,
+    dataPointText: stat.average_score,
+    label: moment(stat.month, 'M').format('MMM'),
+  }));
+
 
   const isLoading = isRefetching || isFetching;
 
   const isLoadingWeekly = isRefetchingWeekly || isFetchingWeekly;
+
+  const isLoadingYearly = isRefetchingYearly || isFetchingYearly;
+
 
   return {
     labels,
@@ -174,6 +213,12 @@ export function useAverageModalController() {
     weekAverage,
     weekTotalGames,
     isLoadingWeekly,
-    weeklyValues
+    weeklyValues,
+    currentYear,
+    handleCurrentYearChange,
+    yearlyValues,
+    isLoadingYearly,
+    yearAverage,
+    yearTotalGames
   }
 }

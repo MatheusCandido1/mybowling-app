@@ -133,7 +133,7 @@ export const AverageCard = styled.TouchableOpacity`
   border-radius: 8px;
   padding: 12px 0;
   width: 48%;
-  height: 100px;
+  height: 112px;
   justify-content: space-between;
   align-items: center;
   background-color: #FFF;

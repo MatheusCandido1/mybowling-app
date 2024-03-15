@@ -185,4 +185,19 @@ export const WeekContainer = styled.View`
   justify-content: center;
 `;
 
-export const YearlyContainer = styled.View``;
+export const YearlyContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+`;
+
+export const YearlyHeader = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+`;
+
+export const YearlyContent = styled.View`
+  width: 100%;
+`;

@@ -1,4 +1,3 @@
-import { intlFormatDistance } from "date-fns";
 import moment from "moment";
 
 
@@ -17,7 +16,7 @@ export function formatDistance(date: string) {
 }
 
 export function getMonthName(month: number) {
-  return new Date(0, month).toLocaleString('en-US', { month: 'long' });
+  return moment(month+1, 'M').format('MMMM');
 }
 
 export function formatFromDate(date: Date) {

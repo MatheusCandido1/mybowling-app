@@ -149,12 +149,12 @@ export function Dashboard() {
                   <MaterialIcons name="arrow-drop-down" size={30} color="red" />
                )}
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 4}}>
+            <View style={{justifyContent: 'center', alignItems: 'center', gap: 4}}>
             <GamesPlayedLabel>Games played: {stats.current_month_games}</GamesPlayedLabel>
             <TouchableOpacity
               onPress={handleShowAverageModal}
             >
-              <MaterialIcons name="info-outline" size={20} color="#0d9488" />
+            <Text style={{color: '#0d9488', fontWeight: 'bold', fontSize: 12, textDecorationLine: 'underline'}}>See Charts</Text>
             </TouchableOpacity>
             </View>
           </View>

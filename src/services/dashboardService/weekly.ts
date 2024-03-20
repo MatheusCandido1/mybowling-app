@@ -5,7 +5,7 @@ export interface WeeklyInterface {
 }
 
 export async function weekly(params: WeeklyInterface) {
-  const response = await httpClient.get<any>(`/dashboard/weekly/${params.week}/`);
+  const response = await httpClient.get<any>(`/dashboard/weekly/${params.week}`);
 
   return response.data.data;
 }

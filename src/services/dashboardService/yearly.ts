@@ -5,7 +5,7 @@ export interface YearlyInterface {
 }
 
 export async function yearly(params: YearlyInterface) {
-  const response = await httpClient.get<any>(`/dashboard/yearly/${params.year}/`);
+  const response = await httpClient.get<any>(`/dashboard/yearly/${params.year}`);
 
   return response.data.data;
 }

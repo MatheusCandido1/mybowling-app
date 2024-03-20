@@ -5,7 +5,7 @@ import { WeeklyInterface } from "../services/dashboardService/weekly";
 export function useDashboardWeekly(params: WeeklyInterface) {
 
   const { data = [], isFetching, refetch, isRefetching} = useQuery(
-    ['dashboard', 'monthly'], () =>
+    ['dashboard', 'weekly'], () =>
     DashboardService.weekly(params),
     {
       staleTime: Infinity,

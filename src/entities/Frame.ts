@@ -8,6 +8,7 @@ export interface IFrame {
   pins?: string | null,
   pins2?: string | null,
   is_split?: boolean | null,
+  is_split2?: boolean | null,
   points: number,
   score: number
 }

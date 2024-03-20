@@ -5,18 +5,18 @@ import { useEffect, useState } from "react";
 import { useGame } from "../../../../hooks/useGame";
 import Toast from 'react-native-toast-message';
 
-export function PinBoard() {
+export function PinBoard2() {
   const { setSplitValue, currentFrame } = useGame();
 
-  const [selectedPins, setSelectedPins] = useState<number[]>(currentFrame.pins?.split("-").map(Number) || []);
+  const [selectedPins, setSelectedPins] = useState<number[]>(currentFrame.pins2?.split("-").map(Number) || []);
 
 
   useEffect(() => {
-    setSelectedPins(currentFrame.pins?.split("-").map(Number) || []);
-  }, [currentFrame.pins]);
+    setSelectedPins(currentFrame.pins2?.split("-").map(Number) || []);
+  }, [currentFrame.pins2]);
 
 
-  const allowPinSelection = currentFrame.first_shot !== null && currentFrame.first_shot !== 10;
+  const allowPinSelection = currentFrame.second_shot !== null && currentFrame.second_shot !== 10;
 
   function handlePinPress(pin: number) {
     if (!allowPinSelection) {
@@ -45,7 +45,7 @@ export function PinBoard() {
       return;
     }
 
-    if (selectedPins.length >= (10 - currentFrame.first_shot)) {
+    if (selectedPins.length >= (10 - currentFrame.second_shot)) {
       Toast.show({
         type: 'error',
         text1: 'Error',

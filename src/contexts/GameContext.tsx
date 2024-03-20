@@ -179,12 +179,24 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   function setSplitValue(newValue: string) {
     const newFrames = [...frames];
     const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
-    newFrames[index].pins = newValue;
-    newFrames[index].is_split = isSplit(newValue);
-    setFrames(newFrames);
+
+    const shouldShowPins2 = currentFrame.frame_number === 10 && (currentFrame.first_shot === 10 || ((Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10)))
+
+    if(!shouldShowPins2) {
+      newFrames[index].pins = newValue;
+      newFrames[index].is_split = isSplit(newValue);
+      setFrames(newFrames);
+      return;
+    } else {
+      newFrames[index].pins2 = newValue;
+      newFrames[index].is_split2 = isSplit(newValue);
+      setFrames(newFrames);
+      return;
+    }
   }
 
   function updateValueForCurrentFrame(value: string) {
+
     if(currentInputNumber === 1) {
 
       const newFrames = [...frames];
@@ -198,6 +210,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         newFrames[index].pins = null;
         newFrames[index].pins2 = null;
         newFrames[index].is_split = false;
+        newFrames[index].is_split2 = false;
       }
 
       const first_shot = parseInt(value === "Strike" ? "10" : value);
@@ -226,6 +239,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if(currentInputNumber === 2) {
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
+
+      if(newFrames[index].second_shot !== null) {
+        newFrames[index].second_shot = null;
+        newFrames[index].third_shot = null;
+        newFrames[index].pins2 = null;
+        newFrames[index].is_split2 = false;
+      }
+
       if(index === 9) {
         if(value === "Spare") {
           newFrames[index].second_shot = (10 - Number(newFrames[index].first_shot));
@@ -260,6 +281,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if(currentInputNumber === 3) {
       const newFrames = [...frames];
       const index = frames.findIndex(f => f.frame_number === currentFrame.frame_number);
+
+      if(newFrames[index].third_shot !== null) {
+        newFrames[index].second_shot = null;
+        newFrames[index].third_shot = null;
+        newFrames[index].pins2 = null;
+        newFrames[index].is_split2 = false;
+      }
+
       newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value);
       newFrames[index].points = Number(newFrames[index].first_shot) + Number(newFrames[index].second_shot) + Number(newFrames[index].third_shot);
       newFrames[index].status = 'completed';
@@ -269,9 +298,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     closeNumPad();
   }
-
-
-
 
   function handleCurrentFrame(frame: IFrame) {
     setCurrentFrame(frame);

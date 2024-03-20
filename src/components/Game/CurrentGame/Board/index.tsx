@@ -7,6 +7,7 @@ import { Scores } from "../Scores";
 import { formatFrameFirstShot, formatFrameSecondShot, formatFrameThirdShot } from "../../../../utils/formatScore";
 import { isDeviceSmall, isDeviceSmallMedium } from "../../../../utils/deviceDimensions";
 import { isSplit } from "../../../../utils/splitHelper";
+import { PinBoard2 } from "../PinBoard2";
 
 export function Board() {
   const inputFirstShot = useRef(null);
@@ -14,6 +15,8 @@ export function Board() {
   const inputThirdShot = useRef(null);
 
   const { currentFrame, frames, openNumPad } = useGame();
+
+  const shouldShowPins2 = currentFrame.frame_number === 10 && (currentFrame.first_shot === 10 || ((Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10)));
 
   function resetInputs() {
     inputFirstShot.current?.blur();
@@ -118,7 +121,9 @@ export function Board() {
           marginBottom: 32,
         }}
         >
-          <PinBoard />
+          {
+           !shouldShowPins2 ? <PinBoard /> : <PinBoard2 />
+          }
         </View>
       <ScoreContainer>
         <Scores

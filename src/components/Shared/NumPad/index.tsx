@@ -68,8 +68,6 @@ function NumberButton({ onPress, value, children, style, textColor  }: NumberBut
 }
 
 export function NumPad() {
-  //const [maxNumber, setMaxNumber] = React.useState(10);
-
   const {
     closeNumPad,
     updateValueForCurrentFrame,

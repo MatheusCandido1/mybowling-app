@@ -86,8 +86,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setFrames(game.frames);
 
       }
-    /*
-    */
   }
 
   function handleNewGame(data: any) {
@@ -289,7 +287,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         newFrames[index].is_split2 = false;
       }
 
-      newFrames[index].third_shot = parseInt(value === "Strike" ? "10" : value);
+      const newValue = () => {
+        if(value === "Strike") return 10;
+        if(value === "Spare") return 10 - Number(newFrames[index].second_shot);
+        return parseInt(value);
+      }
+
+      newFrames[index].third_shot = newValue()
       newFrames[index].points = Number(newFrames[index].first_shot) + Number(newFrames[index].second_shot) + Number(newFrames[index].third_shot);
       newFrames[index].status = 'completed';
       setFrames(newFrames);

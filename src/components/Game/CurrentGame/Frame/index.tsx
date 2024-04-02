@@ -42,6 +42,7 @@ export function Frame({ data, onPress }: FrameProps) {
     if(third_shot === null) return '';
     if(third_shot === 0) return '-';
     if(third_shot === 10) return 'X';
+    if(Number(second_shot) + Number(third_shot) === 10) return '/';
     return third_shot;
   }
 

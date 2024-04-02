@@ -12,11 +12,11 @@ export function PinBoard2() {
 
 
   useEffect(() => {
-    setSelectedPins(currentFrame.pins2?.split("-").map(Number) || []);
+    setSelectedPins(currentFrame.pins2?.split("-").map(Number).filter(pin => pin !== 0) || []);
   }, [currentFrame.pins2]);
 
 
-  const allowPinSelection = currentFrame.second_shot !== null && currentFrame.second_shot !== 10;
+  const allowPinSelection = (currentFrame.first_shot === 10 && currentFrame.second_shot !== null);
 
   function handlePinPress(pin: number) {
     if (!allowPinSelection) {

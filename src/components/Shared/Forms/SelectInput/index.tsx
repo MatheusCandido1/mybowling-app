@@ -11,6 +11,7 @@ interface SelectInputProps {
   onChange?(value: string, item?: Item): void;
   value: string | null;
   placeholder?: string;
+  searchPlaceholder?: string;
 }
 
 interface Item {
@@ -18,7 +19,7 @@ interface Item {
   name: string;
 }
 
-export function SelectInput({ label, error, items, onChange, value, placeholder }: SelectInputProps) {
+export function SelectInput({ label, error, items, onChange, value, placeholder, searchPlaceholder }: SelectInputProps) {
 
   function handleSelect(value: { id: string; name: string; }) {
     onChange && onChange(value.id.toString(), value)
@@ -31,10 +32,12 @@ export function SelectInput({ label, error, items, onChange, value, placeholder 
       </Label>
       <SelectDropdown
           data={items}
+          search
+          searchPlaceHolder={searchPlaceholder}
           onSelect={(selectedItem, index) => {
             handleSelect(selectedItem)
           }}
-          defaultButtonText={value?.name ?? "Select an option"}
+          defaultButtonText={value?.name}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.name
           }}

@@ -94,6 +94,7 @@ export const formatFrameThirdShot = (currentFrame: IFrame) => {
     if(currentFrame.third_shot === null) return '';
     if(currentFrame.third_shot === 10) return 'X';
     if(currentFrame.third_shot === 0) return '-';
+    if(Number(currentFrame.second_shot) + Number(currentFrame.third_shot) === 10) return '/';
     return currentFrame.third_shot.toString();
   }
   return '';

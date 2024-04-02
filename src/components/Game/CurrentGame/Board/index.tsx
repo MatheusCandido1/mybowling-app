@@ -24,15 +24,17 @@ export function Board() {
     inputThirdShot.current?.blur();
   }
 
+  const currentPins = shouldShowPins2 ? currentFrame.pins2 : currentFrame.pins;
+
+
   const onFocusEmitter = (inputNumber: number) => {
     openNumPad(inputNumber);
     resetInputs();
   }
 
   function shouldBlockSecondInput() {
-    // Check if the frame is the last one
-    // To-Do: Check if the frame is the last one and the first shot is a strike
-    if(currentFrame.frame_number === 10) return false;
+    if(currentFrame.first_shot !== null) return false;
+    if(currentFrame.frame_number === 10) return true;
     if(currentFrame.first_shot === null) return true;
     if(currentFrame.first_shot === 10) return true;
     return false;
@@ -56,21 +58,21 @@ export function Board() {
         <Title>Frame {currentFrame.frame_number}</Title>
         <PinsBadge
           style={{
-            backgroundColor: isSplit(currentFrame.pins) ? '#0D9488' : '#FFF',
-            shadowColor: isSplit(currentFrame.pins) ? '#0D9488' : '#000',
-            shadowOffset: { width: 0, height: isSplit(currentFrame.pins) ? 4 : 0 },
-            shadowOpacity: isSplit(currentFrame.pins) ? 0.4 : 0,
-            shadowRadius: isSplit(currentFrame.pins) ? 4 : 0,
+            backgroundColor: isSplit(currentPins) ? '#0D9488' : '#FFF',
+            shadowColor: isSplit(currentPins) ? '#0D9488' : '#000',
+            shadowOffset: { width: 0, height: isSplit(currentPins) ? 4 : 0 },
+            shadowOpacity: isSplit(currentPins) ? 0.4 : 0,
+            shadowRadius: isSplit(currentPins) ? 4 : 0,
             borderWidth: 2,
-            borderColor: isSplit(currentFrame.pins) ? '#0D9488' : '#0D9488',
+            borderColor: isSplit(currentPins) ? '#0D9488' : '#0D9488',
           }}
         >
           <PinsBadgeText
             style={{
-              color: isSplit(currentFrame.pins) ? '#FFF' : '#0D9488',
+              color: isSplit(currentPins) ? '#FFF' : '#0D9488',
             }}
           >
-            {isSplit(currentFrame.pins) ? "Split" : "Pins"}: {currentFrame.pins}
+            {isSplit(currentPins) ? "Split" : "Pins"}: {currentPins}
           </PinsBadgeText>
         </PinsBadge>
       </TitleContainer>
@@ -93,22 +95,19 @@ export function Board() {
             opacity: shouldBlockSecondInput() ? 0.5 : 1
           }}
         />
-        {(currentFrame.frame_number === 10) && (currentFrame.first_shot === 10 || ((Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10))) ?
-          (
-            <ScoreInput
-              ref={inputThirdShot}
-              showSoftInputOnFocus={false}
-              onFocus={() => onFocusEmitter(3)}
-              selectionColor={'transparent'}
-              value={formatFrameThirdShot(currentFrame)}
-              editable={!shouldBlockThirdInput()}
-              style={{
-                opacity: shouldBlockThirdInput() ? 0.5 : 1
-              }}
-            />
-          )
-          :
-          null
+        {currentFrame.frame_number  === 10 ? (
+          <ScoreInput
+          ref={inputThirdShot}
+          showSoftInputOnFocus={false}
+          onFocus={() => onFocusEmitter(3)}
+          selectionColor={'transparent'}
+          value={formatFrameThirdShot(currentFrame)}
+          editable={!shouldBlockThirdInput()}
+          style={{
+            opacity: shouldBlockThirdInput() ? 0.5 : 1
+          }}
+          /> )
+          : null
         }
       </InputContainer>
         <View

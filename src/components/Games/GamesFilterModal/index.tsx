@@ -63,6 +63,7 @@ export function GamesFilterModal({ showModal }: GameFilterModalProps ) {
                   value={currentFilters.location}
                   onChange={handleLocationChange}
                   selectedValue={currentFilters.location}
+                  searchPlaceholder={"Type the name of the bowling alley"}
                 />
               </LocationContainer>
               <BallContainer>

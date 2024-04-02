@@ -12,14 +12,8 @@ export function PinBoard() {
 
 
   useEffect(() => {
-    const currentSplit = currentFrame.pins?.split("-").map(Number) || [];
-    // Remove 0 from selected pins
-    if (currentSplit.includes(0)) {
-      currentSplit.splice(currentSplit.indexOf(0), 1);
-    }
-    setSplitValue(currentSplit.join('-'));
+    setSelectedPins(currentFrame.pins?.split("-").map(Number).filter(pin => pin !== 0) || []);
   }, [currentFrame.pins]);
-
 
   const allowPinSelection = currentFrame.first_shot !== null && currentFrame.first_shot !== 10;
 
@@ -39,10 +33,6 @@ export function PinBoard() {
       setSelectedPins((prevSelectedPins) => {
         const updatedSelectedPins = prevSelectedPins.filter((selectedPin) => selectedPin !== pin);
         const currentSplit = updatedSelectedPins.sort((a, b) => a - b);
-        // Remove 0 from selected pins
-        if (currentSplit.includes(0)) {
-          currentSplit.splice(currentSplit.indexOf(0), 1);
-        }
         setSplitValue(currentSplit.join('-'));
 
         return updatedSelectedPins;
@@ -50,7 +40,7 @@ export function PinBoard() {
       return;
     }
 
-    if (selectedPins.length >= (10 - currentFrame.first_shot)) {
+    if (selectedPins.length >= (10 - Number(currentFrame.first_shot))) {
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -61,15 +51,12 @@ export function PinBoard() {
       return;
     }
 
+
     setSelectedPins((prevSelectedPins) => {
       const updatedSelectedPins = prevSelectedPins.includes(pin)
         ? prevSelectedPins.filter((selectedPin) => selectedPin !== pin)
         : [...prevSelectedPins, pin];
       const currentSplit = updatedSelectedPins.sort((a, b) => a - b);
-      // Remove 0 from selected pins
-      if (currentSplit.includes(0)) {
-        currentSplit.splice(currentSplit.indexOf(0), 1);
-      }
       setSplitValue(currentSplit.join('-'));
 
       return updatedSelectedPins;

@@ -75,21 +75,64 @@ export function NumPad() {
     currentInputNumber
   } = useGame();
 
-  const allowStrikeOnSecondShot = currentFrame.first_shot === 10 && currentFrame.frame_number === 10;
-  const allowStrikeOnThirdShot = ((Number(currentFrame.second_shot) + Number(currentFrame.first_shot) === 10) || (currentFrame.second_shot === 10))  && currentFrame.frame_number === 10;
-  const allowSpareOnThirdShot = currentFrame.frame_number === 10 && currentInputNumber === 3;
+
+  const isEditingInput1 = currentInputNumber === 1;
+  const isEditingInput2 = currentInputNumber === 2;
+  const isEditingInput3 = currentInputNumber === 3;
+
+  const allowSpareOnFirstShot = false;
+  const allowStrikeOnFirstShot = isEditingInput1 ? true : false;
+
+
+  const allowSpareOnSecondShot = () => {
+    if(isEditingInput2) {
+      if(currentFrame.frame_number === 10) {
+        return Number(currentFrame.first_shot) <= 9;
+      } else {
+        return currentFrame.first_shot !== 10;
+      }
+    }
+  }
+
+  const allowStrikeOnSecondShot = () => {
+    if(isEditingInput2) {
+      if(currentFrame.frame_number === 10) {
+        return currentFrame.first_shot === 10;
+      } else {
+        return currentFrame.first_shot === 10;
+      }
+    }
+  }
+
+
+  const allowSpareOnThirdShot = () => {
+    if(isEditingInput3) {
+      if(currentFrame.frame_number === 10) {
+        if(currentFrame.first_shot === 10) {
+          return Number(currentFrame.second_shot) <= 9;
+        }
+      }
+    }
+  }
+
+  const allowStrikeOnThirdShot = () => {
+    if(isEditingInput3) {
+      if(currentFrame.frame_number === 10) {
+        return (currentFrame.first_shot === 10 && currentFrame.second_shot === 10) || (Number(currentFrame.first_shot) + Number(currentFrame.second_shot) === 10);
+      }
+    }
+  }
 
 
   function handlePressNumber(value: string) {
     updateValueForCurrentFrame(value);
     closeNumPad();
   }
-  const isEditingInput1 = currentInputNumber === 1;
-  const isEditingInput2 = currentInputNumber === 2;
 
-  const allowSpare = (currentFrame.first_shot === null || isEditingInput1) || allowSpareOnThirdShot;
+  const allowSpare = allowSpareOnFirstShot || allowSpareOnSecondShot() || allowSpareOnThirdShot();
 
-  const allowStrike = (currentFrame.first_shot === null || isEditingInput1) || allowStrikeOnSecondShot || allowStrikeOnThirdShot;
+  const allowStrike = allowStrikeOnFirstShot || allowStrikeOnSecondShot() || allowStrikeOnThirdShot();
+
 
   const getMaxNumber = () => {
     if(isEditingInput1) {
@@ -101,6 +144,11 @@ export function NumPad() {
       } else {
         return (10 - (Number(currentFrame?.first_shot)+1));
       }
+    }
+
+    if(isEditingInput3) {
+      if(currentFrame.first_shot === 10 && currentFrame.second_shot === 10) return 10
+
     }
   }
 
@@ -157,9 +205,9 @@ export function NumPad() {
           icon={<MaterialCommunityIcons name="slash-forward" size={18} color="#FFF" />}
           onPress={() => handlePressNumber("Spare")}
           style={{
-            backgroundColor: !allowSpare ? '#0d9488' : '#E9E9E9',
-            borderColor: !allowSpare ? '#0d9488' : '#E9E9E9',
-            pointerEvents: !allowSpare ? 'auto' : 'none',
+            backgroundColor: allowSpare ? '#0d9488' : '#E9E9E9',
+            borderColor: allowSpare ? '#0d9488' : '#E9E9E9',
+            pointerEvents: allowSpare ? 'auto' : 'none',
           }}
         />
         <ActionButton

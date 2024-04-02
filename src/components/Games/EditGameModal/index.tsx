@@ -71,6 +71,7 @@ export function EditGameModal() {
                     onChange={onChange}
                     value={value}
                     error={errors.location_id?.message}
+                    searchPlaceholder={"Type the name of the bowling alley"}
                   />
                 )}
               />
@@ -87,6 +88,7 @@ export function EditGameModal() {
                       onChange={onChange}
                       value={value}
                       error={errors.group_id?.message}
+                      searchPlaceholder={"Type the name of the group"}
                     />
                   )}
                 />

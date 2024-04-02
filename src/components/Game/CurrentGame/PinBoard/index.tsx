@@ -12,7 +12,12 @@ export function PinBoard() {
 
 
   useEffect(() => {
-    setSelectedPins(currentFrame.pins?.split("-").map(Number) || []);
+    const currentSplit = currentFrame.pins?.split("-").map(Number) || [];
+    // Remove 0 from selected pins
+    if (currentSplit.includes(0)) {
+      currentSplit.splice(currentSplit.indexOf(0), 1);
+    }
+    setSplitValue(currentSplit.join('-'));
   }, [currentFrame.pins]);
 
 

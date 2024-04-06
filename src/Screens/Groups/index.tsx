@@ -18,6 +18,7 @@ import { InvitesModal } from '../../components/Groups/InvitesModal';
 import { InvitesButton } from '../../components/Groups/InvitesButton';
 import { useEffect } from 'react';
 import Toast from 'react-native-toast-message';
+import { BowlingLoader } from '../../components/Shared/BowlingLoader';
 
 
 
@@ -31,7 +32,8 @@ export function Groups({ showInvites}: { showInvites: boolean}) {
     showInviteModal,
     refreshGroups,
     handleShowInviteModal,
-    invites
+    invites,
+    isFetchingGroups
   } = useGroupsController();
 
   useEffect(() => {
@@ -76,6 +78,19 @@ export function Groups({ showInvites}: { showInvites: boolean}) {
             />
           </NewGroupButton>
         </HeaderContainer>
+        {isFetchingGroups ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <BowlingLoader />
+          </View>
+        ) : null}
+
+        {groups.length === 0 && !isFetchingGroups && <EmptyGroups />}
         <GroupsList>
         <FlatList
           data={groups}
@@ -84,9 +99,6 @@ export function Groups({ showInvites}: { showInvites: boolean}) {
           onRefresh={refreshGroups}
           refreshing={false}
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-          ListEmptyComponent={() =>
-          <EmptyGroups />
-          }
           renderItem={({ item }) => (
             <GroupCard
               name={item.name}

@@ -52,11 +52,9 @@ export function Members() {
           <View style={{width: '20%', alignItems:'center'}}>
             <HeaderLabel>Role</HeaderLabel>
           </View>
-          {isLoggedUserAdmin ? (
             <View style={{width: '20%', alignItems:'flex-end'}}>
             <HeaderLabel>Actions</HeaderLabel>
             </View>
-          ): null}
         </Header>
         <FlatList
             data={members}

@@ -56,6 +56,7 @@ import { AverageModal } from "../../components/Dashboard/AverageModal/AverageMod
 import { EmptyRecentGames } from "../../components/Dashboard/EmptyRecentGames";
 import { SplitModal } from "../../components/Dashboard/SplitModal";
 import { SplitCard } from "../../components/Dashboard/SplitCard";
+import { NewVersionAvailablePopup } from "../../components/Dashboard/NewVersionAvailablePopup";
 
 
 export function Dashboard() {
@@ -67,7 +68,9 @@ export function Dashboard() {
     stats,
     isLoading,
     handleShowAverageModal,
-    handleShowSplitModal
+    handleShowSplitModal,
+    hasUpdate,
+    isCheckingVersion,
    } = useDashboardController();
 
   const { loggedUser } = useAuth();
@@ -298,6 +301,7 @@ export function Dashboard() {
   }
   return (
     <Container>
+      {(hasUpdate && !isCheckingVersion) ? (<NewVersionAvailablePopup />): null}
       {isLoading ? ( <OverlayLoading /> ) : (
         <>
           <Header />

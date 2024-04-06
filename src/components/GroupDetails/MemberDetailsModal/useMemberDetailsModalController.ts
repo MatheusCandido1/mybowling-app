@@ -77,7 +77,8 @@ export function useMemberDetailsModalController() {
   }
 
   function allowRemove() {
-    return isCurrentUserAdmin() ? loggedUser?.id !== selectedMember?.id : loggedUser?.id === selectedMember?.id;
+    // return isCurrentUserAdmin() ? loggedUser?.id !== selectedMember?.id : loggedUser?.id === selectedMember?.id;
+    return false
   }
 
   return {

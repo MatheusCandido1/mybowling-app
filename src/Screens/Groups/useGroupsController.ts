@@ -12,7 +12,6 @@ export function useGroupsController() {
 
   const navigation = useNavigation();
 
-
   const queryClient = useQueryClient();
 
   const {

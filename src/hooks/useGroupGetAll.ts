@@ -19,12 +19,8 @@ export function useGroupGetAll() {
     return data.filter(group => group.is_active === 1)
   }, [data]);
 
-  const defaultGroup = {
-    id: '',
-    name: 'Select an option.',
-  }
 
-  return { groups: [defaultGroup, ...groups] ?? [], isFetching, invites}
+  return { groups: groups ?? [], isFetching, invites}
 }
 
 

@@ -76,7 +76,6 @@ export function Groups({ showInvites}: { showInvites: boolean}) {
             />
           </NewGroupButton>
         </HeaderContainer>
-        {}
         <GroupsList>
         <FlatList
           data={groups}

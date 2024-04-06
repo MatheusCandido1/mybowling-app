@@ -32,8 +32,6 @@ export function SelectInput({ label, error, items, onChange, value, placeholder,
       </Label>
       <SelectDropdown
           data={items}
-          search
-          searchPlaceHolder={searchPlaceholder}
           onSelect={(selectedItem, index) => {
             handleSelect(selectedItem)
           }}

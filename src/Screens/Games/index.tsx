@@ -4,7 +4,6 @@ import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { ActivityIndicator, Dimensions, Text, View } from "react-native";
 import { GameCard } from "../../components/Games/GameCard";
 import { useGamesController } from "./useGamesController";
-import { OverlayLoading } from "../../components/Shared/OverlayLoading";
 import { GameDetailsModal } from "../../components/Games/GameDetailsModal";
 import { GamesFilterModal } from "../../components/Games/GamesFilterModal";
 import { formatFromDate } from "../../utils/formatDate";
@@ -14,6 +13,7 @@ import { EmptyGames } from "../../components/Games/EmptyGames";
 import { formatBallName } from "../../utils/formatBallName";
 import { RefreshControl, FlatList } from "react-native-gesture-handler";
 import { EditGameModal } from "../../components/Games/EditGameModal";
+import { BowlingLoader } from "../../components/Shared/BowlingLoader";
 
 export function Games() {
   const navigation = useNavigation();
@@ -103,7 +103,20 @@ export function Games() {
 
               </FilterContainer>
             </SearchContainer>
-            {games.length === 0 && <EmptyGames />}
+            {isLoading ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+              <BowlingLoader />
+              </View>
+            ) : null}
+            {games.length === 0 && !isLoading && <EmptyGames />}
+
+
             <GamesContainer>
               <FlatList
                 data={games}

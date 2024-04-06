@@ -172,6 +172,7 @@ export function GameModal() {
                   value={value}
                   error={errors.group_id?.message}
                   searchPlaceholder={"Type the name of the group"}
+                  showReset
                 />
               )}
             />

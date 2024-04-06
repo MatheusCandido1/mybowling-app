@@ -2,10 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { GamesService } from "../../../../services/gamesService";
 import Toast from "react-native-toast-message";
+import { useNavigation } from "@react-navigation/native";
 
 export function onGoingGameCardController() {
   const swipeableRef = useRef(null);
 
+  const navigation = useNavigation();
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -37,6 +39,9 @@ export function onGoingGameCardController() {
         autoHide: true,
       });
 
+      // Navigate to the games list
+      navigation.navigate('Games');
+
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -56,5 +61,6 @@ export function onGoingGameCardController() {
     handleHideConfirmDelete,
     swipeableRef,
     handleDeleteGame,
+    isDeletingGame
   }
 }

@@ -4,11 +4,27 @@ export const Container = styled.View`
   width: 100%;
 `;
 
+export const LabelContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const Label = styled.Text`
   font-size: 16px;
   color: #0d9488;
   font-weight: bold;
   margin-left: 2px;
+`;
+
+export const Link = styled.TouchableOpacity`
+
+`;
+
+export const LinkText = styled.Text`
+  color: #0d9488;
+  font-weight: bold;
+  text-decoration: underline;
 `;
 
 export const Input = styled.TextInput`

@@ -33,6 +33,7 @@ export function OnGoingGameCard({ game, onPress }: OnGoingGameCardProps) {
     handleHideConfirmDelete,
     swipeableRef,
     handleDeleteGame,
+    isDeletingGame
   } = onGoingGameCardController();
 
   const { id, ball, location, game_date, total_score } = game;
@@ -65,6 +66,7 @@ export function OnGoingGameCard({ game, onPress }: OnGoingGameCardProps) {
       text="Are you sure you want to delete this game?"
       handleConfirm={() => handleDeleteGame(id)}
       handleCloseConfirmPopup={handleHideConfirmDelete}
+      loading={isDeletingGame}
     />
     <Swipeable
     ref={swipeableRef}

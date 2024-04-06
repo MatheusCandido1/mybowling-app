@@ -1,8 +1,8 @@
 import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
-import { Container, Label } from "./styles";
+import { Container, Label, LabelContainer, Link, LinkText } from "./styles";
 import SelectDropdown from 'react-native-select-dropdown'
 import { Entypo } from "@expo/vector-icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface SelectInputProps {
   label: string;
@@ -12,6 +12,7 @@ interface SelectInputProps {
   value: string | null;
   placeholder?: string;
   searchPlaceholder?: string;
+  showReset?: boolean;
 }
 
 interface Item {
@@ -19,18 +20,34 @@ interface Item {
   name: string;
 }
 
-export function SelectInput({ label, error, items, onChange, value, placeholder, searchPlaceholder }: SelectInputProps) {
+export function SelectInput({ label, error, items, onChange, value, showReset }: SelectInputProps) {
+
+  const selectRef = useRef(null)
 
   function handleSelect(value: { id: string; name: string; }) {
     onChange && onChange(value.id.toString(), value)
   }
 
+  function handleReset() {
+    selectRef.current.reset()
+  }
+
+
   return (
     <Container>
-      <Label>
-        {label}
-      </Label>
+      <LabelContainer>
+        <Label>
+          {label}
+        </Label>
+        {(showReset) && (
+        <Link onPress={handleReset}>
+          <LinkText style={{textDecorationColor: '#0d9488'}}> Reset </LinkText>
+        </Link>
+        )}
+
+      </LabelContainer>
       <SelectDropdown
+          ref={selectRef}
           data={items}
           onSelect={(selectedItem, index) => {
             handleSelect(selectedItem)

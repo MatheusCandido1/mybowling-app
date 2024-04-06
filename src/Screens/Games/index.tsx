@@ -116,44 +116,44 @@ export function Games() {
             ) : null}
             {games.length === 0 && !isLoading && <EmptyGames />}
 
+            {!isLoading && games.length > 0 && (
+               <GamesContainer>
+               <FlatList
+                 data={games}
+                 onScroll={({nativeEvent}) => {
+                   if (isCloseToBottom(nativeEvent)) {
+                     if(!isFetchingNextPage && hasNextPage) {
+                       onReachEnd();
+                     }
+                   }
+                 }}
+                 scrollEventThrottle={1000}
+                 keyExtractor={(item: any) => item.id}
+                 showsVerticalScrollIndicator={false}
+                 ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                 onEndReachedThreshold={0}
+                 ListFooterComponent={() => fetchingNextPage() }
+                 refreshControl={
+                   <RefreshControl
+                     refreshing={isLoading}
+                     onRefresh={refetchGames}
+                   />
+                 }
+                 renderItem={({ item }) => (
+                 <GameCard
+                   id={item.id}
+                   location={item.location}
+                   date={item.game_date}
+                   totalScore={item.total_score}
+                   frames={item.frames}
+                   onShowDetails={() => handleShowDetailsModal(item)}
 
-            <GamesContainer>
-              <FlatList
-                data={games}
-                onScroll={({nativeEvent}) => {
-                  if (isCloseToBottom(nativeEvent)) {
-                    if(!isFetchingNextPage && hasNextPage) {
-                      onReachEnd();
-                    }
-                  }
-                }}
-                scrollEventThrottle={1000}
-                keyExtractor={(item: any) => item.id}
-                showsVerticalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-                onEndReachedThreshold={0}
-                ListFooterComponent={() => fetchingNextPage() }
-                refreshControl={
-                  <RefreshControl
-                    refreshing={isLoading}
-                    onRefresh={refetchGames}
-                  />
-                }
-                renderItem={({ item }) => (
-                <GameCard
-                  id={item.id}
-                  location={item.location}
-                  date={item.game_date}
-                  totalScore={item.total_score}
-                  frames={item.frames}
-                  onShowDetails={() => handleShowDetailsModal(item)}
-
-                />
-                )}
-              >
-              </FlatList>
-            </GamesContainer>
-
+                 />
+                 )}
+               >
+               </FlatList>
+             </GamesContainer>
+            )}
         </Content>
         </>
 

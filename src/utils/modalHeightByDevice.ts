@@ -2,7 +2,8 @@ import {
   isDeviceSmall,
   isDeviceMedium,
   isDeviceSmallMedium,
-  isDeviceBig
+  isDeviceBig,
+  height
  } from "./deviceDimensions"
 import { isAndroid } from "./getOS"
 import { isIpad } from "./getDevice"
@@ -41,7 +42,6 @@ export const EditGameModalHeight = () => {
 
 export const GamesFilterModalHeight = () => {
   if(isIpad()) return { px: '930px' }
-  if(isAndroid) return { px: '120px'};
   if(isDeviceSmall) return { px: '250px' }
   if(isDeviceSmallMedium) return { px: '315px' }
   if(isDeviceMedium) return { px: '390px' }

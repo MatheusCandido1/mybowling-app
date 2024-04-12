@@ -5,7 +5,7 @@ const Container = styled.View`
   height: 44px;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 22px;
 `;
 
 const Text = styled.Text`

@@ -42,7 +42,7 @@ export const MembersContainer = styled.View`
 export const MemberNumberContainer = styled.View`
   height: 30px;
   width: 30px;
-  border-radius: 50%;
+  border-radius: 15px;
   background-color: #0D9488;
   justify-content: center;
   align-items: center;

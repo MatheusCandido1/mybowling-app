@@ -32,6 +32,7 @@ export function SelectInput({ label, error, items, onChange, value, showReset, d
 
   function handleReset() {
     selectRef.current.reset()
+    onChange && onChange('', null)
   }
 
 
@@ -55,7 +56,7 @@ export function SelectInput({ label, error, items, onChange, value, showReset, d
           onSelect={(selectedItem, index) => {
             handleSelect(selectedItem)
           }}
-          defaultButtonText={initialLabel ? initialLabel : value?.name}
+          defaultButtonText={initialLabel ? initialLabel : ((value?.name) ? value?.name : value)}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.name
           }}

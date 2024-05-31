@@ -80,7 +80,8 @@ export function Dashboard() {
     first_name: loggedUser?.name.split(' ')[0],
   }
 
-  const showAdditionalInformationModal = loggedUser?.profile.city === null || loggedUser?.profile.state === null;
+  const showAdditionalInformationModal = (loggedUser!.profile.state === undefined) || (loggedUser!.profile.state === '') || (loggedUser!.profile.state === null);
+
 
   const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;

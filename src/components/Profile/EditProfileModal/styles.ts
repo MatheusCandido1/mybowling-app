@@ -49,8 +49,7 @@ export const AvatarContainer = styled.View`
 
 export const ButtonContainer = styled.View`
   width: 100%;
-  margin-top: 20px;
-
+  margin-top: 12px;
 `;
 
 export const AvatarButton = styled.TouchableOpacity`

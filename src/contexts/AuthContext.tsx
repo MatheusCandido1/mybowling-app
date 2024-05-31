@@ -48,7 +48,6 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
   const fetchLoggedUser = async (user: any) => {
     try {
       const user = await AsyncStorage.getItem('loggedUser');
-      console.log(user)
       setLoggedUser(user ? JSON.parse(user) : null);
     } catch (error) {
       console.error('Error fetching logged user:', error);

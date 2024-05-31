@@ -9,6 +9,7 @@ import { useEditProfileModalController } from "./useEditProfileModalController";
 import { OverlayLoading } from "../../Shared/OverlayLoading";
 import { Controller } from 'react-hook-form';
 import { useProfile } from "../../../hooks/useProfile";
+import { SelectInput } from "../../Shared/Forms/SelectInput";
 
 
 export function EditProfileModal() {
@@ -26,7 +27,9 @@ export function EditProfileModal() {
     errors,
     isLoadingUserUpdate,
     showUpdateProfileModal,
-    handleCloseUpdateProfileModal
+    handleCloseUpdateProfileModal,
+    states,
+    cities,
   } = useEditProfileModalController();
 
   return (
@@ -81,6 +84,36 @@ export function EditProfileModal() {
                />
              )}
            />
+           <Controller
+             control={control}
+             name="state"
+             defaultValue=""
+             render={({ field: { onChange, value }}) => (
+               <SelectInput
+                 label="State"
+                 items={states}
+                 onChange={onChange}
+                 value={value}
+                 error={errors.state?.message}
+               />
+             )}
+           />
+
+          <Controller
+             control={control}
+             name="city"
+             defaultValue=""
+             render={({ field: { onChange, value }}) => (
+               <SelectInput
+                 label="City"
+                 items={cities}
+                 onChange={onChange}
+                 value={value}
+                 error={errors.city?.message}
+               />
+             )}
+           />
+
             <ButtonContainer>
               <MainButton
                 label="Save"

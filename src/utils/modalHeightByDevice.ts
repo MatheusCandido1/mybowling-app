@@ -76,7 +76,7 @@ export const EditProfileModalHeight = () => {
   if(isIpad()) return { px: '895px' }
   if(isDeviceSmall) return { px: '215px' }
   if(isDeviceSmallMedium) return { px: '280px' }
-  if(isDeviceMedium) return { px: '375px' }
+  if(isDeviceMedium) return { px: '210px' }
   if(isDeviceBig) return { px: '445px' }
 }
 

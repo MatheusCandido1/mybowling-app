@@ -13,6 +13,8 @@ import { useProfile } from '../../../hooks/useProfile';
 const schema = z.object({
   name: z.string(),
   email: z.string().email(),
+  city: z.string(),
+  state: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;

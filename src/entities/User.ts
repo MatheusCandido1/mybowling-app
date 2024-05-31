@@ -7,6 +7,8 @@ export interface IUser {
   notifications_not_read: number;
   profile: {
     first_access: boolean;
+    city: string;
+    state: string;
   },
   access_token: string;
 }

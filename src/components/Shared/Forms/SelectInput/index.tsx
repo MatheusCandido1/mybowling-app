@@ -13,6 +13,8 @@ interface SelectInputProps {
   placeholder?: string;
   searchPlaceholder?: string;
   showReset?: boolean;
+  disabled?: boolean;
+  initialLabel?: string;
 }
 
 interface Item {
@@ -20,7 +22,7 @@ interface Item {
   name: string;
 }
 
-export function SelectInput({ label, error, items, onChange, value, showReset }: SelectInputProps) {
+export function SelectInput({ label, error, items, onChange, value, showReset, disabled, initialLabel }: SelectInputProps) {
 
   const selectRef = useRef(null)
 
@@ -48,11 +50,12 @@ export function SelectInput({ label, error, items, onChange, value, showReset }:
       </LabelContainer>
       <SelectDropdown
           ref={selectRef}
+          disabled={disabled}
           data={items}
           onSelect={(selectedItem, index) => {
             handleSelect(selectedItem)
           }}
-          defaultButtonText={value?.name}
+          defaultButtonText={initialLabel ? initialLabel : value?.name}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.name
           }}
@@ -67,6 +70,7 @@ export function SelectInput({ label, error, items, onChange, value, showReset }:
             height: 40,
             borderRadius: 8,
             marginTop: 8,
+            backgroundColor: disabled ? '#bfbfc0' : '#efeff0',
           }}
           buttonTextStyle={{
             textAlign: 'left',

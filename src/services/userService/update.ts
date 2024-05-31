@@ -3,6 +3,8 @@ import { httpClient } from "../HttpClient";
 export interface UpdateUserParams {
   name: string;
   email: string;
+  city: string;
+  state: string;
 }
 
 export async function update(data: UpdateUserParams) {

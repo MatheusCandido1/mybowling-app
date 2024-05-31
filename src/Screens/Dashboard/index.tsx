@@ -57,6 +57,7 @@ import { EmptyRecentGames } from "../../components/Dashboard/EmptyRecentGames";
 import { SplitModal } from "../../components/Dashboard/SplitModal";
 import { SplitCard } from "../../components/Dashboard/SplitCard";
 import { NewVersionAvailablePopup } from "../../components/Dashboard/NewVersionAvailablePopup";
+import { AdditionalInformationModal } from "../../components/Dashboard/AdditionalInformationModal";
 
 
 export function Dashboard() {
@@ -78,6 +79,8 @@ export function Dashboard() {
   const user = {
     first_name: loggedUser?.name.split(' ')[0],
   }
+
+  const showAdditionalInformationModal = loggedUser?.profile.city === null || loggedUser?.profile.state === null;
 
   const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;
@@ -432,6 +435,8 @@ export function Dashboard() {
       )}
       <AverageModal />
       <SplitModal />
+      {showAdditionalInformationModal && <AdditionalInformationModal />}
+
     </Container>
   );
 }

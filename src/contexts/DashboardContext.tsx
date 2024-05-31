@@ -10,6 +10,9 @@ interface DashboardContextData {
   showNewVersionPopup: boolean;
   handleCloseNewVersionPopup(): void;
   handleShowNewVersionPopup(): void;
+  showAdditionalInformationModal: boolean;
+  handleShowAdditionalInformationModal(): void;
+  handleCloseAdditionalInformationModal(): void;
 }
 
 export const DashboardContext = createContext({} as DashboardContextData);
@@ -18,6 +21,15 @@ export function DashboardProvider({children}: {children: React.ReactNode}) {
   const [showAverageModal, setShowAverageModal] = useState(false);
   const [showSplitModal, setShowSplitModal] = useState(false);
   const [showNewVersionPopup, setShowNewVersionPopup] = useState(false);
+  const [showAdditionalInformationModal, setShowAdditionalInformationModal] = useState(false);
+
+  function handleShowAdditionalInformationModal() {
+    setShowAdditionalInformationModal(true);
+  }
+
+  function handleCloseAdditionalInformationModal() {
+    setShowAdditionalInformationModal(false);
+  }
 
   function handleCloseNewVersionPopup() {
     setShowNewVersionPopup(false);
@@ -53,7 +65,10 @@ export function DashboardProvider({children}: {children: React.ReactNode}) {
       handleCloseSplitModal,
       showNewVersionPopup,
       handleCloseNewVersionPopup,
-      handleShowNewVersionPopup
+      handleShowNewVersionPopup,
+      showAdditionalInformationModal,
+      handleShowAdditionalInformationModal,
+      handleCloseAdditionalInformationModal
     }}>
       {children}
     </DashboardContext.Provider>

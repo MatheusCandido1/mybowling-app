@@ -17,6 +17,9 @@ import { BagIcon } from '../../components/Icons/BagIcon';
 import { ProfileIcon } from '../../components/Icons/ProfileIcon';
 import { isIpad } from '../../utils/getDevice';
 import { isAndroid } from '../../utils/getOS';
+import { RankingWrapper } from '../../Wrappers/RankingWrapper';
+import { FontAwesome6 } from "@expo/vector-icons";
+import { RankingIcon } from '../../components/Icons/RankingIcon';
 
 
 export function MainTabs() {
@@ -110,6 +113,30 @@ export function MainTabs() {
           }}
         />
         <Tab.Screen
+          name="Ranking"
+          component={RankingWrapper}
+          options={{
+            title: 'Games',
+            tabBarIcon: ({ focused }) => (
+              <View
+                style={{
+                  marginTop: setDefaultMarginTop,
+                  backgroundColor: !focused ? '#0d9488' : '#FFF',
+                  padding: focused ? 10 : 0,
+                  borderRadius:focused ? 8 : 0,
+                }}
+              >
+
+                <RankingIcon
+                  height={isIpad() ? 44:32}
+                  width={isIpad() ? 44:32}
+                  color={!focused ? "#FFF":"#0d9488"}
+                />
+              </View>
+            )
+          }}
+        />
+        <Tab.Screen
           name="Arsenal"
           component={ArsenalWrapper}
           options={{
@@ -132,6 +159,7 @@ export function MainTabs() {
             )
           }}
         />
+
         <Tab.Screen
           name="Profile"
           component={ProfileWrapper}

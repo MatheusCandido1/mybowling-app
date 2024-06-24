@@ -1,33 +1,34 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 interface RankingContextData {
-  rankingType: string;
-  handleSetRankingType(type: string): void;
-  rankingPeriod: string;
-  handleSetRakingPeriod(period: string): void;
+  showGameDetails: boolean;
+  handleShowGameDetails(game: any): void;
+  handleHideGameDetails(): void;
+  selectedGame: any;
 }
 
 export const RankingContext = createContext({} as RankingContextData);
 
 export function RankingProvider({children}: {children: React.ReactNode}) {
+  const [showGameDetails, setShowGameDetails] = useState(false);
+  const [selectedGame, setSelectedGame] = useState(null);
 
-  const [rankingType, setRankingType] = useState('Score');
-  const [rankingPeriod, setRankingPeriod] = useState('Week');
-
-  function handleSetRankingType(type: string) {
-    setRankingType(type);
+  function handleShowGameDetails(game: any) {
+    setSelectedGame(game);
+    setShowGameDetails(true);
   }
 
-  function handleSetRakingPeriod(period: string) {
-    setRankingPeriod(period);
+  function handleHideGameDetails() {
+    setSelectedGame(null);
+    setShowGameDetails(false);
   }
 
   return (
     <RankingContext.Provider value={{
-      rankingType,
-      handleSetRankingType,
-      rankingPeriod,
-      handleSetRakingPeriod
+      showGameDetails,
+      handleShowGameDetails,
+      handleHideGameDetails,
+      selectedGame
     }}>
       {children}
     </RankingContext.Provider>

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.Pressable`
+export const Container = styled.TouchableOpacity`
   width: 100%;
   height: 52px;
   background-color: #FFF;

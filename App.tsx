@@ -3,6 +3,7 @@ import 'react-native-gesture-handler';
 import Toast, { BaseToast } from 'react-native-toast-message';
 import { AuthProvider } from "./src/contexts/AuthContext";
 import { AppWrapper } from "./src/Wrappers/AppWrapper";
+import { ClickOutsideProvider } from 'react-native-click-outside';
 
 const toastConfig = {
   success: (props: any) => (
@@ -82,6 +83,7 @@ const queryClient = new QueryClient({
 export default function App() {
 
   return (
+    <ClickOutsideProvider>
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <AppWrapper />
@@ -91,6 +93,7 @@ export default function App() {
           config={toastConfig}
         />
     </QueryClientProvider>
+    </ClickOutsideProvider>
   );
 }
 

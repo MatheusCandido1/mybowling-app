@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const FirstPlaceContainer = styled.View`
+export const FirstPlaceContainer = styled.TouchableOpacity`
   background-color: #FFF;
   border-width: 4px;
   align-items: center;
@@ -15,10 +15,21 @@ export const FirstPlaceImage = styled.Image`
 
 
 export const FirstPlaceName = styled.Text`
-  font-size: 24px;
-  color: #000;
+  font-size: 10px;
+  color: #FFF;
+  font-weight: bold;
 `;
 
+export const FirstPlaceNameHolder = styled.View`
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 16px;
+`;
+
+export const PlaceSection = styled.View`
+  align-items: center;
+  justify-content: center;
+`;
 
 export const FirstPlacePosition = styled.View`
   position: absolute;

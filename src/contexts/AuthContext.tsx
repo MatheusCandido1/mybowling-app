@@ -10,6 +10,9 @@ interface AuthContextData {
   loggedUser: IUser | null;
   fetchLoggedUser(user: any): void;
   updateLoggedUser(user: any): void;
+  showDropdown: boolean;
+  openDropdown(): void;
+  closeDropdown(): void;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -17,6 +20,15 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({children}: {children: React.ReactNode}) {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loggedUser, setLoggedUser] = useState<IUser | null>(null);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+
+  function openDropdown() {
+    setShowDropdown(true);
+  }
+
+  function closeDropdown() {
+    setShowDropdown(false);
+  }
 
   const { me } = useMe();
 
@@ -78,7 +90,10 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       logout,
       loggedUser,
       fetchLoggedUser,
-      updateLoggedUser
+      updateLoggedUser,
+      showDropdown,
+      openDropdown,
+      closeDropdown
     }}>
       {children}
     </AuthContext.Provider>

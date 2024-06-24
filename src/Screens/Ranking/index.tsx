@@ -3,19 +3,22 @@ import { Header } from "../../components/Shared/Header";
 import { Container, Content, Option, OptionText, OptionsContainer, PodiumContainer, RankedUsers } from "./styles";
 import { useRankingController } from "./useRankingController";
 import { Place } from "../../components/Ranking/Place";
-import { RankingSwitch } from "../../components/Ranking/RankingSwitch";
 import { RankedUser } from "../../components/Ranking/RankedUser";
-import { FlatList, View } from "react-native";
+import { FlatList, View, Text } from "react-native";
+import { BowlingLoader } from "../../components/Shared/BowlingLoader";
+import { RankedGameDetailsModal } from "../../components/Ranking/RankedGameDetailsModal";
 
 export function Ranking() {
 
   const navigation = useNavigation();
 
   const {
-    handleSetRakingPeriod,
     getOptionStyle,
     rankings,
-    isFetching
+    isLoading,
+    showGameDetails,
+    handleShowGameDetails,
+    handleRankingPeriod,
   } = useRankingController();
 
   const options = ['Week', 'Month'];
@@ -25,7 +28,7 @@ export function Ranking() {
       return (
         <Option
           key={option}
-          onPress={() => handleSetRakingPeriod(option)}
+          onPress={() => handleRankingPeriod(option)}
           style={{
             backgroundColor: getOptionStyle(option).backgroundColor,
           }}
@@ -47,25 +50,42 @@ export function Ranking() {
           <OptionsContainer>
             {optionComponents()}
           </OptionsContainer>
-          {!isFetching && (
+          {isLoading ? (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <BowlingLoader />
+            </View>
+          ): (
             <>
+             {rankings.length >= 3 ? (
               <PodiumContainer>
-                <Place
-                  position={2}
-                  avatar={rankings[1].avatar}
-                  score={rankings[1].total_score}
-                />
-                <Place
-                  position={1}
-                  avatar={rankings[0].avatar}
-                  score={rankings[0].total_score}
-                />
-                <Place
-                  position={3}
-                  avatar={rankings[2].avatar}
-                  score={rankings[2].total_score}
-                />
+              <Place
+                name={rankings[1].name}
+                position={2}
+                avatar={rankings[1].avatar}
+                score={rankings[1].total_score}
+                onPress={() => handleShowGameDetails(rankings[1])}
+
+              />
+              <Place
+                name={rankings[0].name}
+                position={1}
+                avatar={rankings[0].avatar}
+                score={rankings[0].total_score}
+                onPress={() => handleShowGameDetails(rankings[0])}
+              />
+              <Place
+                name={rankings[2].name}
+                position={3}
+                avatar={rankings[2].avatar}
+                score={rankings[2].total_score}
+                onPress={() => handleShowGameDetails(rankings[2])}
+              />
               </PodiumContainer>
+              ): (
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                  <Text>{rankingPeriod}ly ranking not available.</Text>
+                </View>
+              )}
               <RankedUsers>
                 <FlatList
                   data={rankings.slice(3, rankings.length)}
@@ -78,6 +98,7 @@ export function Ranking() {
                       avatar={item.avatar}
                       name={item.name}
                       score={item.total_score}
+                      onPress={() => handleShowGameDetails(item)}
                     />
                   )}
                 />
@@ -85,7 +106,7 @@ export function Ranking() {
             </>
           )}
         </Content>
-        <RankingSwitch />
+        {showGameDetails ? <RankedGameDetailsModal /> : null}
 
     </Container>
   )

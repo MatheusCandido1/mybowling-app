@@ -5,7 +5,7 @@ import { useDashboardVersion } from "../../hooks/useDashboardVersion";
 import { appVersion } from "../../utils/getAppInfo";
 
 export function useDashboardController() {
-  const { handleShowAverageModal, handleShowSplitModal } = useDashboard();
+  const { handleShowAverageModal, handleShowSplitModal, handleShowAdditionalInformationModal } = useDashboard();
   const { stats, isFetching } = useDashboardGetAll();
   const { apiVersion, isCheckingVersion } = useDashboardVersion();
 
@@ -19,6 +19,7 @@ export function useDashboardController() {
     handleShowSplitModal,
     hasUpdate,
     isCheckingVersion,
-    apiVersion
+    apiVersion,
+    handleShowAdditionalInformationModal
   }
 }

@@ -1,20 +1,23 @@
 import { IUser } from "../../../entities/User";
 import { Avatar } from "../../Shared/Avatar";
-import { FirstPlaceContainer, FirstPlacePosition, FirstPlacePositionText } from "./styles";
+import { FirstPlaceContainer, FirstPlaceName, FirstPlaceNameHolder, FirstPlacePosition, FirstPlacePositionText, PlaceSection } from "./styles";
 
 interface PlaceProps {
   position: number;
   avatar: string;
   score: number;
+  name: string;
+  onPress?(): void;
 }
 
-export function Place({ position, avatar, score }: PlaceProps) {
+export function Place({ position, avatar, score, name, onPress }: PlaceProps) {
+
 
   function getStyle() {
     switch (position) {
       case 1:
         return {
-          color: '#FFD700',
+          color: '#ebc600',
           imageSize: 114,
           size: 120,
         }
@@ -42,14 +45,16 @@ export function Place({ position, avatar, score }: PlaceProps) {
 
 
   return (
-    <FirstPlaceContainer
-      style={{
-        borderColor: getStyle().color,
-        width: getStyle().size,
-        height: getStyle().size,
-        borderRadius: getStyle().size / 2,
-      }}
-    >
+    <PlaceSection>
+      <FirstPlaceContainer
+        onPress={onPress}
+        style={{
+          borderColor: getStyle().color,
+          width: getStyle().size,
+          height: getStyle().size,
+          borderRadius: getStyle().size / 2,
+        }}
+      >
       <Avatar
         imageUri={avatar}
         size={getStyle().imageSize}
@@ -61,6 +66,15 @@ export function Place({ position, avatar, score }: PlaceProps) {
       >
         <FirstPlacePositionText>{score}</FirstPlacePositionText>
       </FirstPlacePosition>
-    </FirstPlaceContainer>
+
+      </FirstPlaceContainer>
+      <FirstPlaceNameHolder
+        style={{
+          backgroundColor: getStyle().color,
+        }}
+      >
+        <FirstPlaceName>{name}</FirstPlaceName>
+      </FirstPlaceNameHolder>
+    </PlaceSection>
   )
 }

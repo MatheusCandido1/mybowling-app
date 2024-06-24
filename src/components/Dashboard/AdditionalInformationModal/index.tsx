@@ -1,9 +1,10 @@
-import { Modal } from "react-native";
 import { Container, Content, Header, Overlay, Title, InputContainer, InformationContainer, InformationText } from "./styles";
 import { useAdditionalInformationModalController } from "./useAdditionalInformationModalController";
 import { Controller } from "react-hook-form";
 import { SelectInput } from "../../Shared/Forms/SelectInput";
 import { MainButton } from "../../Shared/Buttons/MainButton";
+import { Modal, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export function AdditionalInformationModal() {
 
@@ -13,12 +14,15 @@ export function AdditionalInformationModal() {
     states,
     cities,
     handleSubmit,
-    onSubmit
+    onSubmit,
+    isLoadingUserUpdate,
+    handleCloseAdditionalInformationModal,
+    showAdditionalInformationModal
   } = useAdditionalInformationModalController();
 
   return (
     <Modal
-      visible={true}
+      visible={showAdditionalInformationModal}
       animationType="fade"
       transparent
     >
@@ -26,6 +30,9 @@ export function AdditionalInformationModal() {
         <Container>
         <Header>
           <Title>Update Profile</Title>
+          <TouchableOpacity onPress={handleCloseAdditionalInformationModal}>
+            <MaterialCommunityIcons name="close" size={32} color="#000" />
+          </TouchableOpacity>
         </Header>
           <Content>
           <InformationContainer>
@@ -73,6 +80,7 @@ export function AdditionalInformationModal() {
                 marginTop: 12
               }}
               onPress={handleSubmit(onSubmit)}
+              isLoading={isLoadingUserUpdate}
               label="Save"
             />
           </Content>

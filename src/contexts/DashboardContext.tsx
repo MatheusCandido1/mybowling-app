@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 interface DashboardContextData {
   showAverageModal: boolean;
@@ -18,6 +19,9 @@ interface DashboardContextData {
 export const DashboardContext = createContext({} as DashboardContextData);
 
 export function DashboardProvider({children}: {children: React.ReactNode}) {
+
+  const { loggedUser } = useAuth();
+
   const [showAverageModal, setShowAverageModal] = useState(false);
   const [showSplitModal, setShowSplitModal] = useState(false);
   const [showNewVersionPopup, setShowNewVersionPopup] = useState(false);

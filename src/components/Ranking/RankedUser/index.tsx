@@ -7,11 +7,12 @@ interface RankedUserProps {
   name?: string;
   avatar?: string;
   score?: number;
+  onPress?(): void;
 }
 
-export function RankedUser({ rank, name, avatar, score}: RankedUserProps) {
+export function RankedUser({ rank, name, avatar, score, onPress}: RankedUserProps) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Column>
         <Rank>{rank}th</Rank>
         <Avatar

@@ -58,6 +58,7 @@ import { SplitModal } from "../../components/Dashboard/SplitModal";
 import { SplitCard } from "../../components/Dashboard/SplitCard";
 import { NewVersionAvailablePopup } from "../../components/Dashboard/NewVersionAvailablePopup";
 import { AdditionalInformationModal } from "../../components/Dashboard/AdditionalInformationModal";
+import { useEffect } from "react";
 
 
 export function Dashboard() {
@@ -72,6 +73,7 @@ export function Dashboard() {
     handleShowSplitModal,
     hasUpdate,
     isCheckingVersion,
+    handleShowAdditionalInformationModal
    } = useDashboardController();
 
   const { loggedUser } = useAuth();
@@ -80,8 +82,14 @@ export function Dashboard() {
     first_name: loggedUser?.name.split(' ')[0],
   }
 
-  const showAdditionalInformationModal = (loggedUser!.profile.state === undefined) || (loggedUser!.profile.state === '') || (loggedUser!.profile.state === null);
+  useEffect(() => {
+    if ((loggedUser!.profile.state === undefined) || (loggedUser!.profile.state === '') || (loggedUser!.profile.state === null)) {
+      handleShowAdditionalInformationModal();
+    }
+  }, [loggedUser])
 
+  // const showAdditionalInformationModal =
+  const showAdditionalInformationModal = true;
 
   const arsenal = stats.most_used_balls || [];
   const totalGamesAllTime = stats.total_games;

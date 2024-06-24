@@ -101,6 +101,7 @@ export function useAdditionalInformationModalController() {
 
   const {
     handleCloseAdditionalInformationModal,
+    showAdditionalInformationModal
   } = useDashboard();
 
   return {
@@ -111,5 +112,8 @@ export function useAdditionalInformationModalController() {
     onSubmit,
     states,
     cities,
+    isLoadingUserUpdate,
+    handleCloseAdditionalInformationModal,
+    showAdditionalInformationModal
   }
 }

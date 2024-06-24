@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { RankingsService } from "../services/rankingsService";
-import { useMemo } from "react";
+import { GetAllRankingsParams } from "../services/rankingsService/getAll";
 
-export function useRankingGetAll() {
-  const { data = [], isFetching } = useQuery({
-    queryKey: ['ranking', 'getAll'],
-    queryFn: RankingsService.getAll,
-    staleTime: Infinity,
-  });
+export function useRankingGetAll(params: GetAllRankingsParams) {
+  const { data = [], isFetching, refetch, isRefetching } = useQuery(
+    ['ranking', 'getAll'], () =>
+      RankingsService.getAll(params),
+    {
+      staleTime: Infinity,
+    },
+  );
 
-
-  return { rankings: data ?? [], isFetching}
+  return { rankings: data ?? [], isFetching, refetch, isRefetching }
 }
 
 

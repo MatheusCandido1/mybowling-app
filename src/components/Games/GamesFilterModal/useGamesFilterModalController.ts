@@ -4,12 +4,15 @@ import { GamesFilters } from "../../../services/gamesService/getAll";
 import { useGames } from "../../../hooks/useGames";
 import { ILocation } from "../../../entities/Location";
 import { IBall } from "../../../entities/Ball";
+import { useAuth } from "../../../hooks/useAuth";
 
 export function useGamesFilterModalController() {
-  const { locations } = useLocations();
+
+
 
   const { handleCloseFiltersModal, handleApplyFilters, filters, handleResetFilters } = useGames();
 
+  const { locations } = useLocations({});
 
   const [currentFilters, setCurrentFilters] = useState<GamesFilters>({
     start_date: filters.start_date,

@@ -73,6 +73,8 @@ export const AlleysContainer = styled.View`
   flex: 1;
 `;
 
-export const Footer = styled.View`
-
+export const EmptyResultContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;

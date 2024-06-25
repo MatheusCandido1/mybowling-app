@@ -19,6 +19,7 @@ export function Ranking() {
     showGameDetails,
     handleShowGameDetails,
     handleRankingPeriod,
+    period
   } = useRankingController();
 
   const options = ['Week', 'Month'];
@@ -83,7 +84,7 @@ export function Ranking() {
               </PodiumContainer>
               ): (
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text>{rankingPeriod}ly ranking not available.</Text>
+                  <Text>{period}ly ranking not available.</Text>
                 </View>
               )}
               <RankedUsers>

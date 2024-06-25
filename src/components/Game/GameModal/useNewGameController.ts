@@ -14,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const schema = z.object({
   game_date: z.date(),
-  location_id: z.string({ required_error: 'Please select a location' }).nonempty({ message: 'Please select a location' }),
   ball_id:  z.string({ required_error: 'Please select a ball' }).nonempty({ message: 'Please select a ball.' }),
   group_id: z.string().optional(),
 });
@@ -31,6 +30,7 @@ export function useNewGameController() {
   const { onGoingGames } = useOnGoingGames();
   const { handleNewGame } = useGame();
   const { groups } = useGroupGetAll();
+  const { selectedLocation, resetSelectedLocation } = useGame();
 
   const shouldEnableGroups = groups.length > 0;
 
@@ -61,9 +61,14 @@ export function useNewGameController() {
 
   async function onSubmit(data: FormData) {
     try {
-      const game = await createGame(data);
+      const payload = {
+        ...data,
+        location_id: selectedLocation?.id,
+      }
+      const game = await createGame(payload);
       handleNewGame(game.data);
       queryClient.invalidateQueries({ queryKey: ['games'] });
+      resetSelectedLocation();
     } catch (error) {
       Toast.show({
         type: 'error',

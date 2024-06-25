@@ -30,7 +30,7 @@ import { IGame } from "../../../entities/Game";
 import { Separator } from "../../Shared/Separator";
 import { NewGameModalHeight } from "../../../utils/modalHeightByDevice";
 import { DateInput } from "../../Shared/Forms/DateInput";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { LocationInput } from "../../Shared/Forms/LocationInput";
 
 
 export function GameModal() {
@@ -136,30 +136,23 @@ export function GameModal() {
           )}
         />
         </InputContainer>
-        <InputContainer
-          style={{
-            marginTop: 20
-          }}
-        >
-        <Controller
-          control={control}
-          name="location_id"
-          defaultValue=""
-          render={({ field: { onChange, value }}) => (
-            <SelectInput
-              label="Select location"
-              items={locations}
-              onChange={onChange}
-              value={value}
-              error={errors.location_id?.message}
-              searchPlaceholder={"Type the name of the bowling alley"}
-            />
-          )}
-        />
+
+
+          <InputContainer
+            style={{
+              marginTop: 4
+            }}
+          >
+          <LocationInput />
         </InputContainer>
         {
           shouldEnableGroups ? (
-            <InputContainer>
+            <InputContainer
+
+            style={{
+              marginTop: 12
+            }}
+            >
             <Controller
               control={control}
               name="group_id"
@@ -197,7 +190,7 @@ export function GameModal() {
         </InputContainer>
         <MainButton
           style={{
-            marginTop: 4
+            marginTop: 18
           }}
           onPress={handleSubmit(onSubmit)}
           isLoading={isCreatingGame}

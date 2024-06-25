@@ -6,6 +6,7 @@ import { isGameComplete } from "../utils/scoreHelper";
 import { useMutation } from "@tanstack/react-query";
 import { framesService } from "../services/frameService";
 import { isSplit } from "../utils/splitHelper";
+import { ILocation } from "../entities/Location";
 
 interface GameContextData {
   frames: IFrame[];
@@ -26,11 +27,28 @@ interface GameContextData {
   handleResumeGame: (game: IGame) => void;
   currentInputNumber: number;
   resetGame: () => void;
+  selectedLocation: ILocation | null;
+  handleSelectedLocation: (location: ILocation) => void;
+  resetSelectedLocation: () => void;
 }
 
 export const GameContext = createContext({} as GameContextData);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
+
+  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
+
+  function resetSelectedLocation() {
+    setSelectedLocation(null);
+  }
+
+  function handleSelectedLocation(location: ILocation) {
+    if(location.id === selectedLocation?.id) {
+      setSelectedLocation(null);
+      return;
+    }
+    setSelectedLocation(location);
+  }
 
   const [currentGame, setCurrentGame] = useState<IGame | null>(null);
 
@@ -328,6 +346,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         handleResumeGame,
         currentInputNumber,
         resetGame,
+        selectedLocation,
+        handleSelectedLocation,
+        resetSelectedLocation
       }}
     >
       {children}

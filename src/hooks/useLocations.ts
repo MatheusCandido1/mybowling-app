@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { LocationsService } from "../services/locationsService";
+import { GetAllLocationsParams } from "../services/locationsService/getAll";
 
-export function useLocations() {
-  const { data = [], isFetching } = useQuery({
-    queryKey: ['locations', 'getAll'],
-    queryFn: LocationsService.getAll,
-    staleTime: Infinity
-  });
+export function useLocations(params: GetAllLocationsParams) {
+  const { data = [], isFetching, refetch, isRefetching } = useQuery(
+    ['locations', 'getAll'], () =>
+      LocationsService.getAll(params),
+    {
+      staleTime: Infinity,
+    },
+  );
 
-  return { locations: data ?? [], isFetching }
+  const isLoading = isFetching || isRefetching;
+
+  return { locations: data ?? [], isLoading, refetch}
 }

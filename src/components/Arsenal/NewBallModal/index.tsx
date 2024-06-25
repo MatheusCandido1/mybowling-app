@@ -7,7 +7,6 @@ import { Controller } from "react-hook-form";
 import { MainButton } from "../../Shared/Buttons/MainButton";
 import { TextInputWithLabel } from "../../Shared/Forms/TextInputWithLabel";
 import { SelectValueInput } from "../../Shared/Forms/SelectValueInput";
-import { DropdownInput } from "../../Shared/Forms/DropdownInput";
 
 
 export function NewBallModal() {
@@ -39,7 +38,6 @@ export function NewBallModal() {
           </Header>
           <Content>
 
-          <DropdownInput />
           <Controller
           control={control}
           name="name"

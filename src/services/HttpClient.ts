@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // export const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export const BASE_URL = 'http://192.168.0.42:8000/api/v1';
+// export const BASE_URL = 'http://192.168.0.42:8000/api/v1';
 // export const BASE_URL = 'http://localhost:8000/api/v1'
-// export const BASE_URL = "https://mybowlingapp-api-6725c2b4cf9f.herokuapp.com/api/v1";
+export const BASE_URL = "https://mybowlingapp-api-6725c2b4cf9f.herokuapp.com/api/v1";
 
 
 export const httpClient = axios.create({

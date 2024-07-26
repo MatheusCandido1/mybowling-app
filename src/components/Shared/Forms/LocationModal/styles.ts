@@ -27,6 +27,7 @@ export const CloseButton = styled.TouchableOpacity`
   align-items: center;
   margin-top: 8px;
   margin-right: 8px;
+  margin-left: 8px;
 `;
 
 export const Title = styled.Text`
@@ -106,4 +107,36 @@ export const EmptyResultContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+`;
+
+export const FooterContainer = styled.View`
+  height: 32px;
+  width: 100%;
+`;
+
+export const FooterButton = styled.TouchableOpacity`
+  flex: 1;
+  width: 100%;
+  background-color: #0d9488;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+`;
+
+export const FooterButtonText = styled.Text`
+  color: #FFF;
+`;
+
+export const Form = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+
+`;
+
+export const NewLocationContainer = styled.View`
+  flex: 1;
+  flex-direction: column;
+  margin-top: -12px;
 `;

@@ -3,7 +3,7 @@ import { useDashboard } from "../../../hooks/useDashboard";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Location } from "../../../utils/locationHelper";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { UsersService } from "../../../services/userService";
 import { UpdateUserParams } from "../../../services/userService/update";
@@ -19,6 +19,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useAdditionalInformationModalController() {
+
+
+  const stateRef = createRef();
+  const cityRef = createRef();
 
   const {
     loggedUser,
@@ -47,6 +51,9 @@ export function useAdditionalInformationModalController() {
 
   useEffect(() => {
     if (stateValue) {
+      if (cityRef.current) {
+        cityRef.current.reset();
+      }
       const cities = Location[stateValue];
       setCities(cities.map((city, index) => ({
         id: city,
@@ -114,6 +121,8 @@ export function useAdditionalInformationModalController() {
     cities,
     isLoadingUserUpdate,
     handleCloseAdditionalInformationModal,
-    showAdditionalInformationModal
+    showAdditionalInformationModal,
+    stateRef,
+    cityRef
   }
 }

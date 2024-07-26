@@ -6,7 +6,7 @@ import { ErrorFeedbackInput } from "../ErrorFeedbackInput";
 
 interface CustomTextInputProps {
   label: string;
-  icon: 'envelope' | 'lock' | 'navicon' | 'user' ;
+  icon: 'envelope' | 'lock' | 'navicon' | 'user' | 'location' ;
   value: string;
   onChangeText: (text: string) => void;
   isPassword?: boolean;

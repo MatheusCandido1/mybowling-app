@@ -10,5 +10,4 @@ export const Label = styled.Text`
   color: #253237;
   font-weight: 500;
   height: 100%;
-
 `;

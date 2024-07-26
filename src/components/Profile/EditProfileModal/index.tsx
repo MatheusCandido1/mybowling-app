@@ -30,6 +30,8 @@ export function EditProfileModal() {
     handleCloseUpdateProfileModal,
     states,
     cities,
+    cityRef,
+    stateRef
   } = useEditProfileModalController();
 
   return (
@@ -95,6 +97,7 @@ export function EditProfileModal() {
                  onChange={onChange}
                  value={value}
                  error={errors.state?.message}
+                 selectRef={stateRef}
                />
              )}
            />
@@ -110,6 +113,7 @@ export function EditProfileModal() {
                  onChange={onChange}
                  value={value}
                  error={errors.city?.message}
+                 selectRef={cityRef}
                />
              )}
            />
@@ -118,6 +122,7 @@ export function EditProfileModal() {
               <MainButton
                 label="Save"
                 onPress={handleSubmit(onSubmit)}
+                isLoading={isLoadingUserUpdate}
               />
             </ButtonContainer>
           </Content>

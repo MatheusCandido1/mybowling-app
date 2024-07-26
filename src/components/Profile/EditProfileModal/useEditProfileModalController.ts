@@ -1,5 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { UsersService } from "../../../services/userService";
 import { useAuth } from '../../../hooks/useAuth';
 import { useForm } from "react-hook-form";
@@ -21,6 +21,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useEditProfileModalController() {
+
+
+  const stateRef = createRef();
+  const cityRef = createRef();
 
   const [cities, setCities] = useState<string[]>([]);
   const states = Object.keys(Location)
@@ -58,6 +62,9 @@ export function useEditProfileModalController() {
 
   useEffect(() => {
     if (stateValue) {
+      if (cityRef.current) {
+        cityRef.current.reset();
+      }
       const cities = Location[stateValue];
         setCities(cities.map((city, index) => ({
           id: city,
@@ -164,6 +171,8 @@ export function useEditProfileModalController() {
     showUpdateProfileModal,
     handleCloseUpdateProfileModal,
     states,
-    cities
+    cities,
+    cityRef,
+    stateRef
   }
 }

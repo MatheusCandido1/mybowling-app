@@ -17,7 +17,9 @@ export function AdditionalInformationModal() {
     onSubmit,
     isLoadingUserUpdate,
     handleCloseAdditionalInformationModal,
-    showAdditionalInformationModal
+    showAdditionalInformationModal,
+    cityRef,
+    stateRef
   } = useAdditionalInformationModalController();
 
   return (
@@ -52,6 +54,7 @@ export function AdditionalInformationModal() {
                   onChange={onChange}
                   value={value}
                   error={errors.state?.message}
+                  selectRef={stateRef}
                 />
               )}
             />
@@ -70,6 +73,7 @@ export function AdditionalInformationModal() {
                   error={errors.city?.message}
                   disabled={!cities.length}
                   initialLabel={!cities.length ? "Select a State first." : "Select an option."}
+                  selectRef={cityRef}
                 />
               )}
             />

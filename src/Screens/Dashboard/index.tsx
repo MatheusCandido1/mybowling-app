@@ -59,7 +59,6 @@ import { SplitCard } from "../../components/Dashboard/SplitCard";
 import { NewVersionAvailablePopup } from "../../components/Dashboard/NewVersionAvailablePopup";
 import { AdditionalInformationModal } from "../../components/Dashboard/AdditionalInformationModal";
 import { useEffect } from "react";
-import PushNotifications from "../../notifications/PushNotifications";
 
 
 export function Dashboard() {
@@ -445,7 +444,6 @@ export function Dashboard() {
       )}
       <AverageModal />
       <SplitModal />
-      <PushNotifications />
       {showAdditionalInformationModal && <AdditionalInformationModal />}
 
     </Container>

@@ -208,7 +208,7 @@ export function FirstAccess() {
               setSelection={handlePromotionCheck}
               content={
                 <Text>
-                  If you would like to sign up for marketing emails from SplitMate, to keep up to date with the latest news and updates, offers, and more, please check the box below
+                  If you would like to sign up for marketing emails from SplitMate, to keep up to date with the latest news and updates, offers, and more, please check the box.
                 </Text>
               }
             />

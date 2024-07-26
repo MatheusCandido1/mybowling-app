@@ -10,10 +10,10 @@ import { isIpad } from "./getDevice"
 
 export const AdditionalInformationModalHeight = () => {
   if(isIpad()) return { px: '980px' }
-  if(isDeviceSmall) return { px: '300px' }
-  if(isDeviceSmallMedium) return { px: '450px' }
+  if(isDeviceSmall) return { px: '180px' }
+  if(isDeviceSmallMedium) return { px: '270px' }
   if(isDeviceMedium) return { px: '350px' }
-  if(isDeviceBig) return { px: '540px' }
+  if(isDeviceBig) return { px: '420px' }
 }
 
 export const NewGameModalHeight = () => {

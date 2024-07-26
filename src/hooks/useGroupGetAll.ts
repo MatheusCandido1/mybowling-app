@@ -20,7 +20,7 @@ export function useGroupGetAll() {
   }, [data]);
 
 
-  return { groups: groups ?? [], isFetching, invites}
+  return { groups: groups ?? [], isFetchingGroups: isFetching, invites}
 }
 
 

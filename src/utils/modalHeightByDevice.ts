@@ -18,10 +18,10 @@ export const AdditionalInformationModalHeight = () => {
 
 export const NewGameModalHeight = () => {
   if(isIpad()) return { dimensions: 750, px: '750px' }
-  if(isDeviceSmall) return { dimension: 80,px: '80px' }
-  if(isDeviceSmallMedium) return { dimension: 150,px: '150px' }
-  if(isDeviceMedium) return { dimension: 190,px: '190px' }
-  if(isDeviceBig) return { dimension: 270,px: '270px' }
+  if(isDeviceSmall) return { dimension: 105,px: '105px' }
+  if(isDeviceSmallMedium) return { dimension: 175,px: '175px' }
+  if(isDeviceMedium) return { dimension: 220,px: '220px' }
+  if(isDeviceBig) return { dimension: 295,px: '295px' }
 }
 
 export const MembersDetailsModalHeight = () => {

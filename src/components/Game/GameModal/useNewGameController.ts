@@ -29,10 +29,12 @@ export function useNewGameController() {
   const { balls, isFetching: isFetchingBalls } = useBalls();
   const { onGoingGames } = useOnGoingGames();
   const { handleNewGame } = useGame();
-  const { groups } = useGroupGetAll();
+  const { groups, isFetchingGroups } = useGroupGetAll();
   const { selectedLocation, resetSelectedLocation } = useGame();
 
   const shouldEnableGroups = groups.length > 0;
+
+  const isLoadingPage = isFetchingLocations || isFetchingBalls || isFetchingGroups;
 
   const {
     handleSubmit,
@@ -95,6 +97,7 @@ export function useNewGameController() {
     onGoingGames,
     groups,
     shouldEnableGroups,
-    handleContinueGame
+    handleContinueGame,
+    isLoadingPage
   };
 }

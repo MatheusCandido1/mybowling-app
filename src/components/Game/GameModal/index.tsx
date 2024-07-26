@@ -40,7 +40,6 @@ export function GameModal() {
   const navigation = useNavigation();
 
   const {
-    locations,
     isFetchingLocations,
     onSubmit,
     handleSubmit,
@@ -50,7 +49,8 @@ export function GameModal() {
     onGoingGames,
     groups,
     shouldEnableGroups,
-    handleContinueGame
+    handleContinueGame,
+    isLoadingPage
   } = useNewGameController();
 
   const ModalHeight = shouldEnableGroups ? NewGameModalHeight()?.dimension - 90 : NewGameModalHeight()?.dimension;
@@ -121,82 +121,89 @@ export function GameModal() {
   const newGame = () => {
     return (
       <>
+      {isLoadingPage ? <OverlayLoading style="light" /> : (
+
       <Form>
-        <InputContainer>
-        <Controller
-          control={control}
-          name="game_date"
-          defaultValue={new Date()}
-          render={({ field: { onChange, value }}) => (
-            <DateInput
-              label="Game date"
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-        </InputContainer>
+      <InputContainer>
+      <Controller
+        control={control}
+        name="game_date"
+        defaultValue={new Date()}
+        render={({ field: { onChange, value }}) => (
+          <DateInput
+            label="Game date"
+            onChange={onChange}
+            value={value}
+          />
+        )}
+      />
+      </InputContainer>
 
 
+        <InputContainer
+          style={{
+            marginTop: 4
+          }}
+        >
+        <LocationInput />
+      </InputContainer>
+      {
+        shouldEnableGroups ? (
           <InputContainer
-            style={{
-              marginTop: 4
-            }}
+
+          style={{
+            marginTop: 12
+          }}
           >
-          <LocationInput />
-        </InputContainer>
-        {
-          shouldEnableGroups ? (
-            <InputContainer
-
-            style={{
-              marginTop: 12
-            }}
-            >
-            <Controller
-              control={control}
-              name="group_id"
-              defaultValue=""
-              render={({ field: { onChange, value }}) => (
-                <SelectInput
-                  label="Select group (optional)"
-                  items={groups}
-                  onChange={onChange}
-                  value={value}
-                  error={errors.group_id?.message}
-                  searchPlaceholder={"Type the name of the group"}
-                  showReset
-                />
-              )}
-            />
-            </InputContainer>
-          ) : null
-
-        }
-        <InputContainer>
           <Controller
-          name="ball_id"
-          control={control}
-          defaultValue={""}
-          render={({ field: { onChange, value }}) => (
-            <BallSelectInput
-              label="Select ball"
-              onChange={onChange}
-              value={value}
-              error={errors.ball_id?.message}
-            />
+            control={control}
+            name="group_id"
+            defaultValue=""
+            render={({ field: { onChange, value }}) => (
+              <SelectInput
+                label="Select group (optional)"
+                items={groups}
+                onChange={onChange}
+                value={value}
+                error={errors.group_id?.message}
+                searchPlaceholder={"Type the name of the group"}
+                showReset
+              />
             )}
           />
-        </InputContainer>
+          </InputContainer>
+        ) : null
+
+      }
+      <InputContainer
+        style={{
+          marginTop: shouldEnableGroups ? -4 : 12
+        }}
+      >
+        <Controller
+        name="ball_id"
+        control={control}
+        defaultValue={""}
+        render={({ field: { onChange, value }}) => (
+          <BallSelectInput
+            label="Select ball"
+            onChange={onChange}
+            value={value}
+            error={errors.ball_id?.message}
+          />
+          )}
+        />
+      </InputContainer>
         <MainButton
           style={{
-            marginTop: 18
+            marginTop: 0
           }}
           onPress={handleSubmit(onSubmit)}
           isLoading={isCreatingGame}
           label="Start Game"
         />
-      </Form>
+        </Form>
+      )}
     </>
     )
   }

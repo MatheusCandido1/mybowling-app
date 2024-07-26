@@ -48,7 +48,7 @@ export function NotificationPopup({ notification, visible, onClose  }: Notificat
             <AuthorContainer>
               <Author>From: {notification.author}</Author>
             </AuthorContainer>
-            {notification.type === 'WELCOME' ? (<WelcomeNotificationPopup notification={notification} />):null}
+            {notification.type === 'WELCOME' || notification.type === 'GENERAL_MESSAGE' ? (<WelcomeNotificationPopup notification={notification} />):null}
             {notification.type === 'GROUP_INVITE' ? (<GroupInviteNotificationPopup notification={notification} onNavigate={onClose} />):null}
 
           </PopupContent>

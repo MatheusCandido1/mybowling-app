@@ -13,7 +13,6 @@ export function useDashboardController() {
   const { stats, isFetching } = useDashboardGetAll();
   const { apiVersion, isCheckingVersion } = useDashboardVersion();
 
-  const { locations } = useLocations();
   const { balls } = useBalls();
   const { groups } = useGroupGetAll();
 

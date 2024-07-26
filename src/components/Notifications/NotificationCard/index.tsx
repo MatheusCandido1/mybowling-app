@@ -56,7 +56,7 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
       <AuthorContainer>
         <Author>From: {notification.author}</Author>
       </AuthorContainer>
-      {notification.type === 'WELCOME' ? (<WelcomeNotification notification={notification} />):null}
+      {notification.type === 'WELCOME' || notification.type === "GENERAL_MESSAGE"  ? (<WelcomeNotification notification={notification} />):null}
       {notification.type === 'GROUP_INVITE' ? (<GroupInviteNotification notification={notification} />):null}
       </Content>
       <FooterContainer>

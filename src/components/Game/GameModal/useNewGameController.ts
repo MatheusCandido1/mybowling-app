@@ -25,7 +25,6 @@ export function useNewGameController() {
 
   const navigation = useNavigation();
 
-  const { locations, isFetching: isFetchingLocations } = useLocations();
   const { balls, isFetching: isFetchingBalls } = useBalls();
   const { onGoingGames } = useOnGoingGames();
   const { handleNewGame } = useGame();
@@ -34,7 +33,7 @@ export function useNewGameController() {
 
   const shouldEnableGroups = groups.length > 0;
 
-  const isLoadingPage = isFetchingLocations || isFetchingBalls || isFetchingGroups;
+  const isLoadingPage =  isFetchingBalls || isFetchingGroups;
 
   const {
     handleSubmit,
@@ -83,8 +82,6 @@ export function useNewGameController() {
   }
 
   return {
-    locations,
-    isFetchingLocations,
     balls,
     isFetchingBalls,
     handleSubmit,

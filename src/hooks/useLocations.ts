@@ -8,6 +8,7 @@ export function useLocations(params: GetAllLocationsParams) {
       LocationsService.getAll(params),
     {
       staleTime: Infinity,
+      enabled: false
     },
   );
 

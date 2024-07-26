@@ -40,7 +40,6 @@ export function GameModal() {
   const navigation = useNavigation();
 
   const {
-    isFetchingLocations,
     onSubmit,
     handleSubmit,
     control,
@@ -63,7 +62,7 @@ export function GameModal() {
     }
   })
 
-  const isLoadingResources = isFetchingLocations;
+  const isLoadingResources = isLoadingPage;
 
   function handleCloseModal() {
     navigation.navigate('Dashboard');

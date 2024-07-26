@@ -15,6 +15,7 @@ interface SelectInputProps {
   showReset?: boolean;
   disabled?: boolean;
   initialLabel?: string;
+  selectRef?: any;
 }
 
 interface Item {
@@ -22,10 +23,7 @@ interface Item {
   name: string;
 }
 
-export function SelectInput({ label, error, items, onChange, value, showReset, disabled, initialLabel }: SelectInputProps) {
-
-  const selectRef = useRef(null)
-
+export function SelectInput({ label, error, items, onChange, value, showReset, disabled, initialLabel, selectRef }: SelectInputProps) {
   function handleSelect(value: { id: string; name: string; }) {
     onChange && onChange(value.id.toString(), value)
   }

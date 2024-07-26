@@ -14,10 +14,31 @@ export const Container = styled.View`
   align-items: center;
 `;
 
+export const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const CloseButton = styled.TouchableOpacity`
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-right: 8px;
+`;
+
+export const Title = styled.Text`
+  font-size: 20px;
+  color: #000;
+  font-weight: bold;
+`;
+
 export const DropdownContainer = styled.View`
   margin-top: -64px;
   width: 90%;
-  height: 340px;
+  height: 400px;
   background-color: #FFF;
   border-radius: 8px;
 `;
@@ -29,6 +50,14 @@ export const DropdownContent = styled.View`
 
 export const SectionContainer = styled.View`
 
+`;
+
+export const AlleysCount = styled.Text`
+  font-size: 10px;
+  color: #333;
+  margin-top: -10px;
+  margin-bottom: 2px;
+  text-align: center;
 `;
 
 export const SectionText = styled.Text`

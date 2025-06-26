@@ -45,13 +45,10 @@
         "projectId": "d59a1e6c-8a86-4b28-9ce7-a80f0f823f06"
       }
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/5c1cd7b7-f3fc-4319-8998-b05046bf4b86"
     },
-    "owner": "candin",
-    "plugins": []
+    "owner": "candin"
   }
 }

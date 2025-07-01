@@ -13,13 +13,15 @@ export function AppWrapper() {
   const { authenticated, loggedUser } = useAuth();
 
   async function checkForUserPlans() {
-    const offerings = await Purchases.getOfferings();
+    //const offerings = await Purchases.getOfferings();
 
-    console.log("Offerings: ", offerings);
+    //console.log("Offerings: ", offerings.all);
 
-    const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall();
+    await RevenueCatUI.presentPaywallIfNeeded({
+      requiredEntitlementIdentifier: "pro"
+    });
 
-    console.log("Paywall Result: ", paywallResult);
+    // console.log("Paywall Result: ", paywallResult);
   }
 
   useEffect(() => {
@@ -31,11 +33,9 @@ export function AppWrapper() {
     })
 
     checkForUserPlans();
+  }, []);
 
-    // Present paywall for current offering:
 
-
-  })
   return (
     <KeyboardAvoidingView
       style={{

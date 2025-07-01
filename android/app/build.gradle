@@ -109,7 +109,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.splitmate"
+    namespace 'com.candin.mybowlingapp'
     defaultConfig {
         applicationId 'com.candin.mybowlingapp'
         minSdkVersion rootProject.ext.minSdkVersion
